@@ -15,6 +15,8 @@
             --medium-gray: #e0e0e0;
             --dark-gray: #757575;
             --text-color: #333;
+            --bg-color: #f9f9f9;
+            --bg-image: none;
         }
 
         * {
@@ -25,9 +27,14 @@
         }
 
         body {
-            background-color: #f9f9f9;
+            background-color: var(--bg-color);
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-color);
             line-height: 1.6;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -37,9 +44,10 @@
         }
 
         .sidebar {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
         }
 
         .sidebar h1 {
@@ -84,6 +92,8 @@
 
         .main-content {
             padding: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         .dashboard-header {
@@ -93,11 +103,17 @@
             margin-bottom: 30px;
         }
 
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
         .search-bar {
             width: 300px;
             padding: 10px 15px;
-            border-radius: 25px;
+            border-radius: 25px 0 0 25px;
             border: 1px solid var(--medium-gray);
+            border-right: none;
             display: flex;
             align-items: center;
         }
@@ -107,6 +123,17 @@
             outline: none;
             width: 100%;
             margin-left: 10px;
+            background: transparent;
+        }
+
+        .search-button {
+            padding: 10px 15px;
+            border-radius: 0 25px 25px 0;
+            border: 1px solid var(--medium-gray);
+            border-left: none;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
         }
 
         .user-profile {
@@ -129,10 +156,11 @@
         }
 
         .widget {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
         }
 
         .widget-header {
@@ -158,12 +186,28 @@
             font-size: 0.9rem;
         }
 
+        .progress-bar {
+            height: 10px;
+            background-color: var(--medium-gray);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
         .focus-session {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             margin-bottom: 30px;
+            backdrop-filter: blur(5px);
         }
 
         .focus-header {
@@ -192,23 +236,7 @@
             border: 1px solid var(--medium-gray);
             border-radius: 5px;
             margin-bottom: 15px;
-        }
-
-        .start-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            display: block;
-            margin: 0 auto;
-            transition: background-color 0.2s;
-        }
-
-        .start-button:hover {
-            background-color: #3367d6;
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .timer-display {
@@ -247,11 +275,12 @@
         }
 
         .tasks-section {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             margin-bottom: 30px;
+            backdrop-filter: blur(5px);
         }
 
         .tasks-header {
@@ -302,12 +331,13 @@
         }
 
         .feature-card {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             cursor: pointer;
             transition: transform 0.2s;
+            backdrop-filter: blur(5px);
         }
 
         .feature-card:hover {
@@ -423,6 +453,7 @@
             border-radius: 5px;
             margin-top: 15px;
             font-size: 0.9rem;
+            white-space: pre-wrap;
         }
 
         .search-results {
@@ -455,18 +486,87 @@
             color: var(--dark-gray);
         }
 
-        .webpage-content {
-            padding: 20px;
-            background-color: white;
-            border-radius: 5px;
+        .quiz-container {
+            margin-top: 20px;
+        }
+
+        .quiz-question {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            margin-bottom: 8px;
+        }
+
+        .quiz-submit {
             margin-top: 15px;
         }
 
-        .webpage-iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
             border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .color-option.selected {
+            border-color: var(--text-color);
+        }
+
+        .bg-image-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .bg-image-option {
+            width: 100%;
+            height: 60px;
+            border-radius: 5px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .bg-image-option.selected {
+            border-color: var(--primary-color);
         }
 
         @media (max-width: 768px) {
@@ -481,6 +581,10 @@
             .widgets-grid {
                 grid-template-columns: 1fr;
             }
+
+            .search-bar {
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -491,11 +595,11 @@
             
             <div class="sidebar-section">
                 <h2>Technical Report</h2>
-                <div class="sidebar-item">
+                <div class="sidebar-item" id="techReport1">
                     <i class="fas fa-file-alt"></i>
                     <span>2020-12-01 00 (Supplement No. 1)</span>
                 </div>
-                <div class="sidebar-item">
+                <div class="sidebar-item" id="techReport2">
                     <i class="fas fa-newspaper"></i>
                     <span>Daily Times (7 days)</span>
                 </div>
@@ -503,7 +607,7 @@
             
             <div class="sidebar-section">
                 <h2>Businesses</h2>
-                <div class="sidebar-item">
+                <div class="sidebar-item" id="businessItem">
                     <i class="fas fa-clock"></i>
                     <span>Study Times (10 to 14s)</span>
                 </div>
@@ -511,7 +615,7 @@
             
             <div class="sidebar-section">
                 <h2>Study Groups</h2>
-                <div class="sidebar-item">
+                <div class="sidebar-item" id="studyGroupItem">
                     <i class="fas fa-book"></i>
                     <span>Study Materials (24 Games)</span>
                 </div>
@@ -532,9 +636,12 @@
         
         <div class="main-content">
             <div class="dashboard-header">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="googleSearch" placeholder="Search Google...">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="googleSearch" placeholder="Heygoogle">
+                    </div>
+                    <button class="search-button" id="searchButton">Search</button>
                 </div>
                 <div class="user-profile">
                     <img src="https://via.placeholder.com/40" alt="User">
@@ -546,24 +653,27 @@
                 <div class="widget">
                     <div class="widget-header">
                         <div class="widget-title">Today's Study Time</div>
-                        <i class="fas fa-bullseye"></i>
+                        <i class="fas fa-clock"></i>
                     </div>
                     <div class="widget-content">0m</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="studyProgress"></div>
+                    </div>
                 </div>
                 
                 <div class="widget">
                     <div class="widget-header">
-                        <div class="widget-title">Study Group</div>
-                        <i class="fas fa-users"></i>
+                        <div class="widget-title">Daily Quiz</div>
+                        <i class="fas fa-question-circle"></i>
                     </div>
-                    <div class="widget-content">8%</div>
-                    <div class="widget-subtext">Country</div>
+                    <div class="widget-content" id="quizScore">0/0</div>
+                    <div class="widget-subtext">Today's Progress</div>
                 </div>
                 
                 <div class="widget" id="aiQuizWidget">
                     <div class="widget-header">
                         <div class="widget-title">AI Quiz</div>
-                        <i class="fas fa-question-circle"></i>
+                        <i class="fas fa-robot"></i>
                     </div>
                     <div class="widget-subtext">Generate custom quizzes on any subject.</div>
                 </div>
@@ -584,14 +694,14 @@
                 
                 <div class="focus-question">
                     <h3>What are you studying?</h3>
-                    <input type="text" class="focus-input" placeholder="Enter your study topic...">
+                    <input type="text" class="focus-input" id="studyTopic" value="Maths">
                 </div>
                 
-                <div class="timer-display">22:02</div>
+                <div class="timer-display">25:00</div>
                 
                 <div class="timer-controls">
                     <button class="timer-btn start-btn">Start</button>
-                    <button class="timer-btn pause-btn">Dumm</button>
+                    <button class="timer-btn pause-btn">Dur</button>
                     <button class="timer-btn reset-btn">Reset</button>
                 </div>
             </div>
@@ -603,6 +713,10 @@
                 </div>
                 
                 <div class="tasks-list" id="tasksList">
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-text">Hi</div>
+                    </div>
                     <div class="task-item">
                         <input type="checkbox" class="task-checkbox">
                         <div class="task-text">Hi</div>
@@ -652,15 +766,30 @@
                     <label for="studyGoal">Daily Study Goal (minutes)</label>
                     <input type="number" id="studyGoal" value="60">
                 </div>
+                
                 <div class="form-group">
-                    <label for="themeColor">Theme Color</label>
-                    <select id="themeColor">
-                        <option value="blue">Blue</option>
-                        <option value="green">Green</option>
-                        <option value="red">Red</option>
-                        <option value="purple">Purple</option>
-                    </select>
+                    <label>Theme Color</label>
+                    <div class="color-options">
+                        <div class="color-option selected" style="background-color: #4285f4;" data-color="#4285f4"></div>
+                        <div class="color-option" style="background-color: #34a853;" data-color="#34a853"></div>
+                        <div class="color-option" style="background-color: #ea4335;" data-color="#ea4335"></div>
+                        <div class="color-option" style="background-color: #673ab7;" data-color="#673ab7"></div>
+                        <div class="color-option" style="background-color: #ff5722;" data-color="#ff5722"></div>
+                    </div>
                 </div>
+                
+                <div class="form-group">
+                    <label>Background Image</label>
+                    <div class="bg-image-options">
+                        <div class="bg-image-option selected" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="none"></div>
+                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="notifications">Enable Notifications</label>
                     <input type="checkbox" id="notifications" checked>
@@ -691,5 +820,581 @@
         </div>
     </div>
     
-    <!-- Webpage Viewer Modal -->
-    <div cla
+    <!-- AI Quiz Modal -->
+    <div class="modal" id="aiQuizModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">AI Quiz Generator</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="quizSubject">Subject</label>
+                    <input type="text" id="quizSubject" placeholder="Enter subject (e.g., Math, History)">
+                </div>
+                <div class="form-group">
+                    <label for="quizTopic">Specific Topic</label>
+                    <input type="text" id="quizTopic" placeholder="Enter specific topic (optional)">
+                </div>
+                <div class="form-group">
+                    <label for="quizDifficulty">Difficulty</label>
+                    <select id="quizDifficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quizQuestions">Number of Questions</label>
+                    <input type="number" id="quizQuestions" min="1" max="20" value="5">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary" id="generateQuizBtn">Generate Quiz</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Quiz Modal -->
+    <div class="modal" id="dailyQuizModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Daily Quiz</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="dailyQuizContainer">
+                    <p>Loading today's quiz...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeQuizBtn">Close</button>
+                <button class="btn btn-primary" id="submitQuizBtn">Submit Answers</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- AI Study Assistant Modal -->
+    <div class="modal" id="assistantModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">AI Study Assistant</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="assistantQuestion">How can I help you with your studies today?</label>
+                    <textarea id="assistantQuestion" rows="3" placeholder="Ask me anything about your studies..."></textarea>
+                </div>
+                <button class="btn btn-primary" id="askAssistantBtn" style="width: 100%; margin-bottom: 15px;">Ask Assistant</button>
+                <div class="ai-response" id="aiResponse" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification" style="display: none;">
+        <div id="notificationMessage"></div>
+        <button class="notification-close" id="closeNotification">&times;</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Timer functionality
+            const timerDisplay = document.querySelector('.timer-display');
+            const startBtn = document.querySelector('.start-btn');
+            const pauseBtn = document.querySelector('.pause-btn');
+            const resetBtn = document.querySelector('.reset-btn');
+            const focusInput = document.querySelector('.focus-input');
+            
+            let timer;
+            let timeLeft = 25 * 60; // 25 minutes in seconds
+            let isRunning = false;
+            
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            function startTimer() {
+                if (!isRunning) {
+                    isRunning = true;
+                    timer = setInterval(() => {
+                        if (timeLeft > 0) {
+                            timeLeft--;
+                            updateTimerDisplay();
+                            
+                            // Update study time progress
+                            updateStudyProgress(1);
+                        } else {
+                            clearInterval(timer);
+                            isRunning = false;
+                            showNotification('Focus session completed! Great job!');
+                        }
+                    }, 1000);
+                }
+            }
+            
+            function pauseTimer() {
+                clearInterval(timer);
+                isRunning = false;
+            }
+            
+            function resetTimer() {
+                clearInterval(timer);
+                isRunning = false;
+                timeLeft = 25 * 60;
+                updateTimerDisplay();
+            }
+            
+            startBtn.addEventListener('click', startTimer);
+            pauseBtn.addEventListener('click', pauseTimer);
+            resetBtn.addEventListener('click', resetTimer);
+            
+            // Initialize timer display
+            updateTimerDisplay();
+            
+            // Task management
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            const taskModal = document.getElementById('taskModal');
+            const saveTaskBtn = document.getElementById('saveTaskBtn');
+            const tasksList = document.getElementById('tasksList');
+            const closeModalButtons = document.querySelectorAll('.close-modal');
+            
+            let tasks = [
+                { title: "Hi", completed: false },
+                { title: "Hi", completed: false }
+            ];
+            
+            function renderTasks() {
+                if (tasks.length === 0) {
+                    tasksList.innerHTML = '<div class="empty-state">No tasks yet. Create your first task to get started!</div>';
+                    return;
+                }
+                
+                tasksList.innerHTML = '';
+                tasks.forEach((task, index) => {
+                    const taskElement = document.createElement('div');
+                    taskElement.className = 'task-item';
+                    taskElement.innerHTML = `
+                        <input type="checkbox" class="task-checkbox" data-index="${index}" ${task.completed ? 'checked' : ''}>
+                        <div class="task-text ${task.completed ? 'task-completed' : ''}">${task.title}</div>
+                    `;
+                    tasksList.appendChild(taskElement);
+                });
+                
+                // Add event listeners to checkboxes
+                document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const index = this.getAttribute('data-index');
+                        tasks[index].completed = this.checked;
+                        renderTasks();
+                    });
+                });
+            }
+            
+            addTaskBtn.addEventListener('click', function() {
+                taskModal.style.display = 'flex';
+            });
+            
+            saveTaskBtn.addEventListener('click', function() {
+                const title = document.getElementById('taskTitle').value;
+                const due = document.getElementById('taskDue').value;
+                
+                if (!title) {
+                    alert('Please enter a task title');
+                    return;
+                }
+                
+                tasks.push({
+                    title,
+                    due,
+                    completed: false
+                });
+                
+                // Reset form
+                document.getElementById('taskTitle').value = '';
+                document.getElementById('taskDue').value = '';
+                
+                taskModal.style.display = 'none';
+                renderTasks();
+            });
+            
+            // Close modal when clicking X or cancel button
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            });
+            
+            // Settings functionality
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            const colorOptions = document.querySelectorAll('.color-option');
+            const bgImageOptions = document.querySelectorAll('.bg-image-option');
+            
+            settingsBtn.addEventListener('click', function() {
+                settingsModal.style.display = 'flex';
+            });
+            
+            // Color selection
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Background image selection
+            bgImageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    bgImageOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            saveSettingsBtn.addEventListener('click', function() {
+                // Update theme color
+                const selectedColor = document.querySelector('.color-option.selected').dataset.color;
+                document.documentElement.style.setProperty('--primary-color', selectedColor);
+                
+                // Update background
+                const selectedBg = document.querySelector('.bg-image-option.selected').dataset.image;
+                document.documentElement.style.setProperty('--bg-image', selectedBg);
+                
+                // Save other settings
+                const studyGoal = document.getElementById('studyGoal').value;
+                const notificationsEnabled = document.getElementById('notifications').checked;
+                
+                localStorage.setItem('studyGoal', studyGoal);
+                localStorage.setItem('notificationsEnabled', notificationsEnabled);
+                
+                showNotification('Settings saved successfully!');
+                settingsModal.style.display = 'none';
+            });
+            
+            // Load saved settings
+            function loadSettings() {
+                const savedColor = localStorage.getItem('themeColor') || '#4285f4';
+                const savedBg = localStorage.getItem('bgImage') || 'none';
+                const studyGoal = localStorage.getItem('studyGoal') || '60';
+                const notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true' || true;
+                
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+                document.documentElement.style.setProperty('--bg-image', savedBg);
+                document.getElementById('studyGoal').value = studyGoal;
+                document.getElementById('notifications').checked = notificationsEnabled;
+            }
+            
+            // Logout functionality
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to log out?')) {
+                    showNotification('Logged out successfully!');
+                    // In a real app, this would redirect to login page
+                }
+            });
+            
+            // Google Search functionality
+            const googleSearch = document.getElementById('googleSearch');
+            const searchButton = document.getElementById('searchButton');
+            const searchModal = document.getElementById('searchModal');
+            
+            googleSearch.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    performGoogleSearch(this.value.trim());
+                }
+            });
+            
+            searchButton.addEventListener('click', function() {
+                if (googleSearch.value.trim()) {
+                    performGoogleSearch(googleSearch.value.trim());
+                }
+            });
+            
+            function performGoogleSearch(query) {
+                // In a real app, this would call the Google Search API
+                // For demo purposes, we'll use mock data
+                const mockResults = [
+                    {
+                        title: "Study Together - Collaborative Learning Platform",
+                        url: "https://www.studytogether.com",
+                        snippet: "Join Study Together, the best platform for collaborative learning with students around the world. Improve your study habits with our focus timer and study groups."
+                    },
+                    {
+                        title: "Maths Study Resources - Khan Academy",
+                        url: "https://www.khanacademy.org/math",
+                        snippet: "Learn math with free online courses from Khan Academy. Get started with arithmetic, algebra, geometry, calculus, statistics, and more."
+                    },
+                    {
+                        title: "Effective Study Techniques - Harvard University",
+                        url: "https://huh.harvard.edu/study-techniques",
+                        snippet: "Discover research-backed study techniques from Harvard University that can help you learn more effectively and retain information longer."
+                    }
+                ];
+                
+                // Display results in modal
+                const resultsContainer = document.getElementById('searchResultsContainer');
+                resultsContainer.innerHTML = '';
+                
+                if (mockResults.length === 0) {
+                    resultsContainer.innerHTML = '<p>No results found for your search.</p>';
+                } else {
+                    mockResults.forEach((result, index) => {
+                        const resultElement = document.createElement('div');
+                        resultElement.className = 'search-result-item';
+                        resultElement.innerHTML = `
+                            <div class="search-result-title">${result.title}</div>
+                            <div class="search-result-url">${result.url}</div>
+                            <div class="search-result-snippet">${result.snippet}</div>
+                        `;
+                        resultElement.addEventListener('click', function() {
+                            window.open(result.url, '_blank');
+                        });
+                        resultsContainer.appendChild(resultElement);
+                    });
+                }
+                
+                searchModal.style.display = 'flex';
+            }
+            
+            // AI Features
+            const aiQuizWidget = document.getElementById('aiQuizWidget');
+            const aiQuizModal = document.getElementById('aiQuizModal');
+            const generateQuizBtn = document.getElementById('generateQuizBtn');
+            
+            const aiGamesWidget = document.getElementById('aiGamesWidget');
+            
+            aiQuizWidget.addEventListener('click', function() {
+                aiQuizModal.style.display = 'flex';
+            });
+            
+            generateQuizBtn.addEventListener('click', async function() {
+                const subject = document.getElementById('quizSubject').value;
+                const topic = document.getElementById('quizTopic').value;
+                const difficulty = document.getElementById('quizDifficulty').value;
+                const questions = document.getElementById('quizQuestions').value;
+                
+                if (!subject) {
+                    alert('Please enter a subject');
+                    return;
+                }
+                
+                // Generate quiz using AI
+                const quiz = await generateAIQuiz(subject, topic, difficulty, questions);
+                displayQuiz(quiz);
+                
+                aiQuizModal.style.display = 'none';
+            });
+            
+            aiGamesWidget.addEventListener('click', function() {
+                showNotification('AI Study Games feature coming soon!');
+            });
+            
+            // Daily Quiz
+            let dailyQuiz = null;
+            let quizAnswers = {};
+            
+            function generateDailyQuiz() {
+                // In a real app, this would be generated daily from the server
+                // For demo, we'll use a fixed quiz
+                dailyQuiz = {
+                    title: "General Knowledge Quiz",
+                    questions: [
+                        {
+                            question: "What is the capital of France?",
+                            options: ["London", "Paris", "Berlin", "Madrid"],
+                            answer: 1
+                        },
+                        {
+                            question: "Which planet is known as the Red Planet?",
+                            options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                            answer: 1
+                        },
+                        {
+                            question: "What is the chemical symbol for gold?",
+                            options: ["Go", "Gd", "Au", "Ag"],
+                            answer: 2
+                        }
+                    ]
+                };
+                
+                // Show notification about new quiz
+                if (document.getElementById('notifications').checked) {
+                    setTimeout(() => {
+                        showNotification('Your daily quiz is ready! Test your knowledge now.');
+                    }, 3000);
+                }
+            }
+            
+            function displayQuiz(quiz) {
+                const quizContainer = document.getElementById('dailyQuizContainer');
+                quizContainer.innerHTML = `
+                    <h3>${quiz.title}</h3>
+                    <div class="quiz-questions" id="quizQuestionsContainer"></div>
+                `;
+                
+                const questionsContainer = document.getElementById('quizQuestionsContainer');
+                quiz.questions.forEach((q, qIndex) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.className = 'quiz-question-container';
+                    questionElement.innerHTML = `
+                        <div class="quiz-question">${qIndex + 1}. ${q.question}</div>
+                        <div class="quiz-options">
+                            ${q.options.map((opt, oIndex) => `
+                                <div class="quiz-option">
+                                    <input type="radio" name="question-${qIndex}" id="option-${qIndex}-${oIndex}" value="${oIndex}">
+                                    <label for="option-${qIndex}-${oIndex}">${opt}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    questionsContainer.appendChild(questionElement);
+                    
+                    // Store correct answer
+                    quizAnswers[qIndex] = q.answer;
+                });
+                
+                document.getElementById('dailyQuizModal').style.display = 'flex';
+            }
+            
+            document.getElementById('submitQuizBtn').addEventListener('click', function() {
+                let score = 0;
+                const questionCount = dailyQuiz.questions.length;
+                
+                for (let i = 0; i < questionCount; i++) {
+                    const selectedOption = document.querySelector(`input[name="question-${i}"]:checked`);
+                    if (selectedOption && parseInt(selectedOption.value) === quizAnswers[i]) {
+                        score++;
+                    }
+                }
+                
+                // Update quiz score display
+                document.getElementById('quizScore').textContent = `${score}/${questionCount}`;
+                
+                // Update progress bar
+                const progressPercentage = (score / questionCount) * 100;
+                document.getElementById('studyProgress').style.width = `${progressPercentage}%`;
+                
+                showNotification(`Quiz submitted! You scored ${score}/${questionCount}`);
+                document.getElementById('dailyQuizModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeQuizBtn').addEventListener('click', function() {
+                document.getElementById('dailyQuizModal').style.display = 'none';
+            });
+            
+            async function generateAIQuiz(subject, topic, difficulty, questionCount) {
+                // In a real app, this would call the OpenRouter API
+                // For demo, we'll return a mock quiz
+                return {
+                    title: `${subject} Quiz${topic ? ' on ' + topic : ''} (${difficulty} difficulty)`,
+                    questions: [
+                        {
+                            question: `What is the main concept in ${subject}${topic ? ' regarding ' + topic : ''}?`,
+                            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                            answer: 1
+                        },
+                        {
+                            question: `Which of these is most important in ${subject}?`,
+                            options: ["Concept A", "Concept B", "Concept C", "Concept D"],
+                            answer: 0
+                        },
+                        {
+                            question: `How would you solve a typical ${difficulty} problem in ${subject}?`,
+                            options: ["Method X", "Method Y", "Method Z", "All of the above"],
+                            answer: 3
+                        }
+                    ].slice(0, questionCount)
+                };
+            }
+            
+            // Study progress tracking
+            let studyTime = 0;
+            
+            function updateStudyProgress(seconds) {
+                studyTime += seconds;
+                const studyGoal = parseInt(document.getElementById('studyGoal').value) || 60;
+                const goalSeconds = studyGoal * 60;
+                const progressPercentage = Math.min((studyTime / goalSeconds) * 100, 100);
+                
+                document.getElementById('studyProgress').style.width = `${progressPercentage}%`;
+                
+                // Update study time display
+                const minutes = Math.floor(studyTime / 60);
+                document.querySelector('.widget-content').textContent = `${minutes}m`;
+                
+                if (studyTime >= goalSeconds) {
+                    showNotification('Congratulations! You reached your daily study goal!');
+                }
+            }
+            
+            // Notification system
+            function showNotification(message) {
+                if (!document.getElementById('notifications').checked) return;
+                
+                const notification = document.getElementById('notification');
+                const notificationMessage = document.getElementById('notificationMessage');
+                
+                notificationMessage.textContent = message;
+                notification.style.display = 'flex';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+            
+            document.getElementById('closeNotification').addEventListener('click', function() {
+                document.getElementById('notification').style.display = 'none';
+            });
+            
+            // Sidebar navigation
+            document.getElementById('techReport1').addEventListener('click', function() {
+                showNotification('Technical Report 2020-12-01 opened');
+            });
+            
+            document.getElementById('techReport2').addEventListener('click', function() {
+                showNotification('Daily Times report opened');
+            });
+            
+            document.getElementById('businessItem').addEventListener('click', function() {
+                showNotification('Study Times analytics opened');
+            });
+            
+            document.getElementById('studyGroupItem').addEventListener('click', function() {
+                showNotification('Study Materials and Games opened');
+            });
+            
+            // Initialize app
+            function initApp() {
+                loadSettings();
+                renderTasks();
+                generateDailyQuiz();
+                
+                // Show welcome notification
+                setTimeout(() => {
+                    showNotification('Welcome to Study Together! Ready for your daily quiz?');
+                }, 2000);
+            }
+            
+            initApp();
+        });
+    </script>
+</body>
+</html>
