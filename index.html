@@ -1,1400 +1,1409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Together</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4285f4;
-            --secondary-color: #34a853;
-            --accent-color: #ea4335;
-            --light-gray: #f5f5f5;
-            --medium-gray: #e0e0e0;
-            --dark-gray: #757575;
-            --text-color: #333;
-            --bg-color: #f9f9f9;
-            --bg-image: none;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            background-image: var(--bg-image);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: all 0.3s ease;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
-        }
-
-        .sidebar h1 {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        .sidebar-section {
-            margin-bottom: 30px;
-        }
-
-        .sidebar-section h2 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--dark-gray);
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .sidebar-item:hover {
-            background-color: var(--light-gray);
-        }
-
-        .sidebar-item i {
-            margin-right: 10px;
-            color: var(--dark-gray);
-        }
-
-        .sidebar-item.active {
-            background-color: var(--light-gray);
-            font-weight: 500;
-        }
-
-        .main-content {
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar {
-            width: 300px;
-            padding: 10px 15px;
-            border-radius: 25px 0 0 25px;
-            border: 1px solid var(--medium-gray);
-            border-right: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar input {
-            border: none;
-            outline: none;
-            width: 100%;
-            margin-left: 10px;
-            background: transparent;
-        }
-
-        .search-button {
-            padding: 10px 15px;
-            border-radius: 0 25px 25px 0;
-            border: 1px solid var(--medium-gray);
-            border-left: none;
-            background-color: var(--primary-color);
-            color: white;
-            cursor: pointer;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .widgets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .widget {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            backdrop-filter: blur(5px);
-        }
-
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .widget-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .widget-content {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 10px;
-        }
-
-        .widget-subtext {
-            color: var(--dark-gray);
-            font-size: 0.9rem;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background-color: var(--medium-gray);
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: var(--primary-color);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .focus-session {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            backdrop-filter: blur(5px);
-        }
-
-        .focus-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .focus-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .focus-question {
-            margin-bottom: 20px;
-        }
-
-        .focus-question h3 {
-            margin-bottom: 10px;
-        }
-
-        .focus-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--medium-gray);
-            border-radius: 5px;
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .timer-display {
-            font-size: 2.5rem;
-            text-align: center;
-            margin: 20px 0;
-            font-family: monospace;
-        }
-
-        .timer-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .timer-btn {
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .start-btn {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .pause-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .reset-btn {
-            background-color: var(--medium-gray);
-        }
-
-        .tasks-section {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            backdrop-filter: blur(5px);
-        }
-
-        .tasks-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .tasks-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .add-task-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .task-checkbox {
-            margin-right: 10px;
-        }
-
-        .task-text {
-            flex-grow: 1;
-        }
-
-        .task-completed {
-            text-decoration: line-through;
-            color: var(--dark-gray);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .feature-card {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: transform 0.2s;
-            backdrop-filter: blur(5px);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .feature-description {
-            color: var(--dark-gray);
-            font-size: 0.9rem;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 500;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--medium-gray);
-            border-radius: 5px;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: var(--medium-gray);
-        }
-
-        .ai-response {
-            background-color: var(--light-gray);
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-        }
-
-        .search-results {
-            margin-top: 20px;
-        }
-
-        .search-result-item {
-            padding: 10px;
-            border-bottom: 1px solid var(--light-gray);
-            cursor: pointer;
-        }
-
-        .search-result-item:hover {
-            background-color: var(--light-gray);
-        }
-
-        .search-result-title {
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-
-        .search-result-url {
-            color: var(--secondary-color);
-            font-size: 0.8rem;
-            margin: 5px 0;
-        }
-
-        .search-result-snippet {
-            font-size: 0.9rem;
-            color: var(--dark-gray);
-        }
-
-        .quiz-container {
-            margin-top: 20px;
-        }
-
-        .quiz-question {
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .quiz-options {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .quiz-option {
-            margin-bottom: 8px;
-        }
-
-        .quiz-submit {
-            margin-top: 15px;
-        }
-
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .notification-close {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-
-        .color-options {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .color-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .color-option.selected {
-            border-color: var(--text-color);
-        }
-
-        .bg-image-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .bg-image-option {
-            width: 100%;
-            height: 60px;
-            border-radius: 5px;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .bg-image-option.selected {
-            border-color: var(--primary-color);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .widgets-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .search-bar {
-                width: 200px;
-            }
-        }
-    </style>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.18/auth0-spa-js.production.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="theme-color" content="#b98d2a">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyTogether - AI Study App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Using 'Poppins' and 'Merriweather' from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../navbar.css" />
+<link rel="stylesheet" href="../hero.css" />
+<link rel="stylesheet" href="../study-grid.css" />
+<link rel="stylesheet" href="../how-it-will-work.css" />
+<link rel="stylesheet" href="../ai-chat-demo.css" />
+<link rel="stylesheet" href="../faqs.css" />
+<link rel="stylesheet" href="../footer.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h1>Study Together</h1>
-            
-            <div class="sidebar-section">
-                <h2>Technical Report</h2>
-                <div class="sidebar-item" id="techReport1">
-                    <i class="fas fa-file-alt"></i>
-                    <span>2020-12-01 00 (Supplement No. 1)</span>
-                </div>
-                <div class="sidebar-item" id="techReport2">
-                    <i class="fas fa-newspaper"></i>
-                    <span>Daily Times (7 days)</span>
-                </div>
-            </div>
-            
-            <div class="sidebar-section">
-                <h2>Businesses</h2>
-                <div class="sidebar-item" id="businessItem">
-                    <i class="fas fa-clock"></i>
-                    <span>Study Times (10 to 14s)</span>
-                </div>
-            </div>
-            
-            <div class="sidebar-section">
-                <h2>Study Groups</h2>
-                <div class="sidebar-item" id="studyGroupItem">
-                    <i class="fas fa-book"></i>
-                    <span>Study Materials (24 Games)</span>
-                </div>
-            </div>
-            
-            <div class="sidebar-section">
-                <h2>Globalities</h2>
-                <div class="sidebar-item" id="settingsBtn">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </div>
-                <div class="sidebar-item" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Log Out</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="main-content">
-            <div class="dashboard-header">
-                <div class="search-container">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="googleSearch" placeholder="Heygoogle">
-                    </div>
-                    <button class="search-button" id="searchButton">Search</button>
-                </div>
-                <div class="user-profile">
-                    <img src="https://via.placeholder.com/40" alt="User">
-                    <span>Student</span>
-                </div>
-            </div>
-            
-            <div class="widgets-grid">
-                <div class="widget">
-                    <div class="widget-header">
-                        <div class="widget-title">Today's Study Time</div>
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="widget-content">0m</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="studyProgress"></div>
-                    </div>
-                </div>
-                
-                <div class="widget">
-                    <div class="widget-header">
-                        <div class="widget-title">Daily Quiz</div>
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <div class="widget-content" id="quizScore">0/0</div>
-                    <div class="widget-subtext">Today's Progress</div>
-                </div>
-                
-                <div class="widget" id="aiQuizWidget">
-                    <div class="widget-header">
-                        <div class="widget-title">AI Quiz</div>
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="widget-subtext">Generate custom quizzes on any subject.</div>
-                </div>
-                
-                <div class="widget" id="aiGamesWidget">
-                    <div class="widget-header">
-                        <div class="widget-title">AI Study Games</div>
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-                    <div class="widget-subtext">Subject Sources, difficulty Medium, 1</div>
-                </div>
-            </div>
-            
-            <div class="focus-session">
-                <div class="focus-header">
-                    <div class="focus-title">Focus Session (Zen Mode)</div>
-                </div>
-                
-                <div class="focus-question">
-                    <h3>What are you studying?</h3>
-                    <input type="text" class="focus-input" id="studyTopic" value="Maths">
-                </div>
-                
-                <div class="timer-display">25:00</div>
-                
-                <div class="timer-controls">
-                    <button class="timer-btn start-btn">Start</button>
-                    <button class="timer-btn pause-btn">Dur</button>
-                    <button class="timer-btn reset-btn">Reset</button>
-                </div>
-            </div>
-            
-            <div class="tasks-section">
-                <div class="tasks-header">
-                    <div class="tasks-title">Today's Tasks</div>
-                    <button class="add-task-btn" id="addTaskBtn">Add Task</button>
-                </div>
-                
-                <div class="tasks-list" id="tasksList">
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-text">Hi</div>
-                    </div>
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <div class="task-text">Hi</div>
-                    </div>
-                </div>
-                
-                <div class="connect-calendar">
-                    <button class="start-button" style="background-color: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); margin-top: 15px;">Open with Google Calendar</button>
-                </div>
-            </div>
-        </div>
+  <header class="navbar">
+    <div class="brand">
+      <img src="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" alt="StudyTogether Logo" class="logo">
+      <span class="brand-name">StudyTogether</span>
     </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">AI Tools</a>
+      <a href="#">Contact</a>
+    </nav>
+    <button class="hamburger" id="hamburger">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+  </header>
+  <script src="../navbar.js"></script>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Supercharge Your Study Journey</h1>
+    <p class="hero-subtitle">
+      Personalized tools, AI-powered answers, and ultimate focus—all in one place.
+    </p>
+    <button class="cssbuttons-io-button">
+      Get started
+      <div class="icon">
+        <svg
+          height="24"
+          width="24"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </div>
+    </button>
+  </div>
+</section>
+<!-- Study Tools Section -->
+<div class="tool-card reveal"> 
+<section class="tools-section">
+  <h2 class="tools-title">📚 Study Tools We Provide</h2>
+  <div class="tools-grid">
     
-    <!-- Add Task Modal -->
-    <div class="modal" id="taskModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Add New Task</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="taskTitle">Task Title</label>
-                    <input type="text" id="taskTitle" placeholder="Enter task title">
-                </div>
-                <div class="form-group">
-                    <label for="taskDue">Due Date</label>
-                    <input type="datetime-local" id="taskDue">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Cancel</button>
-                <button class="btn btn-primary" id="saveTaskBtn">Save Task</button>
-            </div>
-        </div>
+    <!-- Tool 1 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/lecprnjb.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>AI Doubt Solver</h3>
+      <p>Ask any question and get instant, accurate AI-powered answers.</p>
     </div>
-    
-    <!-- Settings Modal -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Settings</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="studyGoal">Daily Study Goal (minutes)</label>
-                    <input type="number" id="studyGoal" value="60">
-                </div>
-                
-                <div class="form-group">
-                    <label>Theme Color</label>
-                    <div class="color-options">
-                        <div class="color-option selected" style="background-color: #4285f4;" data-color="#4285f4"></div>
-                        <div class="color-option" style="background-color: #34a853;" data-color="#34a853"></div>
-                        <div class="color-option" style="background-color: #ea4335;" data-color="#ea4335"></div>
-                        <div class="color-option" style="background-color: #673ab7;" data-color="#673ab7"></div>
-                        <div class="color-option" style="background-color: #ff5722;" data-color="#ff5722"></div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Background Image</label>
-                    <div class="bg-image-options">
-                        <div class="bg-image-option selected" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="none"></div>
-                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
-                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
-                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
-                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
-                        <div class="bg-image-option" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');" data-image="url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="notifications">Enable Notifications</label>
-                    <input type="checkbox" id="notifications" checked>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Cancel</button>
-                <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
-            </div>
-        </div>
+
+    <!-- Tool 2 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/qghrdngw.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Focus Timer</h3>
+      <p>Boost productivity with a Pomodoro timer built for study sessions.</p>
     </div>
-    
-    <!-- Google Search Results Modal -->
-    <div class="modal" id="searchModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Google Search Results</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="searchResultsContainer">
-                    <p>Search results will appear here...</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Close</button>
-            </div>
-        </div>
+
+    <!-- Tool 3 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/wxnxiano.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Notes Manager</h3>
+      <p>Organize your notes, subjects, and topics all in one place.</p>
     </div>
-    
-    <!-- AI Quiz Modal -->
-    <div class="modal" id="aiQuizModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">AI Quiz Generator</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="quizSubject">Subject</label>
-                    <input type="text" id="quizSubject" placeholder="Enter subject (e.g., Math, History)">
-                </div>
-                <div class="form-group">
-                    <label for="quizTopic">Specific Topic</label>
-                    <input type="text" id="quizTopic" placeholder="Enter specific topic (optional)">
-                </div>
-                <div class="form-group">
-                    <label for="quizDifficulty">Difficulty</label>
-                    <select id="quizDifficulty">
-                        <option value="easy">Easy</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="quizQuestions">Number of Questions</label>
-                    <input type="number" id="quizQuestions" min="1" max="20" value="5">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Cancel</button>
-                <button class="btn btn-primary" id="generateQuizBtn">Generate Quiz</button>
-            </div>
-        </div>
+
+    <!-- Tool 4 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/zxvuvcnc.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Daily Reminders</h3>
+      <p>Never miss a study goal with customizable daily reminders.</p>
     </div>
-    
-    <!-- Daily Quiz Modal -->
-    <div class="modal" id="dailyQuizModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Daily Quiz</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="dailyQuizContainer">
-                    <p>Loading today's quiz...</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="closeQuizBtn">Close</button>
-                <button class="btn btn-primary" id="submitQuizBtn">Submit Answers</button>
-            </div>
-        </div>
+<!-- Tool 5 -->
+<div class="tool-card">
+  <lord-icon
+    src="https://cdn.lordicon.com/hiqmdfkt.json"
+    trigger="hover"
+    colors="primary:#b58b2e,secondary:#3e3c54"
+    style="width:60px;height:60px">
+  </lord-icon>
+  <h3>YouTube Focus Music</h3>
+  <p>Listen to curated background music from YouTube to stay in the zone.</p>
+</div>
+
+<!-- Tool 6 -->
+<div class="tool-card">
+  <lord-icon
+    src="https://cdn.lordicon.com/xhdhjyqy.json"
+    trigger="hover"
+    colors="primary:#b58b2e,secondary:#3e3c54"
+    style="width:60px;height:60px">
+  </lord-icon>
+  <h3>Study File Upload</h3>
+  <p>Upload and manage your study files safely with cloud sync support.</p>
+</div>
+  </div>
+</section>
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); // reveal once
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+</script>
+<!--Hero Section Ends Here-->
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <h2 class="how-title">🚀 How StudyTogether Works</h2>
+  <div class="steps-grid">
+
+    <!-- Step 1 -->
+    <div class="step-card">
+      <lord-icon
+  src="https://cdn.lordicon.com/nmguxqka.json"
+  trigger="hover"
+  colors="primary:#b58b2e,secondary:#3e3c54"
+  style="width:60px;height:60px">
+</lord-icon>
+      <h3>Choose Your Tools</h3>
+      <p>Pick the features you need: AI, timer, notes, music & more.</p>
     </div>
-    
-    <!-- AI Study Assistant Modal -->
-    <div class="modal" id="assistantModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">AI Study Assistant</div>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="assistantQuestion">How can I help you with your studies today?</label>
-                    <textarea id="assistantQuestion" rows="3" placeholder="Ask me anything about your studies..."></textarea>
-                </div>
-                <button class="btn btn-primary" id="askAssistantBtn" style="width: 100%; margin-bottom: 15px;">Ask Assistant</button>
-                <div class="ai-response" id="aiResponse" style="display: none;"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Close</button>
-            </div>
-        </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/jnikqyih.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Ask AI Doubts</h3>
+      <p>Type any question & get clear, reliable AI-generated answers.</p>
     </div>
-    
-    <!-- Notification -->
-    <div class="notification" id="notification" style="display: none;">
-        <div id="notificationMessage"></div>
-        <button class="notification-close" id="closeNotification">&times;</button>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/wxnxiano.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Use Focus Timer</h3>
+      <p>Stay productive using our Pomodoro timer with music integration.</p>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Timer functionality
-            const timerDisplay = document.querySelector('.timer-display');
-            const startBtn = document.querySelector('.start-btn');
-            const pauseBtn = document.querySelector('.pause-btn');
-            const resetBtn = document.querySelector('.reset-btn');
-            const focusInput = document.querySelector('.focus-input');
-            
-            let timer;
-            let timeLeft = 25 * 60; // 25 minutes in seconds
-            let isRunning = false;
-            
-            function updateTimerDisplay() {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-            
-            function startTimer() {
-                if (!isRunning) {
-                    isRunning = true;
-                    timer = setInterval(() => {
-                        if (timeLeft > 0) {
-                            timeLeft--;
-                            updateTimerDisplay();
-                            
-                            // Update study time progress
-                            updateStudyProgress(1);
-                        } else {
-                            clearInterval(timer);
-                            isRunning = false;
-                            showNotification('Focus session completed! Great job!');
-                        }
-                    }, 1000);
-                }
-            }
-            
-            function pauseTimer() {
-                clearInterval(timer);
-                isRunning = false;
-            }
-            
-            function resetTimer() {
-                clearInterval(timer);
-                isRunning = false;
-                timeLeft = 25 * 60;
-                updateTimerDisplay();
-            }
-            
-            startBtn.addEventListener('click', startTimer);
-            pauseBtn.addEventListener('click', pauseTimer);
-            resetBtn.addEventListener('click', resetTimer);
-            
-            // Initialize timer display
-            updateTimerDisplay();
-            
-            // Task management
-            const addTaskBtn = document.getElementById('addTaskBtn');
-            const taskModal = document.getElementById('taskModal');
-            const saveTaskBtn = document.getElementById('saveTaskBtn');
-            const tasksList = document.getElementById('tasksList');
-            const closeModalButtons = document.querySelectorAll('.close-modal');
-            
-            let tasks = [
-                { title: "Hi", completed: false },
-                { title: "Hi", completed: false }
-            ];
-            
-            function renderTasks() {
-                if (tasks.length === 0) {
-                    tasksList.innerHTML = '<div class="empty-state">No tasks yet. Create your first task to get started!</div>';
-                    return;
-                }
-                
-                tasksList.innerHTML = '';
-                tasks.forEach((task, index) => {
-                    const taskElement = document.createElement('div');
-                    taskElement.className = 'task-item';
-                    taskElement.innerHTML = `
-                        <input type="checkbox" class="task-checkbox" data-index="${index}" ${task.completed ? 'checked' : ''}>
-                        <div class="task-text ${task.completed ? 'task-completed' : ''}">${task.title}</div>
-                    `;
-                    tasksList.appendChild(taskElement);
-                });
-                
-                // Add event listeners to checkboxes
-                document.querySelectorAll('.task-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const index = this.getAttribute('data-index');
-                        tasks[index].completed = this.checked;
-                        renderTasks();
-                    });
-                });
-            }
-            
-            addTaskBtn.addEventListener('click', function() {
-                taskModal.style.display = 'flex';
-            });
-            
-            saveTaskBtn.addEventListener('click', function() {
-                const title = document.getElementById('taskTitle').value;
-                const due = document.getElementById('taskDue').value;
-                
-                if (!title) {
-                    alert('Please enter a task title');
-                    return;
-                }
-                
-                tasks.push({
-                    title,
-                    due,
-                    completed: false
-                });
-                
-                // Reset form
-                document.getElementById('taskTitle').value = '';
-                document.getElementById('taskDue').value = '';
-                
-                taskModal.style.display = 'none';
-                renderTasks();
-            });
-            
-            // Close modal when clicking X or cancel button
-            closeModalButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                });
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            });
-            
-            // Settings functionality
-            const settingsBtn = document.getElementById('settingsBtn');
-            const settingsModal = document.getElementById('settingsModal');
-            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-            const colorOptions = document.querySelectorAll('.color-option');
-            const bgImageOptions = document.querySelectorAll('.bg-image-option');
-            
-            settingsBtn.addEventListener('click', function() {
-                settingsModal.style.display = 'flex';
-            });
-            
-            // Color selection
-            colorOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    colorOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-            });
-            
-            // Background image selection
-            bgImageOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    bgImageOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-            });
-            
-            saveSettingsBtn.addEventListener('click', function() {
-                // Update theme color
-                const selectedColor = document.querySelector('.color-option.selected').dataset.color;
-                document.documentElement.style.setProperty('--primary-color', selectedColor);
-                
-                // Update background
-                const selectedBg = document.querySelector('.bg-image-option.selected').dataset.image;
-                document.documentElement.style.setProperty('--bg-image', selectedBg);
-                
-                // Save other settings
-                const studyGoal = document.getElementById('studyGoal').value;
-                const notificationsEnabled = document.getElementById('notifications').checked;
-                
-                localStorage.setItem('studyGoal', studyGoal);
-                localStorage.setItem('notificationsEnabled', notificationsEnabled);
-                
-                showNotification('Settings saved successfully!');
-                settingsModal.style.display = 'none';
-            });
-            
-            // Load saved settings
-            function loadSettings() {
-                const savedColor = localStorage.getItem('themeColor') || '#4285f4';
-                const savedBg = localStorage.getItem('bgImage') || 'none';
-                const studyGoal = localStorage.getItem('studyGoal') || '60';
-                const notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true' || true;
-                
-                document.documentElement.style.setProperty('--primary-color', savedColor);
-                document.documentElement.style.setProperty('--bg-image', savedBg);
-                document.getElementById('studyGoal').value = studyGoal;
-                document.getElementById('notifications').checked = notificationsEnabled;
-            }
-            
-            // Logout functionality
-            const logoutBtn = document.getElementById('logoutBtn');
-            
-            logoutBtn.addEventListener('click', function() {
-                if (confirm('Are you sure you want to log out?')) {
-                    showNotification('Logged out successfully!');
-                    // In a real app, this would redirect to login page
-                }
-            });
-            
-            // Google Search functionality
-            const googleSearch = document.getElementById('googleSearch');
-            const searchButton = document.getElementById('searchButton');
-            const searchModal = document.getElementById('searchModal');
-            
-            googleSearch.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && this.value.trim()) {
-                    performGoogleSearch(this.value.trim());
-                }
-            });
-            
-            searchButton.addEventListener('click', function() {
-                if (googleSearch.value.trim()) {
-                    performGoogleSearch(googleSearch.value.trim());
-                }
-            });
-            
-            function performGoogleSearch(query) {
-                // In a real app, this would call the Google Search API
-                // For demo purposes, we'll use mock data
-                const mockResults = [
-                    {
-                        title: "Study Together - Collaborative Learning Platform",
-                        url: "https://www.studytogether.com",
-                        snippet: "Join Study Together, the best platform for collaborative learning with students around the world. Improve your study habits with our focus timer and study groups."
-                    },
-                    {
-                        title: "Maths Study Resources - Khan Academy",
-                        url: "https://www.khanacademy.org/math",
-                        snippet: "Learn math with free online courses from Khan Academy. Get started with arithmetic, algebra, geometry, calculus, statistics, and more."
-                    },
-                    {
-                        title: "Effective Study Techniques - Harvard University",
-                        url: "https://huh.harvard.edu/study-techniques",
-                        snippet: "Discover research-backed study techniques from Harvard University that can help you learn more effectively and retain information longer."
-                    }
-                ];
-                
-                // Display results in modal
-                const resultsContainer = document.getElementById('searchResultsContainer');
-                resultsContainer.innerHTML = '';
-                
-                if (mockResults.length === 0) {
-                    resultsContainer.innerHTML = '<p>No results found for your search.</p>';
-                } else {
-                    mockResults.forEach((result, index) => {
-                        const resultElement = document.createElement('div');
-                        resultElement.className = 'search-result-item';
-                        resultElement.innerHTML = `
-                            <div class="search-result-title">${result.title}</div>
-                            <div class="search-result-url">${result.url}</div>
-                            <div class="search-result-snippet">${result.snippet}</div>
-                        `;
-                        resultElement.addEventListener('click', function() {
-                            window.open(result.url, '_blank');
-                        });
-                        resultsContainer.appendChild(resultElement);
-                    });
-                }
-                
-                searchModal.style.display = 'flex';
-            }
-            
-            // AI Features
-            const aiQuizWidget = document.getElementById('aiQuizWidget');
-            const aiQuizModal = document.getElementById('aiQuizModal');
-            const generateQuizBtn = document.getElementById('generateQuizBtn');
-            
-            const aiGamesWidget = document.getElementById('aiGamesWidget');
-            
-            aiQuizWidget.addEventListener('click', function() {
-                aiQuizModal.style.display = 'flex';
-            });
-            
-            generateQuizBtn.addEventListener('click', async function() {
-                const subject = document.getElementById('quizSubject').value;
-                const topic = document.getElementById('quizTopic').value;
-                const difficulty = document.getElementById('quizDifficulty').value;
-                const questions = document.getElementById('quizQuestions').value;
-                
-                if (!subject) {
-                    alert('Please enter a subject');
-                    return;
-                }
-                
-                // Generate quiz using AI
-                const quiz = await generateAIQuiz(subject, topic, difficulty, questions);
-                displayQuiz(quiz);
-                
-                aiQuizModal.style.display = 'none';
-            });
-            
-            aiGamesWidget.addEventListener('click', function() {
-                showNotification('AI Study Games feature coming soon!');
-            });
-            
-            // Daily Quiz
-            let dailyQuiz = null;
-            let quizAnswers = {};
-            
-            function generateDailyQuiz() {
-                // In a real app, this would be generated daily from the server
-                // For demo, we'll use a fixed quiz
-                dailyQuiz = {
-                    title: "General Knowledge Quiz",
-                    questions: [
-                        {
-                            question: "What is the capital of France?",
-                            options: ["London", "Paris", "Berlin", "Madrid"],
-                            answer: 1
-                        },
-                        {
-                            question: "Which planet is known as the Red Planet?",
-                            options: ["Venus", "Mars", "Jupiter", "Saturn"],
-                            answer: 1
-                        },
-                        {
-                            question: "What is the chemical symbol for gold?",
-                            options: ["Go", "Gd", "Au", "Ag"],
-                            answer: 2
-                        }
-                    ]
-                };
-                
-                // Show notification about new quiz
-                if (document.getElementById('notifications').checked) {
-                    setTimeout(() => {
-                        showNotification('Your daily quiz is ready! Test your knowledge now.');
-                    }, 3000);
-                }
-            }
-            
-            function displayQuiz(quiz) {
-                const quizContainer = document.getElementById('dailyQuizContainer');
-                quizContainer.innerHTML = `
-                    <h3>${quiz.title}</h3>
-                    <div class="quiz-questions" id="quizQuestionsContainer"></div>
-                `;
-                
-                const questionsContainer = document.getElementById('quizQuestionsContainer');
-                quiz.questions.forEach((q, qIndex) => {
-                    const questionElement = document.createElement('div');
-                    questionElement.className = 'quiz-question-container';
-                    questionElement.innerHTML = `
-                        <div class="quiz-question">${qIndex + 1}. ${q.question}</div>
-                        <div class="quiz-options">
-                            ${q.options.map((opt, oIndex) => `
-                                <div class="quiz-option">
-                                    <input type="radio" name="question-${qIndex}" id="option-${qIndex}-${oIndex}" value="${oIndex}">
-                                    <label for="option-${qIndex}-${oIndex}">${opt}</label>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
-                    questionsContainer.appendChild(questionElement);
-                    
-                    // Store correct answer
-                    quizAnswers[qIndex] = q.answer;
-                });
-                
-                document.getElementById('dailyQuizModal').style.display = 'flex';
-            }
-            
-            document.getElementById('submitQuizBtn').addEventListener('click', function() {
-                let score = 0;
-                const questionCount = dailyQuiz.questions.length;
-                
-                for (let i = 0; i < questionCount; i++) {
-                    const selectedOption = document.querySelector(`input[name="question-${i}"]:checked`);
-                    if (selectedOption && parseInt(selectedOption.value) === quizAnswers[i]) {
-                        score++;
-                    }
-                }
-                
-                // Update quiz score display
-                document.getElementById('quizScore').textContent = `${score}/${questionCount}`;
-                
-                // Update progress bar
-                const progressPercentage = (score / questionCount) * 100;
-                document.getElementById('studyProgress').style.width = `${progressPercentage}%`;
-                
-                showNotification(`Quiz submitted! You scored ${score}/${questionCount}`);
-                document.getElementById('dailyQuizModal').style.display = 'none';
-            });
-            
-            document.getElementById('closeQuizBtn').addEventListener('click', function() {
-                document.getElementById('dailyQuizModal').style.display = 'none';
-            });
-            
-            async function generateAIQuiz(subject, topic, difficulty, questionCount) {
-                // In a real app, this would call the OpenRouter API
-                // For demo, we'll return a mock quiz
-                return {
-                    title: `${subject} Quiz${topic ? ' on ' + topic : ''} (${difficulty} difficulty)`,
-                    questions: [
-                        {
-                            question: `What is the main concept in ${subject}${topic ? ' regarding ' + topic : ''}?`,
-                            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-                            answer: 1
-                        },
-                        {
-                            question: `Which of these is most important in ${subject}?`,
-                            options: ["Concept A", "Concept B", "Concept C", "Concept D"],
-                            answer: 0
-                        },
-                        {
-                            question: `How would you solve a typical ${difficulty} problem in ${subject}?`,
-                            options: ["Method X", "Method Y", "Method Z", "All of the above"],
-                            answer: 3
-                        }
-                    ].slice(0, questionCount)
-                };
-            }
-            
-            // Study progress tracking
-            let studyTime = 0;
-            
-            function updateStudyProgress(seconds) {
-                studyTime += seconds;
-                const studyGoal = parseInt(document.getElementById('studyGoal').value) || 60;
-                const goalSeconds = studyGoal * 60;
-                const progressPercentage = Math.min((studyTime / goalSeconds) * 100, 100);
-                
-                document.getElementById('studyProgress').style.width = `${progressPercentage}%`;
-                
-                // Update study time display
-                const minutes = Math.floor(studyTime / 60);
-                document.querySelector('.widget-content').textContent = `${minutes}m`;
-                
-                if (studyTime >= goalSeconds) {
-                    showNotification('Congratulations! You reached your daily study goal!');
-                }
-            }
-            
-            // Notification system
-            function showNotification(message) {
-                if (!document.getElementById('notifications').checked) return;
-                
-                const notification = document.getElementById('notification');
-                const notificationMessage = document.getElementById('notificationMessage');
-                
-                notificationMessage.textContent = message;
-                notification.style.display = 'flex';
-                
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 5000);
-            }
-            
-            document.getElementById('closeNotification').addEventListener('click', function() {
-                document.getElementById('notification').style.display = 'none';
-            });
-            
-            // Sidebar navigation
-            document.getElementById('techReport1').addEventListener('click', function() {
-                showNotification('Technical Report 2020-12-01 opened');
-            });
-            
-            document.getElementById('techReport2').addEventListener('click', function() {
-                showNotification('Daily Times report opened');
-            });
-            
-            document.getElementById('businessItem').addEventListener('click', function() {
-                showNotification('Study Times analytics opened');
-            });
-            
-            document.getElementById('studyGroupItem').addEventListener('click', function() {
-                showNotification('Study Materials and Games opened');
-            });
-            
-            // Initialize app
-            function initApp() {
-                loadSettings();
-                renderTasks();
-                generateDailyQuiz();
-                
-                // Show welcome notification
-                setTimeout(() => {
-                    showNotification('Welcome to Study Together! Ready for your daily quiz?');
-                }, 2000);
-            }
-            
-            initApp();
-        });
-    </script>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/ggihhudh.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Organize & Achieve</h3>
+      <p>Keep track of your notes, reminders, and study files easily.</p>
+    </div>
+
+  </div>
+</section>
+ </div>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<!-- How It Will Work Section End -->
+<section class="ai-chat-live">
+  <h2 class="ai-title">💬 Ask Anything to StudyTogether AI</h2>
+  
+  <!-- Intro Message -->
+  <div class="intro-message">Start the conversation with our AI Assistant 👇</div>
+  
+  <!-- Suggestions -->
+  <div class="suggestions">
+    <span class="suggestion">What is Quantum Mechanics?</span>
+    <span class="suggestion">Study tips for long hours</span>
+    <span class="suggestion">Explain Gravity simply</span>
+    <span class="suggestion">How to stay focused?</span>
+    <span class="suggestion">What is Photosynthesis?</span>
+    <span class="suggestion">How to prepare for boards?</span>
+  </div>
+  
+  <!-- Chat Container -->
+  <div class="chat-window" id="chat-window"></div>
+  
+  <!-- Chat Input -->
+  <form id="chat-form">
+    <input type="text" id="user-input" placeholder="Type your question..." required />
+    <button type="submit">Ask</button>
+  </form>
+</section>
+<script src="../ai-demo.js"></script>
+
+<!--demo-->
+<!-- How It Works Section -->
+<section id="how-it-works" class="how-it-works-section">
+  <div class="container" data-aos="fade-up">
+    <h2 class="section-title">🚀 How <span>StudyTogether</span> Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>📝 Ask Anything</h3>
+        <p>Type your study-related question or select from smart suggestions.</p>
+      </div>
+      <div class="step">
+        <h3>🤖 AI Starts Typing</h3>
+        <p>Watch as our AI generates intelligent, structured responses.</p>
+      </div>
+      <div class="step">
+        <h3>📚 Get Smart Answers</h3>
+        <p>Formatted answers with headings, lists, and highlights appear beautifully.</p>
+      </div>
+      <div class="step">
+        <h3>🚀 Learn Smarter</h3>
+        <p>Use AI chat, tools, and resources to boost your learning journey.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .how-it-works-section {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #3e3c54;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.section-title span {
+  color: #b58b2e;
+}
+
+.steps {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.step {
+  background-color: #f8f6f0;
+  border: 2px solid #a4a3bc;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+}
+
+.step h3 {
+  font-size: 1.2rem;
+  color: #342f52;
+  margin-bottom: 10px;
+}
+
+.step p {
+  color: #3e3c54;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+</style>
+<!-- In <head> -->
+
+<!-- Before </body> -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script><!--how to works ends-->
+<!-- FAQS Section -->
+<section id="faqs" class="faq-section">
+  <div class="container">
+    <h2 class="section-title">❓ Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <button class="faq-question">What is StudyTogether AI?</button>
+      <div class="faq-answer">
+        <p>StudyTogether AI is your personal educational assistant that answers questions, explains topics, and helps you focus using smart tools — all powered by AI.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is StudyTogether free to use?</button>
+      <div class="faq-answer">
+        <p>Yes! Basic features and study chat are free. We’re here to make learning accessible to every student.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">What type of questions can I ask?</button>
+      <div class="faq-answer">
+        <p>You can ask anything related to science, math, history, homework help, study hacks, and more!</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is my data safe and private?</button>
+      <div class="faq-answer">
+        <p>Absolutely! We don’t store your chat history unless you choose to. Your study space is safe and secure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const faq = button.nextElementSibling;
+    const isOpen = faq.style.maxHeight;
+
+    document.querySelectorAll(".faq-answer").forEach(f => f.style.maxHeight = null);
+
+    if (!isOpen) {
+      faq.style.maxHeight = faq.scrollHeight + "px";
+    } else {
+      faq.style.maxHeight = null;
+    }
+  });
+});
+</script>
+
+<!--FAQS Ends-->
+<!--Footer Starts-->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <img src="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" alt="StudyTogether Logo" class="footer-logo" />
+      <h3 class="footer-title">StudyTogether</h3>
+      <p>Your AI-powered study partner</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#faqs">FAQs</a></li>
+        <li><a href="#chat">AI Chat</a></li>
+        <li><a href="#tools">Study Tools</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: <a href="mailto:studytogether@app.com">studytogether@app.com</a></p>
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 StudyTogether. All rights reserved.</p>
+  </div>
+</footer>
+<!-- Footer Ends-->
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" title="Back to Top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+<style>
+  #scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  z-index: 100;
+  background-color: #b58b2e;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #3e3c54;
+  transform: scale(1.1);
+}
+</style>
+<script>
+  const scrollBtn = document.getElementById("scrollToTopBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollBtn.style.display = "block";
+    } else {
+      scrollBtn.style.display = "none";
+    }
+  });
+
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+<style>
+  /* ===== AI Chat Demo Section ===== */
+.ai-chat-demo {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.ai-title {
+  font-size: 2.2rem;
+  color: #3e3c54;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 40px;
+}
+
+.chat-window {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.chat-bubble {
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  margin: 10px 0;
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.4;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Animate chat bubbles */
+.chat-bubble {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faq-section {
+  background-color: #f9f9f9;
+  padding: 60px 20px;
+}
+
+.faq-section .section-title {
+  font-size: 2.5rem;
+  color: #3e3c54;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border: 2px solid #a4a3bc;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.faq-question {
+  background-color: #b58b2e;
+  color: white;
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.faq-answer {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+  margin: 15px 0;
+  color: #3e3c54;
+  line-height: 1.6;
+}
+
+.footer {
+  background-color: #3e3c54;
+  color: #fff;
+  padding: 50px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.footer-title {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #b58b2e;
+}
+
+.footer-brand p {
+  font-size: 0.95rem;
+  color: #d1d1d1;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.footer-links li {
+  margin: 6px 0;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #b58b2e;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  color: #b58b2e;
+}
+
+.social-icons a {
+  font-size: 1.2rem;
+  color: white;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #b58b2e;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #a4a3bc;
+  border-top: 1px solid #4e4d61;
+  padding-top: 15px;
+}
+/* ===== Hero Section ===== */
+.hero {
+  background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1373&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark overlay with fade-in */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(62, 60, 84, 0.5);
+  z-index: 1;
+  animation: fadeInOverlay 1s ease-in-out forwards;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  animation: slideUp 1s ease-out;
+}
+
+/* Headline */
+.hero-title {
+  font-size: 2.8rem;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 15px;
+  animation: slideUp 1s ease-out forwards;
+}
+
+/* Subtitle with delay */
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: #dcdcf1;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 0.8s;
+  animation-fill-mode: both;
+}
+
+/* Button with delay */
+.cssbuttons-io-button {
+  background: #a370f0;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+
+/* Button icon */
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInOverlay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
+/* ===== Reveal on Scroll Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ai-chat-live {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.ai-title {
+  font-size: 2.2rem;
+  color: #3e3c54;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 30px;
+}
+
+.chat-window {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+.chat-bubble {
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  margin: 10px 0;
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+#chat-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#chat-form button {
+  background-color: #a370f0;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.intro-message {
+  font-size: 1rem;
+  color: #5a586e;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px auto 20px;
+  max-width: 600px;
+}
+
+.suggestion {
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.suggestion:hover {
+  background-color: #b58b2e;
+}
+
+.chat-bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+/* Typing indicator bubble */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 18px;
+  margin: 10px 0;
+  max-width: 120px;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+  animation: bounce ease-in-out;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+.chat-bubble h1,
+.chat-bubble h2,
+.chat-bubble h3 {
+  margin: 8px 0;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.chat-bubble ul {
+  padding-left: 18px;
+  margin: 5px 0;
+}
+.chat-bubble {
+  word-break: break-word;
+}
+/* Chat bubbles */
+.chat-window {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.chat-bubble {
+  margin: 10px 0;
+  padding: 12px 18px;
+  border-radius: 14px;
+  max-width: 90%;
+  word-break: break-word;
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+/* Typing dots animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 18px;
+  margin: 10px 0;
+  max-width: 120px;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1s infinite ease-in-out;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.6; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Animation on message entry */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+/* Font & Base Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: #3e3c54;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #f6f3ec;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #342f52;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #b58b2e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a {
+  position: relative;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #e6d3a3;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #000;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+/* Hamburger Button (Desktop Hidden) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: #3e3c54;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+}
+
+/* Hamburger to Cross Animation */
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #3e3c54;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+    width: fit-content;
+    min-width: 150px;
+  }
+  
+  .nav-links.show {
+    display: flex;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+}
+/* Hide navbar with smooth transition */
+.hide-navbar {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.navbar {
+  transition: transform 0.3s ease;
+}
+/* === Slide Up Fade In Animation === */
+@keyframes slideUpFadeIn {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Apply animation to brand section */
+.brand {
+  animation: slideUpFadeIn 0.8s ease-out;
+}
+
+/* ===== Tools Section ===== */
+.tools-section {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.tools-title {
+  font-size: 2.4rem;
+  color: #3e3c54;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.tool-card h3 {
+  margin: 15px 0 10px;
+  color: #3e3c54;
+  font-size: 1.3rem;
+}
+
+.tool-card p {
+  font-size: 0.95rem;
+  color: #5a586e;
+  line-height: 1.4;
+}
+
+
+</style>
+<script>
+  const apiKey = "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";
+const chatWindow = document.getElementById("chat-window");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("user-input");
+const suggestions = document.querySelectorAll(".suggestion");
+
+form.addEventListener("submit", handleUserMessage);
+suggestions.forEach(btn => btn.addEventListener("click", () => {
+  input.value = btn.textContent;
+  handleUserMessage(new Event("submit"));
+}));
+
+async function handleUserMessage(e) {
+  e.preventDefault();
+  const userMessage = input.value.trim();
+  if (!userMessage) return;
+
+  appendMessage("user", userMessage);
+  input.value = "";
+
+  // Show typing indicator
+  const loadingId = `typing-${Date.now()}`;
+  const loader = document.createElement("div");
+  loader.classList.add("typing-indicator");
+  loader.id = loadingId;
+  loader.innerHTML = `<span></span><span></span><span></span>`;
+  chatWindow.appendChild(loader);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "mistralai/mistral-7b-instruct:free",
+        messages: [
+          {
+            role: "system",
+            content: "You're a helpful educational assistant. Format replies using bold text, lists, and headings when relevant. Respond to science, study and school-related questions clearly."
+          },
+          {
+            role: "user",
+            content: userMessage
+          }
+        ]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data?.choices?.[0]?.message?.content || "Sorry, Ai is Not Available this Time. Please Contact the Admin by Maling connect.studytogether@gmail.com";
+
+    // Remove typing indicator
+    const loadingEl = document.getElementById(loadingId);
+    if (loadingEl) chatWindow.removeChild(loadingEl);
+
+    appendFormattedMessage("ai", reply);
+
+  } catch (error) {
+    console.error("AI Error:", error);
+    const loadingEl = document.getElementById(loadingId);
+    if (loadingEl) chatWindow.removeChild(loadingEl);
+    appendMessage("ai", "❌ Something went wrong. Please inform us at connect.studytogether@gmail.com");
+  }
+}
+
+function appendMessage(role, text) {
+  const bubble = document.createElement("div");
+  const id = `msg-${Date.now()}`;
+  bubble.classList.add("chat-bubble", role);
+  bubble.id = id;
+  bubble.innerHTML = `<p>${role === "ai" ? "<strong>AI:</strong> " : ""}${text}</p>`;
+  chatWindow.appendChild(bubble);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return id;
+}
+
+function appendFormattedMessage(role, rawText) {
+  const bubble = document.createElement("div");
+  bubble.classList.add("chat-bubble", role);
+
+  let htmlText = rawText
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    // Headings
+    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    // Bullet points
+    .replace(/(?:^|\n)- (.*?)(?=\n|$)/g, "<li>$1</li>")
+    // Line breaks
+    .replace(/\n\n/g, "<br><br>")
+    .replace(/\n/g, "<br>")
+    // Math formatting fixes
+    .replace(/\\\\/g, "")
+    .replace(/\\\(/g, "(")
+    .replace(/\\\)/g, ")");
+
+  // Wrap list items in <ul>
+  if (htmlText.includes("<li>")) {
+    htmlText = htmlText.replace(/(<li>.*<\/li>)/gs, "<ul>$1</ul>");
+  }
+
+  bubble.innerHTML = `<p><strong>AI:</strong><br>${htmlText}</p>`;
+  chatWindow.appendChild(bubble);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+
+</script>
+
+<!--Scroll to Toop Ends-->
+<script>
+  const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navbar = document.querySelector('.navbar');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+  hamburger.classList.toggle('active');
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('show');
+    hamburger.classList.remove('active');
+  });
+});
+
+// Scroll direction detection
+let lastScrollTop = 0;
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (scrollTop > lastScrollTop) {
+    // Scrolling down
+    navbar.classList.add('hide-navbar');
+  } else {
+    // Scrolling up
+    navbar.classList.remove('hide-navbar');
+  }
+  
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Avoid negative values
+});
+</script>
+<script src="script.js"></script>
 </body>
 </html>
