@@ -1,0 +1,245 @@
+<!-- Profile Page Layout -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyTogether Profile</title>
+
+  <!-- FontAwesome + Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Uploadcare -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css">
+  <script type="module">
+    import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+    UC.defineComponents(UC);
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f9f9f9;
+    }
+
+    .sidebar {
+      background-color: #3e3c54;
+      color: white;
+      width: 60px;
+      transition: width 0.3s;
+      overflow: hidden;
+      position: fixed;
+      height: 100%;
+      top: 0; left: 0;
+      z-index: 1000;
+    }
+    .sidebar.expanded { width: 220px; }
+    .sidebar .hamburger {
+      text-align: right;
+      padding: 20px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .sidebar ul { list-style: none; padding: 0 20px; }
+    .sidebar li {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .sidebar li i { min-width: 20px; }
+    .sidebar span { opacity: 0; transition: opacity 0.3s; }
+    .sidebar.expanded span { opacity: 1; }
+
+    .top-navbar {
+      position: fixed;
+      left: 60px;
+      right: 0;
+      height: 60px;
+      background: #b58b2e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      transition: left 0.3s;
+      z-index: 999;
+    }
+    .sidebar.expanded ~ .top-navbar { left: 220px; }
+
+    .profile-container {
+      position: relative;
+      cursor: pointer;
+    }
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 10px;
+      display: none;
+      z-index: 1001;
+    }
+    .profile-menu.active { display: block; }
+    .profile-menu div {
+      padding: 8px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .profile-menu div:hover {
+      background: #f0f0f0;
+    }
+
+    .main-content {
+      margin-top: 60px;
+      margin-left: 60px;
+      padding: 20px;
+      transition: margin-left 0.3s;
+      width: 100%;
+    }
+    .sidebar.expanded ~ .main-content {
+      margin-left: 220px;
+    }
+
+    uc-file-uploader-regular {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1002;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="hamburger" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul>
+      <li><i class="fas fa-brain"></i> <span>AI Chats</span></li>
+      <li><i class="fas fa-history"></i> <span>Study History</span></li>
+      <li><i class="fas fa-cog"></i> <span>Settings</span></li>
+      <li><i class="fas fa-bullseye"></i> <span>Focus</span></li>
+      <li><i class="fas fa-upload"></i> <span>Upload</span></li>
+      <li><i class="fas fa-book-reader"></i> <span>My Study</span></li>
+      <li><i class="fab fa-youtube"></i> <span>YouTube Music</span></li>
+    </ul>
+  </div>
+
+  <!-- Top Navbar -->
+  <div class="top-navbar">
+    <div id="datetime"></div>
+    <div class="profile-container" onclick="toggleProfileMenu()">
+      <img id="profileImage" src="https://i.postimg.cc/wTCGZYpj/cropped-IMG-20250622-WA0016.jpg" class="profile-pic"/>
+      <div class="profile-menu" id="profileMenu">
+        <div onclick="triggerUploader()">Change Profile Picture</div>
+        <div onclick="viewPicture()">View Profile Picture</div>
+        <div onclick="removePicture()">Remove Profile Picture</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Welcome to Your StudyTogether Profile</h1>
+    <p>This is your dashboard. Start exploring your study tools.</p>
+  </div>
+<script type="module">
+  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+  UC.defineComponents(UC);
+</script>
+  <!-- Uploadcare Integration -->
+<uc-config
+  ctx-name="my-uploader"
+  pubkey="203e08aacf401f27092b"
+  source-list="local,camera,facebook,gdri"
+  multiple="false"
+  file-types="image/*"
+></uc-config>
+
+<uc-file-uploader-regular
+  ctx-name="my-uploader"
+  id="profileUploader"
+  style="display: none;"
+></uc-file-uploader-regular>
+
+<uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
+  <!-- Scripts -->
+  <script type="module">
+  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+  UC.defineComponents(UC);
+
+  // Toggle Sidebar
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('expanded');
+  }
+
+  // Update Date & Time
+  function updateDateTime() {
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+    const dateString = now.toLocaleDateString('en-GB', options);
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('datetime').textContent = `${dateString} | ${timeString}`;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+
+  // Toggle Profile Menu
+  window.toggleProfileMenu = function () {
+    document.getElementById('profileMenu').classList.toggle('active');
+  };
+
+  // View Picture
+  window.viewPicture = function () {
+    const src = document.getElementById('profileImage').src;
+    window.open(src, '_blank');
+  };
+
+  // Remove Picture
+  window.removePicture = function () {
+    const defaultPic = "https://i.postimg.cc/t4xSyS5C/default.png";
+    document.getElementById('profileImage').src = defaultPic;
+    localStorage.removeItem("profileImage");
+  };
+
+  // Open Uploadcare uploader
+  window.triggerUploader = function () {
+    const uploader = document.getElementById('profileUploader');
+    uploader.style.display = 'block';
+    uploader.click();
+  };
+
+  // On Upload Success
+  const ctxProvider = document.querySelector("uc-upload-ctx-provider");
+  ctxProvider.addEventListener("common-upload-success", (e) => {
+    const uploadedUrl = e.detail.successEntries[0].cdnUrl;
+    document.getElementById('profileImage').src = uploadedUrl;
+    localStorage.setItem("profileImage", uploadedUrl);
+    document.getElementById('profileUploader').style.display = 'none';
+  });
+
+  // Load from localStorage
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedPic = localStorage.getItem("profileImage");
+    if (savedPic) {
+      document.getElementById('profileImage').src = savedPic;
+    }
+  });
+</script>
+</body>
+</html>
