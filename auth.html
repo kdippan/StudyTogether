@@ -1,1 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css" integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="apple-touch-icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" />
+  <link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" type="image/x-icon" />
 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyTogether | Login</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    :root {
+      --brand-primary: #b58b2e;
+      --brand-dark: #3e3c54;
+      --brand-gray: #a4a3bc;
+      --brand-black: #000;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1581442616656-2d868c1f0128?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .login-container {
+      /* From https://css.glass */
+background: rgba(255, 255, 255, 0);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.4px);
+-webkit-backdrop-filter: blur(4.4px);
+border: 1px solid rgba(255, 255, 255, 0.4);
+      
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeInUp 0.9s ease;
+    }
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+    .login-container img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+.login-container img {
+  width: 100px;
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.login-container img:hover {
+  transform: scale(1.05);
+}
+    h2 {
+      font-family: "Michroma", sans-serif;
+      margin-bottom: 20px;
+      color: var(--brand-dark);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    .relative {
+      position: relative;
+    }
+
+    .relative button {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-login {
+      background-color: var(--brand-primary);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      width: 100%;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-login:hover {
+      background-color: var(--brand-dark);
+    }
+
+    .contact-info {
+      font-size: 0.9rem;
+      margin-top: 20px;
+      color: #555;
+    }
+
+    .contact-info strong {
+      color: var(--brand-dark);
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" alt="Study Toghether" />
+    <h2>Login to StudyTogether</h2>
+
+    <div class="error" id="errorMsg"></div>
+
+    <input type="text" id="username" placeholder="Enter Username" />
+
+    <div class="relative">
+      <input type="password" id="password" placeholder="Enter Password" />
+      <button type="button" onclick="togglePassword()">
+        <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 1l22 22" />
+          <path d="M17.94 17.94A10.05 10.05 0 0 1 12 19c-7 0-10-7-10-7a15.7 15.7 0 0 1 5.28-6.2" />
+          <path d="M9.88 9.88A3 3 0 0 0 14.12 14.12" />
+        </svg>
+      </button>
+    </div>
+
+    <button class="btn-login" onclick="login()">Login</button>
+
+    <div class="contact-info">
+  <p>Need access or forgot password? Contact us:</p>
+
+  <!-- Email Link with Lordicon -->
+  <a href="mailto:connect.studytogether@gmail.com" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin: 10px 0;">
+    <lord-icon
+      src="https://cdn.lordicon.com/diihvcfp.json"
+      trigger="hover"
+      colors="primary:#3e3c54"
+      style="width:30px;height:30px">
+    </lord-icon>
+    <strong style="color: #3e3c54;">connect.studytogether@gmail.com</strong>
+  </a>
+
+  <!-- WhatsApp Link with Lordicon -->
+  <a href="https://wa.me/917289937344" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;">
+    <i class="fab fa-whatsapp" style="text-decoration: none; color: --brand-primary; width:30px; height:30px"></i>
+    <strong style="color: #25D366;">WhatsApp</strong>
+  </a>
+</div>
+<style>
+.fab {
+  text-decoration: none;
+  color: var(--brand-primary);
+  width: 30px;
+  height: 30px;
+}
+</style>
+  <!-- Script -->
+  <script>
+    const adminUsers = {
+      Khushboo: { password: "Khushboo@123", profile: "/Students/Khushboo.html" },
+      Dippan: { password: "Dippan@123", profile: "/Students/Dippan.html" },
+      Raj: { password: "Raj@123", profile: "/Students/Raj.html" },
+      Sakshi: { password: "Sakshi@123", profile: "/Students/Sakshi.html" },
+      Roshni: { password: "Roshni@123", profile: "/Students/Roshni.html" },
+      Sahil: { password: "Sahil@123", profile: "/Students/Sahil.html" },
+      Ashish: { password: "Ashish@123", profile: "/Students/Ashish.html" },
+      Priyanshi: { password: "Priyanshi@123", profile: "/Students/Priyanshi.html" }
+    };
+
+    window.onload = () => {
+      const saved = localStorage.getItem("rememberedUser");
+      if (saved && adminUsers[saved]) {
+        window.location.href = adminUsers[saved].profile;
+      }
+    };
+
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("errorMsg");
+
+      if (adminUsers[username] && adminUsers[username].password === password) {
+        localStorage.setItem("rememberedUser", username);
+        localStorage.setItem("loggedInUser", username);
+        window.location.href = adminUsers[username].profile;
+      } else {
+        error.textContent = "Invalid username or password!";
+      }
+    }
+
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      const icon = document.getElementById("eyeIcon");
+
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.innerHTML = `<circle cx="12" cy="12" r="3"></circle>
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>`;
+      } else {
+        passwordField.type = "password";
+        icon.innerHTML = `<path d="M1 1l22 22" />
+                          <path d="M17.94 17.94A10.05 10.05 0 0 1 12 19c-7 0-10-7-10-7a15.7 15.7 0 0 1 5.28-6.2" />
+                          <path d="M9.88 9.88A3 3 0 0 0 14.12 14.12" />`;
+      }
+    }
+  </script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</body>
+</html>
