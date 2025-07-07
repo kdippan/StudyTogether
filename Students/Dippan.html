@@ -190,12 +190,17 @@
 
   // Update Date & Time
   function updateDateTime() {
-    const now = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-    const dateString = now.toLocaleDateString('en-GB', options);
-    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    document.getElementById('datetime').textContent = `${dateString} | ${timeString}`;
-  }
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+  const dateString = now.toLocaleDateString('en-GB', options);
+  const timeString = now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
+  
+  document.getElementById('datetime').textContent = `${dateString} | ${timeString}`;
+}
   setInterval(updateDateTime, 1000);
   updateDateTime();
 
@@ -239,6 +244,16 @@
     if (savedPic) {
       document.getElementById('profileImage').src = savedPic;
     }
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.getElementById("sidebar");
+    const hamburger = sidebar.querySelector(".hamburger");
+
+    hamburger.addEventListener("click", () => {
+      sidebar.classList.toggle("expanded");
+    });
   });
 </script>
 </body>
