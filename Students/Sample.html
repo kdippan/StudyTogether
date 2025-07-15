@@ -2,6 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=dashboard_customize" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/lib.min.js" integrity="sha512-tE7j0ptGYRtx0sHRAOkHNLAuIqVW7udzmjvNh1A6vIEnWUJnx7j7khwTEjemjDaauV+lHo0jEtdW8jn5weoxhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/colors.min.js" integrity="sha512-XCWTRVO7g0LlfM1NYVx8ugIQPaMWJAZEqOcu85qaFrrSVzc48gqN4bsWVWuTheX3iiVhb3g3tBN6E1XArqGYLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StudyTogether Profile</title>
@@ -20,7 +26,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Poppins', sans-serif;
+    
       display: flex;
       height: 100vh;
       background: #f9f9f9;
@@ -130,7 +136,7 @@
       <i class="fas fa-bars"></i>
     </div>
     <ul>
-      <li><i class="fas fa-brain"></i> <span>AI Chats</span></li>
+        <li><i class="fa-duotone fa-solid fa-sliders"></i> <span class="settings-btn">Customisation</span></li>
       <li><i class="fas fa-history"></i> <span>Study History</span></li>
       <li><i class="fas fa-cog"></i> <span>Settings</span></li>
       <li><i class="fas fa-bullseye"></i> <span>Focus</span></li>
@@ -154,10 +160,255 @@
   </div>
 
   <!-- Main Content -->
-  <div class="main-content">
-    <h1>Welcome to Your StudyTogether Profile</h1>
-    <p>This is your dashboard. Start exploring your study tools.</p>
+<div class="main-content">
+<!-- Background Setting with Modal Starts Here" !-->
+  <div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    <h2>🎨 Customize Dashboard</h2>
+
+    <label for="themeSelect">Choose Theme:</label><br>
+    <select id="themeSelect" onchange="updateThemePreview(this.value)">
+      <option value="">Select a background</option>
+      <option value="0">BMW (Dark)</option>
+      <option value="1">BMW (Autum)</option>
+      <option value="2">BMW Dark Asthetic</option>
+      <option value="3">Animie LoFi</option>
+      <option value="4">BMW Asthetic (Dark)</option>
+      <option value="5">LoFi Asthetic</option>
+      <option value="6">Asthetic Girl</option>
+        <option value="7">Forest Path</option>
+        <option value="8">Books</option>
+        <option value="9">Book Open</option>
+        <option value="10">Library</option>
+        <option value="11">Cat HD</option>
+        <option value="12">Autum Woods</option>
+        <option value="13">Books with Glasses</option>
+        <option value="14">City</option>
+        <option value="15">Old Books Library</option>
+        <option value="16">Tiger HD</option>
+        <option value="17">Woods</option>
+        <option value="18">Wood Brak Brown</option>
+    </select>
+
+    <div id="themePreview" class="theme-preview"></div>
+
+    <label for="fontSelect">Choose Font:</label><br>
+    <select id="fontSelect">
+      <option value="Poppins">Poppins</option>
+      <option value="Oswald">Oswald</option>
+      <option value="Playfair Display">Playfair Display</option>
+      <option value="Michroma">Michroma</option>
+      <option value="DM Sans">DM Sans</option>
+    </select><br>
+<label for="uploadcare">Upload Custom Background:</label><br>
+<input
+  type="hidden"
+  role="uploadcare-uploader"
+  data-public-key="203e08aacf401f27092b"
+  data-images-only="true"
+  data-crop="free"
+  id="uploadcare"
+/>
+<br />
+    <button onclick="applySettings()">Apply</button>
   </div>
+</div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+</style>
+  <style>
+    :root {
+      --bg-transition: all 0.7s ease-in-out;
+      --main-font: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--main-font);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: var(--bg-transition);
+      height: 100vh;
+      color: white auto;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #fff;
+    }
+
+    .modal-content {
+      background: #1e1e1e;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      animation: scaleUp 0.3s ease-in-out;
+    
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    select, button {
+      margin: 1rem 0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .theme-preview {
+      width: 100%;
+      height: 120px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      margin-top: 1rem;
+      border: 2px solid #fff;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 1.5rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<script>
+  // Uploadcare Widget
+  uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(info => {
+    const customUrl = info.cdnUrl;
+    document.body.style.backgroundImage = `url(${customUrl})`;
+    localStorage.setItem('dashboardBgCustom', customUrl);
+    localStorage.setItem('dashboardBg', 'custom');
+    themeSelect.value = ""; // clear theme selection
+    updateThemePreview(""); // clear preview
+  });
+
+  // Load custom background if selected
+  window.addEventListener("load", () => {
+    if (localStorage.getItem('dashboardBg') === 'custom') {
+      const customUrl = localStorage.getItem('dashboardBgCustom');
+      if (customUrl) {
+        document.body.style.backgroundImage = `url(${customUrl})`;
+      }
+    }
+  });
+</script>
+<script>
+  const bgImages = [
+    "https://i.postimg.cc/QMtY9c6n/a889088f6431738d58fb051ec21cd19c.jpg",
+    "https://i.postimg.cc/fRHBNJw7/69faad988c368ce422f76c5602147b4e.jpg",
+    "https://i.postimg.cc/T32CFrXY/6e5742369184ae9f560386dc7f6da493.jpg",
+    "https://i.postimg.cc/bYQgv6yw/cartoon-lifestyle-summertime-scene.jpg",
+    "https://i.postimg.cc/jd4MMMmF/d7c1b7f834bf4b6505b5778dc81866ab.jpg",
+    "https://i.postimg.cc/ZK4cvrnF/illustration-anime-city.jpg",
+    "https://i.postimg.cc/3RGBm129/lifestyle-scene-with-people-doing-regular-tasks-anime-style.jpg",
+    "https://i.postimg.cc/h4wZ5CDD/avenue-815297.jpg",
+    "https://i.postimg.cc/4dWqysRV/book-3964050.jpg",
+    "https://i.postimg.cc/9QykTGjW/book-6709160.jpg",
+    "https://i.postimg.cc/5t3kKb0T/books-2596809.jpg",
+    "https://i.postimg.cc/44FjTf5T/cat-8040862.jpg",
+    "https://i.postimg.cc/hPdZW9v9/fall-3186876.jpg",
+    "https://i.postimg.cc/cHxPd62d/glasses-1052023.jpg",
+    "https://i.postimg.cc/gjfML0SX/images.jpg",
+    "https://i.postimg.cc/Rhq8nyv8/old-books-436498.jpg",
+    "https://i.postimg.cc/ZKXk6bBL/tiger-1822535.jpg",
+    "https://i.postimg.cc/zB2257Tk/tree-3095703.jpg",
+    "https://i.postimg.cc/bwfCzsS4/wood-7633457.jpg",
+  ];
+
+  const modal = document.getElementById('settingsModal');
+  const themeSelect = document.getElementById('themeSelect');
+  const fontSelect = document.getElementById('fontSelect');
+  const themePreview = document.getElementById('themePreview');
+
+  // Open Modal
+  document.querySelector('.settings-btn').addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  // Close Modal
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  // Set Background
+  function setBackground(index) {
+    document.body.style.backgroundImage = `url(${bgImages[index]})`;
+    preloadImage(bgImages[index]);
+    localStorage.setItem('dashboardBg', index);
+  }
+
+  // Set Font
+  function setFont(fontName) {
+    const fontUrl = `https://fonts.googleapis.com/css2?family=${fontName.replace(" ", "+")}&display=swap`;
+    document.getElementById('font-link').href = fontUrl;
+    document.documentElement.style.setProperty('--main-font', `'${fontName}', sans-serif`);
+    localStorage.setItem('dashboardFont', fontName);
+  }
+
+  // Apply Settings
+  function applySettings() {
+    const bgIndex = themeSelect.value;
+    const selectedFont = fontSelect.value;
+
+    if (bgIndex !== "") setBackground(bgIndex);
+    setFont(selectedFont);
+    closeModal();
+  }
+
+  // Load Saved Settings
+  window.onload = () => {
+    const savedBg = localStorage.getItem('dashboardBg');
+    const savedFont = localStorage.getItem('dashboardFont');
+
+    if (savedBg !== null) setBackground(savedBg);
+    if (savedFont !== null) setFont(savedFont);
+
+    themeSelect.value = savedBg;
+    fontSelect.value = savedFont || "Poppins";
+    updateThemePreview(savedBg);
+  };
+
+  // Update preview box
+  function updateThemePreview(index) {
+    if (index !== "") {
+      themePreview.style.backgroundImage = `url(${bgImages[index]})`;
+    } else {
+      themePreview.style.backgroundImage = "none";
+    }
+  }
+
+  // Preload image
+  function preloadImage(url) {
+    const img = new Image();
+    img.src = url;
+  }
+</script>
+<!-- Background Setting with Modal Ends Here" !-->
+</div>
 <script type="module">
   import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
   UC.defineComponents(UC);
