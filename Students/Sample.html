@@ -2,6 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="apply-btn.css" type="text/css" media="all" />
+  <style>
+  
+.snowflake {
+  position: absolute;
+  user-select: none;
+  top: -10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  z-index: 10;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+  @keyframes fall {
+    to {
+      transform: translateY(100vh);
+    }
+  }
+  .snow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10; /* Set lower than top-navbar (z-index: 999) */
+}
+</style>
+<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=dashboard_customize" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/lib.min.js" integrity="sha512-tE7j0ptGYRtx0sHRAOkHNLAuIqVW7udzmjvNh1A6vIEnWUJnx7j7khwTEjemjDaauV+lHo0jEtdW8jn5weoxhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/colors.min.js" integrity="sha512-XCWTRVO7g0LlfM1NYVx8ugIQPaMWJAZEqOcu85qaFrrSVzc48gqN4bsWVWuTheX3iiVhb3g3tBN6E1XArqGYLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -189,6 +217,10 @@
         <option value="16">Tiger HD</option>
         <option value="17">Woods</option>
         <option value="18">Wood Brak Brown</option>
+        <option value="19">130237207_p0_master1200</option>
+<option value="20">112952843_p0_master1200</option>
+<option value="21">129418439_p0_master1200</option>
+<option value="22">129633683_p0_master1200</option>
     </select>
 
     <div id="themePreview" class="theme-preview"></div>
@@ -199,7 +231,18 @@
       <option value="Oswald">Oswald</option>
       <option value="Playfair Display">Playfair Display</option>
       <option value="Michroma">Michroma</option>
-      <option value="DM Sans">DM Sans</option>
+      <option value="Libertinus Mono">Libertinus Mono</option>
+      <option value="Cedarville Cursive">Cedarville Cursive</option>
+      <option value="My Soul">My Soul</option>
+      <option value="Caveat">Caveat</option>
+      <option value="Shadows Into Light">Shadows Into Light</option>
+      <option value="Indie Flower">Indie Flower</option>
+      <option value="Amatic SC">Amatic SC</option>
+      <option value="Handlee">Handlee</option>
+      <option value="Bad Script">Bad Script</option>
+      <option value="News Cycle">News Cycle</option>
+      <option value="Changa">Changa</option>
+      <option value="Kaushan Script">Kaushan Script</option>
     </select><br>
 <label for="uploadcare">Upload Custom Background:</label><br>
 <input
@@ -211,11 +254,232 @@
   id="uploadcare"
 />
 <br />
-    <button onclick="applySettings()">Apply</button>
+
+<!-- Snow Effect Toggle -->
+<div class="checkbox-wrapper mt-4">
+  <input type="checkbox" id="snowToggle" />
+  <label for="snowToggle" class="terms-label">
+    <svg class="checkbox-svg" viewBox="0 0 64 64">
+      <rect class="checkbox-box" width="64" height="64" rx="12" ry="12"></rect>
+      <polyline class="checkbox-tick" points="16,32 28,44 48,20" stroke-width="6" fill="none"></polyline>
+    </svg>
+    <span class="label-text">Enable Snowfall Animation</span>
+  </label>
+</div>
+<br /><br />
+<style type="text/css" media="all">
+  /* From Uiverse.io by Creatlydev */ 
+.button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--clr);
+  color: #fff;
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  padding-left: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.3s;
+}
+
+.button__icon-wrapper {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  color: var(--clr);
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.button:hover {
+  background-color: #000;
+}
+
+.button:hover .button__icon-wrapper {
+  color: #000;
+}
+
+.button__icon-svg--copy {
+  position: absolute;
+  transform: translate(-150%, 150%);
+}
+
+.button:hover .button__icon-svg:first-child {
+  transition: transform 0.3s ease-in-out;
+  transform: translate(150%, -150%);
+}
+
+.button:hover .button__icon-svg--copy {
+  transition: transform 0.3s ease-in-out 0.1s;
+  transform: translate(0);
+}
+
+</style>
+    <button onclick="applySettings()" class="button" style="--clr: #aa6f73"><span class="button__icon-wrapper">
+    <svg
+      viewBox="0 0 14 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="button__icon-svg"
+      width="10"
+    >
+      <path
+        d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+        fill="currentColor"
+      ></path>
+    </svg>
+
+    <svg
+      viewBox="0 0 14 15"
+      fill="none"
+      width="10"
+      xmlns="http://www.w3.org/2000/svg"
+      class="button__icon-svg button__icon-svg--copy"
+    >
+      <path
+        d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  </span>
+ Apply</button>
   </div>
 </div>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<script>
+  // Show setting modal by default
+  window.onload = () => {
+    modal.style.display = 'flex';
+
+    const savedBg = localStorage.getItem('dashboardBg');
+    const savedFont = localStorage.getItem('dashboardFont');
+    const customBg = localStorage.getItem('customBg');
+    let enableSnow = localStorage.getItem('enableSnow');
+
+    if (enableSnow === null) {
+      enableSnow = true;
+      localStorage.setItem('enableSnow', true);
+    } else {
+      enableSnow = (enableSnow === 'true');
+    }
+
+    if (savedBg !== null) setBackground(savedBg);
+    if (savedFont !== null) setFont(savedFont);
+    if (customBg) document.body.style.backgroundImage = `url(${customBg})`;
+    if (enableSnow) toggleSnow(true);
+
+    themeSelect.value = savedBg;
+    fontSelect.value = savedFont || "Poppins";
+    updateThemePreview(savedBg);
+    document.getElementById("snowToggle").checked = enableSnow;
+  };
+
+  // Snow toggle
+  document.getElementById('snowToggle').addEventListener('change', function () {
+    toggleSnow(this.checked);
+    localStorage.setItem('enableSnow', this.checked);
+  });
+
+  function toggleSnow(enable) {
+    let existing = document.getElementById("snow");
+    if (enable && !existing) {
+      const snowContainer = document.createElement("div");
+      snowContainer.id = "snow";
+      snowContainer.className = "snow";
+
+      for (let i = 0; i < 50; i++) {
+        const flake = document.createElement("div");
+        flake.className = "snowflake";
+        flake.style.left = `${Math.random() * 100}vw`;
+        flake.style.width = flake.style.height = `${Math.random() * 6 + 4}px`;
+        flake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        flake.style.opacity = Math.random();
+        snowContainer.appendChild(flake);
+      }
+
+      document.body.appendChild(snowContainer);
+    } else if (!enable && existing) {
+      existing.remove();
+    }
+  }
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+/* Snowfall animation */
+.snow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: white;
+  user-select: none;
+  font-size: 1em;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Uiverse checkbox style */
+.checkbox-wrapper input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-wrapper .terms-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-wrapper .terms-label .label-text {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.checkbox-wrapper .checkbox-svg {
+  width: 30px;
+  height: 30px;
+}
+
+.checkbox-wrapper .checkbox-box {
+  fill: rgba(207, 205, 205, 0.425);
+  stroke: #8c00ff;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 0.6s ease-in;
+}
+
+.checkbox-wrapper .checkbox-tick {
+  stroke: #8c00ff;
+  stroke-dasharray: 172;
+  stroke-dashoffset: 172;
+  transition: stroke-dashoffset 0.6s ease-in;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + .terms-label .checkbox-box,
+.checkbox-wrapper input[type="checkbox"]:checked + .terms-label .checkbox-tick {
+  stroke-dashoffset: 0;
+}
 </style>
   <style>
     :root {
@@ -244,11 +508,19 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      color: #fff;
+      color: #FFFFFF;
     }
 
     .modal-content {
-      background: #1e1e1e;
+      color: #000;
+      background: hsla(180, 13%, 58%, 1);
+background: linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
+
+background: -moz-linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
+
+background: -webkit-linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#87A3A3", endColorstr="#AC8D9A", GradientType=1);
       padding: 2rem;
       border-radius: 20px;
       text-align: center;
@@ -294,7 +566,6 @@
       cursor: pointer;
     }
   </style>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 <script>
   // Uploadcare Widget
   uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(info => {
@@ -337,6 +608,10 @@
     "https://i.postimg.cc/ZKXk6bBL/tiger-1822535.jpg",
     "https://i.postimg.cc/zB2257Tk/tree-3095703.jpg",
     "https://i.postimg.cc/bwfCzsS4/wood-7633457.jpg",
+    "https://i.postimg.cc/63wCmz8r/112952843-p0-master1200.webp",
+    "https://i.postimg.cc/Z5G8rJZD/129418439-p0-master1200.webp",
+    "https://i.postimg.cc/MG1y5gpZ/129633683-p0-master1200.webp",
+    "https://i.postimg.cc/BQwcnxz3/130237207-p0-master1200.webp",
   ];
 
   const modal = document.getElementById('settingsModal');
@@ -507,5 +782,6 @@
     });
   });
 </script>
+
 </body>
 </html>
