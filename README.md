@@ -28,3 +28,4 @@ Uses free AI models like:
 - `microsoft/mai-ds-r1:free`
 
 API Key used in the project: #OpenRouterAPI
+**https://studytogetherapp.netlify.app/**
