@@ -1,1149 +1,1415 @@
-<!-- Profile Page Layout -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="/files/img-uploads-handler.js" type="text/javascript" charset="utf-8"></script>
-  <link rel="stylesheet" href="/files/img-uploads-handler.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="apply-btn.css" type="text/css" media="all" />
-  <style>
-  
-.snowflake {
-  position: absolute;
-  user-select: none;
-  top: -10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  z-index: 10;
-  pointer-events: none;
-  animation: fall linear infinite;
-}
-  @keyframes fall {
-    to {
-      transform: translateY(100vh);
-    }
-  }
-  .snow {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 10; /* Set lower than top-navbar (z-index: 999) */
-}
-</style>
-<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
-<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=dashboard_customize" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/lib.min.js" integrity="sha512-tE7j0ptGYRtx0sHRAOkHNLAuIqVW7udzmjvNh1A6vIEnWUJnx7j7khwTEjemjDaauV+lHo0jEtdW8jn5weoxhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/colors.min.js" integrity="sha512-XCWTRVO7g0LlfM1NYVx8ugIQPaMWJAZEqOcu85qaFrrSVzc48gqN4bsWVWuTheX3iiVhb3g3tBN6E1XArqGYLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" />
+  <link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" type="image/x-icon" />
+
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.18/auth0-spa-js.production.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StudyTogether Profile</title>
-
-  <!-- FontAwesome + Google Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Uploadcare -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css">
-  <script type="module">
-    import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
-    UC.defineComponents(UC);
-  </script>
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-    
-      display: flex;
-      height: 100vh;
-      background: #f9f9f9;
-    }
-
-    .sidebar {
-      background-color: #3e3c54;
-      color: white;
-      width: 60px;
-      transition: width 0.3s;
-      overflow: hidden;
-      position: fixed;
-      height: 100%;
-      top: 0; left: 0;
-      z-index: 10001;
-    }
-    .sidebar.expanded { width: 220px; }
-    .sidebar .hamburger {
-      text-align: right;
-      padding: 20px;
-      cursor: pointer;
-      font-size: 20px;
-    }
-    .sidebar ul { list-style: none; padding: 0 20px; }
-    .sidebar li {
-      margin: 20px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .sidebar li i { min-width: 20px; }
-    .sidebar span { opacity: 0; transition: opacity 0.3s; }
-    .sidebar.expanded span { opacity: 1; }
-
-    .top-navbar {
-      position: fixed;
-      left: 60px;
-      right: 0;
-      height: 60px;
-      background: #b58b2e;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      transition: left 0.3s;
-      z-index: 999;
-    }
-    .sidebar.expanded ~ .top-navbar { left: 220px; }
-
-    .profile-container {
-      position: relative;
-      cursor: pointer;
-    }
-    .profile-pic {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .profile-menu {
-      position: absolute;
-      top: 50px;
-      right: 0;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 10px;
-      display: none;
-      z-index: 1001;
-    }
-    .profile-menu.active { display: block; }
-    .profile-menu div {
-      padding: 8px 12px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .profile-menu div:hover {
-      background: #f0f0f0;
-    }
-
-    .main-content {
-      margin-top: 60px;
-      margin-left: 60px;
-      padding: 20px;
-      transition: margin-left 0.3s;
-      width: 100%;
-    }
-    .sidebar.expanded ~ .main-content {
-      margin-left: 220px;
-    }
-
-    uc-file-uploader-regular {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1002;
-    }
-  </style>
+  <meta name="theme-color" content="#b98d2a">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyTogether - AI Study App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Using 'Poppins' and 'Merriweather' from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../navbar.css" />
+<link rel="stylesheet" href="../hero.css" />
+<link rel="stylesheet" href="../study-grid.css" />
+<link rel="stylesheet" href="../how-it-will-work.css" />
+<link rel="stylesheet" href="../ai-chat-demo.css" />
+<link rel="stylesheet" href="../faqs.css" />
+<link rel="stylesheet" href="../footer.css" />
 </head>
 <body>
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div class="hamburger" onclick="toggleSidebar()">
-      <i class="fas fa-bars"></i>
+  <header class="navbar">
+    <div class="brand">
+      <img src="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" alt="StudyTogether Logo" class="logo">
+      <span class="brand-name">StudyTogether</span>
     </div>
-    <ul>
-        <li class="settings-btn"><i class="fa-duotone fa-solid fa-sliders"></i> <span>Customisation</span></li>
-      <li id="filesLink"><i class="fa-solid fa-file"></i> <span>Files</span></li>
-      <li><i class="fas fa-cog"></i> <span>Settings</span></li>
-      <li><i class="fas fa-bullseye"></i> <span>Focus</span></li>
-      <li><i class="fas fa-upload"></i> <span>Upload</span></li>
-      <li><i class="fas fa-book-reader"></i> <span>My Study</span></li>
-      <li><i class="fab fa-youtube"></i> <span>YouTube Music</span></li>
-    </ul>
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">AI Demo</a>
+      <a href="#">Contact</a>
+      <a href="../auth.html">Login</a>
+    </nav>
+    <button class="hamburger" id="hamburger">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+  </header>
+  <script src="../navbar.js"></script>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Supercharge Your Study Journey</h1>
+    <p class="hero-subtitle">
+      Personalized tools, AI-powered answers, and ultimate focus—all in one place.
+    </p>
+    <a href"./auth.html" target="_self" hreflang="en">
+    <button class="cssbuttons-io-button">
+      Get started
+      <div class="icon">
+        <svg
+          height="24"
+          width="24"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </div>
+    </button>
+    </a>
   </div>
+</section>
+<!-- Study Tools Section -->
+<div class="tool-card reveal"> 
+<section class="tools-section">
+  <h2 class="tools-title">📚 Study Tools We Provide</h2>
+  <div class="tools-grid">
+    
+    <!-- Tool 1 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/lecprnjb.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>AI Doubt Solver</h3>
+      <p>Ask any question and get instant, accurate AI-powered answers.</p>
+    </div>
 
-  <!-- Top Navbar -->
-  <div class="top-navbar">
-    <div id="datetime"></div>
-    <div class="profile-container" onclick="toggleProfileMenu()">
-      <img id="profileImage" src="https://i.postimg.cc/wTCGZYpj/cropped-IMG-20250622-WA0016.jpg" class="profile-pic"/>
-      <div class="profile-menu" id="profileMenu">
-        <div onclick="triggerUploader()">Change Profile Picture</div>
-        <div onclick="viewPicture()">View Profile Picture</div>
-        <div onclick="removePicture()">Remove Profile Picture</div>
+    <!-- Tool 2 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/qghrdngw.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Focus Timer</h3>
+      <p>Boost productivity with a Pomodoro timer built for study sessions.</p>
+    </div>
+
+    <!-- Tool 3 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/wxnxiano.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Notes Manager</h3>
+      <p>Organize your notes, subjects, and topics all in one place.</p>
+    </div>
+
+    <!-- Tool 4 -->
+    <div class="tool-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/zxvuvcnc.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Daily Reminders</h3>
+      <p>Never miss a study goal with customizable daily reminders.</p>
+    </div>
+<!-- Tool 5 -->
+<div class="tool-card">
+  <lord-icon
+    src="https://cdn.lordicon.com/hiqmdfkt.json"
+    trigger="hover"
+    colors="primary:#b58b2e,secondary:#3e3c54"
+    style="width:60px;height:60px">
+  </lord-icon>
+  <h3>YouTube Focus Music</h3>
+  <p>Listen to curated background music from YouTube to stay in the zone.</p>
+</div>
+
+<!-- Tool 6 -->
+<div class="tool-card">
+  <lord-icon
+    src="https://cdn.lordicon.com/xhdhjyqy.json"
+    trigger="hover"
+    colors="primary:#b58b2e,secondary:#3e3c54"
+    style="width:60px;height:60px">
+  </lord-icon>
+  <h3>Study File Upload</h3>
+  <p>Upload and manage your study files safely with cloud sync support.</p>
+</div>
+  </div>
+</section>
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); // reveal once
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+</script>
+<!--Hero Section Ends Here-->
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <h2 class="how-title">🚀 How StudyTogether Works</h2>
+  <div class="steps-grid">
+
+    <!-- Step 1 -->
+    <div class="step-card">
+      <lord-icon
+  src="https://cdn.lordicon.com/nmguxqka.json"
+  trigger="hover"
+  colors="primary:#b58b2e,secondary:#3e3c54"
+  style="width:60px;height:60px">
+</lord-icon>
+      <h3>Choose Your Tools</h3>
+      <p>Pick the features you need: AI, timer, notes, music & more.</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/jnikqyih.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Ask AI Doubts</h3>
+      <p>Type any question & get clear, reliable AI-generated answers.</p>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/wxnxiano.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Use Focus Timer</h3>
+      <p>Stay productive using our Pomodoro timer with music integration.</p>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+      <lord-icon
+        src="https://cdn.lordicon.com/ggihhudh.json"
+        trigger="hover"
+        colors="primary:#b58b2e,secondary:#3e3c54"
+        style="width:60px;height:60px">
+      </lord-icon>
+      <h3>Organize & Achieve</h3>
+      <p>Keep track of your notes, reminders, and study files easily.</p>
+    </div>
+
+  </div>
+</section>
+ </div>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<!-- How It Will Work Section End -->
+<section class="ai-chat-live">
+  <h2 class="ai-title">💬 Ask Anything to StudyTogether AI</h2>
+  
+  <!-- Intro Message -->
+  <div class="intro-message">Start the conversation with our AI Assistant 👇</div>
+  
+  <!-- Suggestions -->
+  <div class="suggestions">
+    <span class="suggestion">What is Quantum Mechanics?</span>
+    <span class="suggestion">Study tips for long hours</span>
+    <span class="suggestion">Explain Gravity simply</span>
+    <span class="suggestion">How to stay focused?</span>
+    <span class="suggestion">What is Photosynthesis?</span>
+    <span class="suggestion">How to prepare for boards?</span>
+  </div>
+  
+  <!-- Chat Container -->
+  <div class="chat-window" id="chat-window"></div>
+  
+  <!-- Chat Input -->
+  <form id="chat-form">
+    <input type="text" id="user-input" placeholder="Type your question..." required />
+    <button type="submit">Ask</button>
+  </form>
+</section>
+<script src="../ai-demo.js"></script>
+
+<!--demo-->
+<!-- How It Works Section -->
+<section id="how-it-works" class="how-it-works-section">
+  <div class="container" data-aos="fade-up">
+    <h2 class="section-title">🚀 How <span>StudyTogether</span> Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>📝 Ask Anything</h3>
+        <p>Type your study-related question or select from smart suggestions.</p>
+      </div>
+      <div class="step">
+        <h3>🤖 AI Starts Typing</h3>
+        <p>Watch as our AI generates intelligent, structured responses.</p>
+      </div>
+      <div class="step">
+        <h3>📚 Get Smart Answers</h3>
+        <p>Formatted answers with headings, lists, and highlights appear beautifully.</p>
+      </div>
+      <div class="step">
+        <h3>🚀 Learn Smarter</h3>
+        <p>Use AI chat, tools, and resources to boost your learning journey.</p>
       </div>
     </div>
   </div>
-
-  <!-- Main Content -->
-<div class="main-content">
-<!-- Background Setting with Modal Starts Here" !-->
-  <div class="modal" id="settingsModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-    <h2>🎨 Customize Dashboard</h2>
-
-    <label for="themeSelect">Choose Theme:</label><br>
-    <select id="themeSelect" onchange="updateThemePreview(this.value)">
-      <option value="">Select a background</option>
-      <option value="0">BMW (Dark)</option>
-      <option value="1">BMW (Autum)</option>
-      <option value="2">BMW Dark Asthetic</option>
-      <option value="3">Animie LoFi</option>
-      <option value="4">BMW Asthetic (Dark)</option>
-      <option value="5">LoFi Asthetic</option>
-      <option value="6">Asthetic Girl</option>
-        <option value="7">Forest Path</option>
-        <option value="8">Books</option>
-        <option value="9">Book Open</option>
-        <option value="10">Library</option>
-        <option value="11">Cat HD</option>
-        <option value="12">Autum Woods</option>
-        <option value="13">Books with Glasses</option>
-        <option value="14">City</option>
-        <option value="15">Old Books Library</option>
-        <option value="16">Tiger HD</option>
-        <option value="17">Woods</option>
-        <option value="18">Wood Brak Brown</option>
-        <option value="19">130237207_p0_master1200</option>
-<option value="20">112952843_p0_master1200</option>
-<option value="21">129418439_p0_master1200</option>
-<option value="22">129633683_p0_master1200</option>
-    </select>
-
-    <div id="themePreview" class="theme-preview"></div>
-
-    <label for="fontSelect">Choose Font:</label><br>
-    <select id="fontSelect">
-      <option value="Poppins">Poppins</option>
-      <option value="Oswald">Oswald</option>
-      <option value="Playfair Display">Playfair Display</option>
-      <option value="Michroma">Michroma</option>
-      <option value="Libertinus Mono">Libertinus Mono</option>
-      <option value="Cedarville Cursive">Cedarville Cursive</option>
-      <option value="My Soul">My Soul</option>
-      <option value="Caveat">Caveat</option>
-      <option value="Shadows Into Light">Shadows Into Light</option>
-      <option value="Indie Flower">Indie Flower</option>
-      <option value="Amatic SC">Amatic SC</option>
-      <option value="Handlee">Handlee</option>
-      <option value="Bad Script">Bad Script</option>
-      <option value="News Cycle">News Cycle</option>
-      <option value="Changa">Changa</option>
-      <option value="Kaushan Script">Kaushan Script</option>
-    </select><br>
-<label for="uploadcare">Upload Custom Background:</label><br>
-<input
-  type="hidden"
-  role="uploadcare-uploader"
-  data-public-key="203e08aacf401f27092b"
-  data-images-only="true"
-  data-crop="free"
-  id="uploadcare"
-/>
-<br />
-
-<!-- Snow Effect Toggle -->
-<div class="checkbox-wrapper mt-4">
-  <input type="checkbox" id="snowToggle" />
-  <label for="snowToggle" class="terms-label">
-    <svg class="checkbox-svg" viewBox="0 0 64 64">
-      <rect class="checkbox-box" width="64" height="64" rx="12" ry="12"></rect>
-      <polyline class="checkbox-tick" points="16,32 28,44 48,20" stroke-width="6" fill="none"></polyline>
-    </svg>
-    <span class="label-text">Enable Snowfall Animation</span>
-  </label>
-</div>
-<br /><br />
-<style type="text/css" media="all">
-  /* From Uiverse.io by Creatlydev */ 
-.button {
-  line-height: 1;
-  text-decoration: none;
-  display: inline-flex;
-  border: none;
-  cursor: pointer;
-  align-items: center;
-  gap: 0.75rem;
-  background-color: var(--clr);
-  color: #fff;
-  border-radius: 10rem;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  padding-left: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: background-color 0.3s;
-}
-
-.button__icon-wrapper {
-  flex-shrink: 0;
-  width: 25px;
-  height: 25px;
-  position: relative;
-  color: var(--clr);
+</section>
+<style>
+  .how-it-works-section {
+  padding: 60px 20px;
   background-color: #fff;
-  border-radius: 50%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #3e3c54;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.section-title span {
+  color: #b58b2e;
+}
+
+.steps {
   display: grid;
-  place-items: center;
-  overflow: hidden;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.button:hover {
-  background-color: #000;
+.step {
+  background-color: #f8f6f0;
+  border: 2px solid #a4a3bc;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.button:hover .button__icon-wrapper {
-  color: #000;
+.step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
 }
 
-.button__icon-svg--copy {
-  position: absolute;
-  transform: translate(-150%, 150%);
+.step h3 {
+  font-size: 1.2rem;
+  color: #342f52;
+  margin-bottom: 10px;
 }
 
-.button:hover .button__icon-svg:first-child {
-  transition: transform 0.3s ease-in-out;
-  transform: translate(150%, -150%);
+.step p {
+  color: #3e3c54;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
-
-.button:hover .button__icon-svg--copy {
-  transition: transform 0.3s ease-in-out 0.1s;
-  transform: translate(0);
-}
-
 </style>
-    <button onclick="applySettings()" class="button" style="--clr: #aa6f73"><span class="button__icon-wrapper">
-    <svg
-      viewBox="0 0 14 15"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      class="button__icon-svg"
-      width="10"
-    >
-      <path
-        d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-        fill="currentColor"
-      ></path>
-    </svg>
+<!-- In <head> -->
 
-    <svg
-      viewBox="0 0 14 15"
-      fill="none"
-      width="10"
-      xmlns="http://www.w3.org/2000/svg"
-      class="button__icon-svg button__icon-svg--copy"
-    >
-      <path
-        d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-        fill="currentColor"
-      ></path>
-    </svg>
-  </span>
- Apply</button>
+<!-- Before </body> -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script><!--how to works ends-->
+<!-- FAQS Section -->
+<section id="faqs" class="faq-section">
+  <div class="container">
+    <h2 class="section-title">❓ Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <button class="faq-question">What is StudyTogether AI?</button>
+      <div class="faq-answer">
+        <p>StudyTogether AI is your personal educational assistant that answers questions, explains topics, and helps you focus using smart tools — all powered by AI.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is StudyTogether free to use?</button>
+      <div class="faq-answer">
+        <p>Yes! Basic features and study chat are free. We’re here to make learning accessible to every student.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">What type of questions can I ask?</button>
+      <div class="faq-answer">
+        <p>You can ask anything related to science, math, history, homework help, study hacks, and more!</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Is my data safe and private?</button>
+      <div class="faq-answer">
+        <p>Absolutely! We don’t store your chat history unless you choose to. Your study space is safe and secure.</p>
+      </div>
+    </div>
   </div>
-</div>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+</section>
 <script>
-  // Show setting modal by default
-  window.onload = () => {
-    modal.style.display = 'flex';
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const faq = button.nextElementSibling;
+    const isOpen = faq.style.maxHeight;
 
-    const savedBg = localStorage.getItem('dashboardBg');
-    const savedFont = localStorage.getItem('dashboardFont');
-    const customBg = localStorage.getItem('customBg');
-    let enableSnow = localStorage.getItem('enableSnow');
+    document.querySelectorAll(".faq-answer").forEach(f => f.style.maxHeight = null);
 
-    if (enableSnow === null) {
-      enableSnow = true;
-      localStorage.setItem('enableSnow', true);
+    if (!isOpen) {
+      faq.style.maxHeight = faq.scrollHeight + "px";
     } else {
-      enableSnow = (enableSnow === 'true');
-    }
-
-    if (savedBg !== null) setBackground(savedBg);
-    if (savedFont !== null) setFont(savedFont);
-    if (customBg) document.body.style.backgroundImage = `url(${customBg})`;
-    if (enableSnow) toggleSnow(true);
-
-    themeSelect.value = savedBg;
-    fontSelect.value = savedFont || "Poppins";
-    updateThemePreview(savedBg);
-    document.getElementById("snowToggle").checked = enableSnow;
-  };
-
-  // Snow toggle
-  document.getElementById('snowToggle').addEventListener('change', function () {
-    toggleSnow(this.checked);
-    localStorage.setItem('enableSnow', this.checked);
-  });
-
-  function toggleSnow(enable) {
-    let existing = document.getElementById("snow");
-    if (enable && !existing) {
-      const snowContainer = document.createElement("div");
-      snowContainer.id = "snow";
-      snowContainer.className = "snow";
-
-      for (let i = 0; i < 50; i++) {
-        const flake = document.createElement("div");
-        flake.className = "snowflake";
-        flake.style.left = `${Math.random() * 100}vw`;
-        flake.style.width = flake.style.height = `${Math.random() * 6 + 4}px`;
-        flake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        flake.style.opacity = Math.random();
-        snowContainer.appendChild(flake);
-      }
-
-      document.body.appendChild(snowContainer);
-    } else if (!enable && existing) {
-      existing.remove();
-    }
-  }
-</script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
-/* Snowfall animation */
-.snow {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.snowflake {
-  position: absolute;
-  top: -10px;
-  color: white;
-  user-select: none;
-  font-size: 1em;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
-  }
-}
-
-/* Uiverse checkbox style */
-.checkbox-wrapper input[type="checkbox"] {
-  display: none;
-}
-
-.checkbox-wrapper .terms-label {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.checkbox-wrapper .terms-label .label-text {
-  margin-left: 10px;
-  font-size: 14px;
-}
-
-.checkbox-wrapper .checkbox-svg {
-  width: 30px;
-  height: 30px;
-}
-
-.checkbox-wrapper .checkbox-box {
-  fill: rgba(207, 205, 205, 0.425);
-  stroke: #8c00ff;
-  stroke-dasharray: 800;
-  stroke-dashoffset: 800;
-  transition: stroke-dashoffset 0.6s ease-in;
-}
-
-.checkbox-wrapper .checkbox-tick {
-  stroke: #8c00ff;
-  stroke-dasharray: 172;
-  stroke-dashoffset: 172;
-  transition: stroke-dashoffset 0.6s ease-in;
-}
-
-.checkbox-wrapper input[type="checkbox"]:checked + .terms-label .checkbox-box,
-.checkbox-wrapper input[type="checkbox"]:checked + .terms-label .checkbox-tick {
-  stroke-dashoffset: 0;
-}
-</style>
-  <style>
-    :root {
-      --bg-transition: all 0.7s ease-in-out;
-      --main-font: 'Poppins', sans-serif;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: var(--main-font);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: var(--bg-transition);
-      height: 100vh;
-      color: white auto;
-    }
-
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      color: #FFFFFF;
-    }
-
-    .modal-content {
-      color: #000;
-      background: hsla(180, 13%, 58%, 1);
-background: linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
-
-background: -moz-linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
-
-background: -webkit-linear-gradient(90deg, hsla(180, 13%, 58%, 1) 0%, hsla(335, 16%, 61%, 1) 100%);
-
-filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#87A3A3", endColorstr="#AC8D9A", GradientType=1);
-      padding: 2rem;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      animation: scaleUp 0.3s ease-in-out;
-    
-    }
-
-    @keyframes scaleUp {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    select, button {
-      margin: 1rem 0;
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1rem;
-      font-family: inherit;
-      cursor: pointer;
-    }
-
-    .theme-preview {
-      width: 100%;
-      height: 120px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 12px;
-      margin-top: 1rem;
-      border: 2px solid #fff;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      font-size: 1.5rem;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
-<script>
-  // Uploadcare Widget
-  uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete(info => {
-    const customUrl = info.cdnUrl;
-    document.body.style.backgroundImage = `url(${customUrl})`;
-    localStorage.setItem('dashboardBgCustom', customUrl);
-    localStorage.setItem('dashboardBg', 'custom');
-    themeSelect.value = ""; // clear theme selection
-    updateThemePreview(""); // clear preview
-  });
-
-  // Load custom background if selected
-  window.addEventListener("load", () => {
-    if (localStorage.getItem('dashboardBg') === 'custom') {
-      const customUrl = localStorage.getItem('dashboardBgCustom');
-      if (customUrl) {
-        document.body.style.backgroundImage = `url(${customUrl})`;
-      }
-    }
-  });
-</script>
-<script>
-  const bgImages = [
-    "https://i.postimg.cc/QMtY9c6n/a889088f6431738d58fb051ec21cd19c.jpg",
-    "https://i.postimg.cc/fRHBNJw7/69faad988c368ce422f76c5602147b4e.jpg",
-    "https://i.postimg.cc/T32CFrXY/6e5742369184ae9f560386dc7f6da493.jpg",
-    "https://i.postimg.cc/bYQgv6yw/cartoon-lifestyle-summertime-scene.jpg",
-    "https://i.postimg.cc/jd4MMMmF/d7c1b7f834bf4b6505b5778dc81866ab.jpg",
-    "https://i.postimg.cc/ZK4cvrnF/illustration-anime-city.jpg",
-    "https://i.postimg.cc/3RGBm129/lifestyle-scene-with-people-doing-regular-tasks-anime-style.jpg",
-    "https://i.postimg.cc/h4wZ5CDD/avenue-815297.jpg",
-    "https://i.postimg.cc/4dWqysRV/book-3964050.jpg",
-    "https://i.postimg.cc/9QykTGjW/book-6709160.jpg",
-    "https://i.postimg.cc/5t3kKb0T/books-2596809.jpg",
-    "https://i.postimg.cc/44FjTf5T/cat-8040862.jpg",
-    "https://i.postimg.cc/hPdZW9v9/fall-3186876.jpg",
-    "https://i.postimg.cc/cHxPd62d/glasses-1052023.jpg",
-    "https://i.postimg.cc/gjfML0SX/images.jpg",
-    "https://i.postimg.cc/Rhq8nyv8/old-books-436498.jpg",
-    "https://i.postimg.cc/ZKXk6bBL/tiger-1822535.jpg",
-    "https://i.postimg.cc/zB2257Tk/tree-3095703.jpg",
-    "https://i.postimg.cc/bwfCzsS4/wood-7633457.jpg",
-    "https://i.postimg.cc/63wCmz8r/112952843-p0-master1200.webp",
-    "https://i.postimg.cc/Z5G8rJZD/129418439-p0-master1200.webp",
-    "https://i.postimg.cc/MG1y5gpZ/129633683-p0-master1200.webp",
-    "https://i.postimg.cc/BQwcnxz3/130237207-p0-master1200.webp",
-  ];
-
-  const modal = document.getElementById('settingsModal');
-  const themeSelect = document.getElementById('themeSelect');
-  const fontSelect = document.getElementById('fontSelect');
-  const themePreview = document.getElementById('themePreview');
-
-  // Open Modal
-  document.querySelector('.settings-btn').addEventListener('click', () => {
-    modal.style.display = 'flex';
-  });
-
-  // Close Modal
-  function closeModal() {
-    modal.style.display = 'none';
-  }
-
-  // Set Background
-  function setBackground(index) {
-    document.body.style.backgroundImage = `url(${bgImages[index]})`;
-    preloadImage(bgImages[index]);
-    localStorage.setItem('dashboardBg', index);
-  }
-
-  // Set Font
-  function setFont(fontName) {
-    const fontUrl = `https://fonts.googleapis.com/css2?family=${fontName.replace(" ", "+")}&display=swap`;
-    document.getElementById('font-link').href = fontUrl;
-    document.documentElement.style.setProperty('--main-font', `'${fontName}', sans-serif`);
-    localStorage.setItem('dashboardFont', fontName);
-  }
-
-  // Apply Settings
-  function applySettings() {
-    const bgIndex = themeSelect.value;
-    const selectedFont = fontSelect.value;
-
-    if (bgIndex !== "") setBackground(bgIndex);
-    setFont(selectedFont);
-    closeModal();
-  }
-
-  // Load Saved Settings
-  window.onload = () => {
-    const savedBg = localStorage.getItem('dashboardBg');
-    const savedFont = localStorage.getItem('dashboardFont');
-
-    if (savedBg !== null) setBackground(savedBg);
-    if (savedFont !== null) setFont(savedFont);
-
-    themeSelect.value = savedBg;
-    fontSelect.value = savedFont || "Poppins";
-    updateThemePreview(savedBg);
-  };
-
-  // Update preview box
-  function updateThemePreview(index) {
-    if (index !== "") {
-      themePreview.style.backgroundImage = `url(${bgImages[index]})`;
-    } else {
-      themePreview.style.backgroundImage = "none";
-    }
-  }
-
-  // Preload image
-  function preloadImage(url) {
-    const img = new Image();
-    img.src = url;
-  }
-</script>
-<!-- Background Setting with Modal Ends Here" !-->
-</div>
-<script type="module">
-  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
-  UC.defineComponents(UC);
-</script>
-  <!-- Uploadcare Integration -->
-<uc-config
-  ctx-name="my-uploader"
-  pubkey="203e08aacf401f27092b"
-  source-list="local,camera,facebook,gdri"
-  multiple="false"
-  file-types="image/*"
-></uc-config>
-
-<uc-file-uploader-regular
-  ctx-name="my-uploader"
-  id="profileUploader"
-  style="display: none;"
-></uc-file-uploader-regular>
-
-<uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
-  <!-- Scripts -->
-  <script type="module">
-  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
-  UC.defineComponents(UC);
-
-  // Toggle Sidebar
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('expanded');
-  }
-
-  // Update Date & Time
-  function updateDateTime() {
-  const now = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-  const dateString = now.toLocaleDateString('en-GB', options);
-  const timeString = now.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
-  });
-  
-  document.getElementById('datetime').textContent = `${dateString} | ${timeString}`;
-}
-  setInterval(updateDateTime, 1000);
-  updateDateTime();
-
-  // Toggle Profile Menu
-  window.toggleProfileMenu = function () {
-    document.getElementById('profileMenu').classList.toggle('active');
-  };
-
-  // View Picture
-  window.viewPicture = function () {
-    const src = document.getElementById('profileImage').src;
-    window.open(src, '_blank');
-  };
-
-  // Remove Picture
-  window.removePicture = function () {
-    const defaultPic = "https://i.postimg.cc/t4xSyS5C/default.png";
-    document.getElementById('profileImage').src = defaultPic;
-    localStorage.removeItem("profileImage");
-  };
-
-  // Open Uploadcare uploader
-  window.triggerUploader = function () {
-    const uploader = document.getElementById('profileUploader');
-    uploader.style.display = 'block';
-    uploader.click();
-  };
-
-  // On Upload Success
-  const ctxProvider = document.querySelector("uc-upload-ctx-provider");
-  ctxProvider.addEventListener("common-upload-success", (e) => {
-    const uploadedUrl = e.detail.successEntries[0].cdnUrl;
-    document.getElementById('profileImage').src = uploadedUrl;
-    localStorage.setItem("profileImage", uploadedUrl);
-    document.getElementById('profileUploader').style.display = 'none';
-  });
-
-  // Load from localStorage
-  window.addEventListener('DOMContentLoaded', () => {
-    const savedPic = localStorage.getItem("profileImage");
-    if (savedPic) {
-      document.getElementById('profileImage').src = savedPic;
-    }
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sidebar = document.getElementById("sidebar");
-    const hamburger = sidebar.querySelector(".hamburger");
-
-    hamburger.addEventListener("click", () => {
-      sidebar.classList.toggle("expanded");
-    });
-  });
-</script>
-<!--Main Content-->
-<div class="main-content">
-  <div class="fixed top-20 left-1/2 transform -translate-x-1/2 w-[90%] max-w-xl bg-white/10 backdrop-blur-lg p-6 rounded-3xl shadow-2xl text-center text-white space-y-4 transition-all duration-500 main-content">
-  <h1 id="greeting" class="text-3xl font-bold drop-shadow-lg"></h1>
-  <p class="text-lg">You have <span id="taskCount">0</span> tasks left today!</p>
-
-  <div class="flex items-center justify-center gap-2 mt-4">
-    <input
-      type="text"
-      id="taskInput"
-      placeholder="Add a new task..."
-      class="w-full px-4 py-2 rounded-xl text-black outline-none"
-    />
-    <button
-      onclick="addTask()"
-      class="bg-[#b58b2e] hover:bg-yellow-600 px-4 py-2 rounded-xl text-white transition"
-    >
-      Add
-    </button>
-  </div>
-
-  <ul id="taskList" class="mt-4 text-left max-h-60 overflow-y-auto space-y-2"></ul>
-  
-</div>
-<br />
-<br />
-</div>
-</div>
-<script>
-  // Greeting based on time
-  const greetingEl = document.getElementById("greeting");
-  const hour = new Date().getHours();
-  let greet = "Hello";
-
-  if (hour < 12) greet = "Good Morning Dippan,";
-  else if (hour < 18) greet = "Good Afternoon Dippan,";
-  else greet = "Good Evening Dippan,";
-
-  greetingEl.textContent = greet;
-
-  // Task logic
-  const taskInput = document.getElementById("taskInput");
-  const taskList = document.getElementById("taskList");
-  const taskCount = document.getElementById("taskCount");
-
-  let tasks = JSON.parse(localStorage.getItem("dashboardTasks")) || [];
-
-  const renderTasks = () => {
-    taskList.innerHTML = "";
-    tasks.forEach((task, index) => {
-      const li = document.createElement("li");
-      li.className =
-        "flex justify-between items-center bg-white/20 px-4 py-2 rounded-xl";
-      li.innerHTML = `
-        <span>${task}</span>
-        <button onclick="removeTask(${index})" class="text-red-400 hover:text-red-600">✖</button>
-      `;
-      taskList.appendChild(li);
-    });
-    taskCount.textContent = tasks.length;
-    localStorage.setItem("dashboardTasks", JSON.stringify(tasks));
-  };
-
-  const addTask = () => {
-    const task = taskInput.value.trim();
-    if (task !== "") {
-      tasks.push(task);
-      taskInput.value = "";
-      renderTasks();
-    }
-  };
-
-  const removeTask = (index) => {
-    tasks.splice(index, 1);
-    renderTasks();
-  };
-
-  renderTasks();
-</script>
-<style>
-  .footer-bar {
-            position: fixed;
-            bottom: 0;
-            left: 60px; /* Shift footer to the right of navbar */
-            width: calc(100% - 60px); /* Adjust width to exclude navbar */
-            /* From https://css.glass */
-background: rgba(192, 122, 31, 0.12);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(2.2px);
--webkit-backdrop-filter: blur(2.2px);
-border: 1px solid rgba(192, 122, 31, 0.99);
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Ensure footer is above main content but below navbar */
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVQYV2NkYGD4z8DAwMgABXgABQv8C1YAAAAABJRU5ErkJggg==');
-        }
-
-        .icon {
-            background-color: #6c5ce7;
-color: white;
-border: none;
-padding: 12px 24px;
-border-radius: 8px;
-font-size: 16px;
-cursor: pointer;
-box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
-transition: all 0.3s ease;
-align-items: center;
-        }
-.icon:hover {
-            background-color: #5649c0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(108, 92, 231, 0.3);
-        }
-        
-        .icon i {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2000; /* Above navbar and footer */
-            
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 70%;
-            max-width: 500px;
-            position: relative;
-        background-color: #606060;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-        }
-        .modal-heading {
-          font-weight: bolder;
-        }
-        .image-iframe {
-          width: 100%;
-          height: 50vh;
-          padding-top: 3px;
-          display: block;
-          overflow-x: auto;
-          overflow-y: auto;
-          margin: 0;
-        }
-</style>
-<script>
-  iframeResize({
-    license: 'GPLv3',
-    log: 'collapsed',
-    waitForLoad: true,
-  }, '#myIframe')
-</script>
-  <!-- Footer -->
-    <footer class="footer-bar">
-        <div data-modal="imageModal"class="icon"><i class="fas fa-image"></i></div>
-        <div  class="icon" data-modal="cloudModal"><i class="fas fa-cloud"></i></div>
-        <div class="icon" data-modal="cameraModal"><i class="fas fa-camera"></i></div>
-        <div class="icon" data-modal="clockModal"><i class="fas fa-clock"></i></div>
-        <div class="icon" data-modal="musicModal"><i class="fas fa-music"></i></div>
-        <div class="icon" data-modal="menuModal"><i class="fas fa-bars"></i></div>
-        <div class="icon" data-modal="chartModal"><i class="fas fa-chart-bar"></i></div>
-        <div class="icon" data-modal="bookModal"><i class="fas fa-book"></i></div>
-        <div class="icon" data-modal="helpModal"><i class="fas fa-question"></i></div>
-    </footer>
-
-    <!-- Modals -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2 class="modal-heading">Image Uploader</h2>
-            <br />
-            <p>
-              <iframe class="image-iframe" src="/imp/upload-handler.html" height="100%" frameborder="0" allowfullscreen scrolling="none" name="Image Uploder" title="Upload Your Images Here !" id="myIframe" ></iframe>
-            </p>
-        </div>
-    </div>
-    <div id="cloudModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Cloud Storage</h2>
-            <p>Content for cloud storage goes here.</p>
-        </div>
-    </div>
-
-    <div id="cameraModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Camera</h2>
-            <p>Content for camera goes here.</p>
-        </div>
-    </div>
-
-    <div id="clockModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Clock</h2>
-            <p>Content for clock goes here.</p>
-        </div>
-    </div>
-
-    <div id="musicModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Music</h2>
-            <p>Content for music goes here.</p>
-        </div>
-    </div>
-
-    <div id="menuModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Menu</h2>
-            <p>Content for menu goes here.</p>
-        </div>
-    </div>
-
-    <div id="chartModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Charts</h2>
-            <p>Content for charts goes here.</p>
-        </div>
-    </div>
-
-    <div id="bookModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Book</h2>
-            <p>Content for book goes here.</p>
-        </div>
-    </div>
-
-    <div id="helpModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Help</h2>
-            <p>Content for help goes here.</p>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const icons = document.querySelectorAll('.icon');
-            const modals = document.querySelectorAll('.modal');
-            const closeButtons = document.querySelectorAll('.close');
-
-            icons.forEach(icon => {
-                icon.addEventListener('click', function () {
-                    const modalId = this.getAttribute('data-modal');
-                    const modal = document.getElementById(modalId);
-                    if (modal) {
-                        modal.style.display = 'block';
-                    }
-                });
-            });
-
-            closeButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const modal = this.closest('.modal');
-                    if (modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-            });
-
-            window.addEventListener('click', function (event) {
-                modals.forEach(modal => {
-                    if (event.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.4.7"></script>
-    
-<!-- Modal for preview.html -->
-<div id="previewModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-xl shadow-xl w-full max-w-5xl h-[80vh] relative overflow-hidden">
-    <!-- Close Button -->
-    <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl font-bold">&times;</button>
-    
-    <!-- Iframe Preview -->
-    <iframe id="previewIframe" class="w-full h-full border-none" loading="lazy"></iframe>
-  </div>
-</div>
-<style type="text/css" media="all">
-  /* Responsive iframe modal */
-#previewModal iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Hide scrollbar for modal content */
-#previewModal::-webkit-scrollbar {
-  display: none;
-}
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const filesLink = document.getElementById("filesLink");
-  const previewModal = document.getElementById("previewModal");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const previewIframe = document.getElementById("previewIframe");
-
-  // Show modal with iframe when "Files" is clicked
-  filesLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    previewIframe.src = "/imp/preview.html";
-    previewModal.classList.remove("hidden");
-  });
-
-  // Close modal
-  closeModalBtn.addEventListener("click", () => {
-    previewModal.classList.add("hidden");
-    previewIframe.src = ""; // Clear src to stop preview
-  });
-
-  // Close modal when clicking outside iframe box
-  previewModal.addEventListener("click", (e) => {
-    if (e.target === previewModal) {
-      previewModal.classList.add("hidden");
-      previewIframe.src = "";
+      faq.style.maxHeight = null;
     }
   });
 });
 </script>
+
+<!--FAQS Ends-->
+<!--Footer Starts-->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <img src="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png" alt="StudyTogether Logo" class="footer-logo" />
+      <h3 class="footer-title">StudyTogether</h3>
+      <p>Your AI-powered study partner</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#faqs">FAQs</a></li>
+        <li><a href="#chat">AI Chat</a></li>
+        <li><a href="#tools">Study Tools</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: <a href="mailto:studytogether@app.com">studytogether@app.com</a></p>
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 StudyTogether. All rights reserved.</p>
+  </div>
+</footer>
+<!-- Footer Ends-->
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" title="Back to Top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+<style>
+  #scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  z-index: 100;
+  background-color: #b58b2e;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #3e3c54;
+  transform: scale(1.1);
+}
+</style>
+<script>
+  const scrollBtn = document.getElementById("scrollToTopBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollBtn.style.display = "block";
+    } else {
+      scrollBtn.style.display = "none";
+    }
+  });
+
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+<style>
+  /* ===== AI Chat Demo Section ===== */
+.ai-chat-demo {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.ai-title {
+  font-size: 2.2rem;
+  color: #3e3c54;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 40px;
+}
+
+.chat-window {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.chat-bubble {
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  margin: 10px 0;
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.4;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Animate chat bubbles */
+.chat-bubble {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faq-section {
+  background-color: #f9f9f9;
+  padding: 60px 20px;
+}
+
+.faq-section .section-title {
+  font-size: 2.5rem;
+  color: #3e3c54;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border: 2px solid #a4a3bc;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.faq-question {
+  background-color: #b58b2e;
+  color: white;
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.faq-answer {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+  margin: 15px 0;
+  color: #3e3c54;
+  line-height: 1.6;
+}
+
+.footer {
+  background-color: #3e3c54;
+  color: #fff;
+  padding: 50px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.footer-title {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #b58b2e;
+}
+
+.footer-brand p {
+  font-size: 0.95rem;
+  color: #d1d1d1;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.footer-links li {
+  margin: 6px 0;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #b58b2e;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  color: #b58b2e;
+}
+
+.social-icons a {
+  font-size: 1.2rem;
+  color: white;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #b58b2e;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #a4a3bc;
+  border-top: 1px solid #4e4d61;
+  padding-top: 15px;
+}
+/* ===== Hero Section ===== */
+.hero {
+  background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1373&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark overlay with fade-in */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(62, 60, 84, 0.5);
+  z-index: 1;
+  animation: fadeInOverlay 1s ease-in-out forwards;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  animation: slideUp 1s ease-out;
+}
+
+/* Headline */
+.hero-title {
+  font-size: 2.8rem;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 15px;
+  animation: slideUp 1s ease-out forwards;
+}
+
+/* Subtitle with delay */
+.hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: #dcdcf1;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 0.8s;
+  animation-fill-mode: both;
+}
+
+/* Button with delay */
+.cssbuttons-io-button {
+  background: #a370f0;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 1.3s;
+}
+
+/* Button icon */
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInOverlay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
+/* ===== Reveal on Scroll Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ai-chat-live {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.ai-title {
+  font-size: 2.2rem;
+  color: #3e3c54;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 30px;
+}
+
+.chat-window {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+.chat-bubble {
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  margin: 10px 0;
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+#chat-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#chat-form button {
+  background-color: #a370f0;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.intro-message {
+  font-size: 1rem;
+  color: #5a586e;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px auto 20px;
+  max-width: 600px;
+}
+
+.suggestion {
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.suggestion:hover {
+  background-color: #b58b2e;
+}
+
+.chat-bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+/* Typing indicator bubble */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 18px;
+  margin: 10px 0;
+  max-width: 120px;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+  animation: bounce ease-in-out;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+.chat-bubble h1,
+.chat-bubble h2,
+.chat-bubble h3 {
+  margin: 8px 0;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.chat-bubble ul {
+  padding-left: 18px;
+  margin: 5px 0;
+}
+.chat-bubble {
+  word-break: break-word;
+}
+/* Chat bubbles */
+.chat-window {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.chat-bubble {
+  margin: 10px 0;
+  padding: 12px 18px;
+  border-radius: 14px;
+  max-width: 90%;
+  word-break: break-word;
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+.chat-bubble.user {
+  background-color: #b58b2e;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.ai {
+  background-color: #3e3c54;
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+/* Typing dots animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #3e3c54;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 18px;
+  margin: 10px 0;
+  max-width: 120px;
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1s infinite ease-in-out;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.6; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Animation on message entry */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+/* Font & Base Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: #3e3c54;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #f6f3ec;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #342f52;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #b58b2e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a {
+  position: relative;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #e6d3a3;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #000;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+/* Hamburger Button (Desktop Hidden) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: #3e3c54;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+}
+
+/* Hamburger to Cross Animation */
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #3e3c54;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+    width: fit-content;
+    min-width: 150px;
+  }
+  
+  .nav-links.show {
+    display: flex;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+}
+/* Hide navbar with smooth transition */
+.hide-navbar {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.navbar {
+  transition: transform 0.3s ease;
+}
+/* === Slide Up Fade In Animation === */
+@keyframes slideUpFadeIn {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Apply animation to brand section */
+.brand {
+  animation: slideUpFadeIn 0.8s ease-out;
+}
+
+/* ===== Tools Section ===== */
+.tools-section {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.tools-title {
+  font-size: 2.4rem;
+  color: #3e3c54;
+  margin-bottom: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.tool-card h3 {
+  margin: 15px 0 10px;
+  color: #3e3c54;
+  font-size: 1.3rem;
+}
+
+.tool-card p {
+  font-size: 0.95rem;
+  color: #5a586e;
+  line-height: 1.4;
+}
+
+
+</style>
+<script>
+  const apiKey = "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";
+const chatWindow = document.getElementById("chat-window");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("user-input");
+const suggestions = document.querySelectorAll(".suggestion");
+
+form.addEventListener("submit", handleUserMessage);
+suggestions.forEach(btn => btn.addEventListener("click", () => {
+  input.value = btn.textContent;
+  handleUserMessage(new Event("submit"));
+}));
+
+async function handleUserMessage(e) {
+  e.preventDefault();
+  const userMessage = input.value.trim();
+  if (!userMessage) return;
+
+  appendMessage("user", userMessage);
+  input.value = "";
+
+  // Show typing indicator
+  const loadingId = `typing-${Date.now()}`;
+  const loader = document.createElement("div");
+  loader.classList.add("typing-indicator");
+  loader.id = loadingId;
+  loader.innerHTML = `<span></span><span></span><span></span>`;
+  chatWindow.appendChild(loader);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "mistralai/mistral-7b-instruct:free",
+        messages: [
+          {
+            role: "system",
+            content: "You're a helpful educational assistant. Format replies using bold text, lists, and headings when relevant. Respond to science, study and school-related questions clearly."
+          },
+          {
+            role: "user",
+            content: userMessage
+          }
+        ]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data?.choices?.[0]?.message?.content || "Sorry, Ai is Not Available this Time. Please Contact the Admin by Maling connect.studytogether@gmail.com";
+
+    // Remove typing indicator
+    const loadingEl = document.getElementById(loadingId);
+    if (loadingEl) chatWindow.removeChild(loadingEl);
+
+    appendFormattedMessage("ai", reply);
+
+  } catch (error) {
+    console.error("AI Error:", error);
+    const loadingEl = document.getElementById(loadingId);
+    if (loadingEl) chatWindow.removeChild(loadingEl);
+    appendMessage("ai", "❌ Something went wrong. Please inform us at connect.studytogether@gmail.com");
+  }
+}
+
+function appendMessage(role, text) {
+  const bubble = document.createElement("div");
+  const id = `msg-${Date.now()}`;
+  bubble.classList.add("chat-bubble", role);
+  bubble.id = id;
+  bubble.innerHTML = `<p>${role === "ai" ? "<strong>AI:</strong> " : ""}${text}</p>`;
+  chatWindow.appendChild(bubble);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return id;
+}
+
+function appendFormattedMessage(role, rawText) {
+  const bubble = document.createElement("div");
+  bubble.classList.add("chat-bubble", role);
+
+  let htmlText = rawText
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    // Headings
+    .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    // Bullet points
+    .replace(/(?:^|\n)- (.*?)(?=\n|$)/g, "<li>$1</li>")
+    // Line breaks
+    .replace(/\n\n/g, "<br><br>")
+    .replace(/\n/g, "<br>")
+    // Math formatting fixes
+    .replace(/\\\\/g, "")
+    .replace(/\\\(/g, "(")
+    .replace(/\\\)/g, ")");
+
+  // Wrap list items in <ul>
+  if (htmlText.includes("<li>")) {
+    htmlText = htmlText.replace(/(<li>.*<\/li>)/gs, "<ul>$1</ul>");
+  }
+
+  bubble.innerHTML = `<p><strong>AI:</strong><br>${htmlText}</p>`;
+  chatWindow.appendChild(bubble);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+
+</script>
+
+<!--Scroll to Toop Ends-->
+<script>
+  const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navbar = document.querySelector('.navbar');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+  hamburger.classList.toggle('active');
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('show');
+    hamburger.classList.remove('active');
+  });
+});
+
+// Scroll direction detection
+let lastScrollTop = 0;
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  
+  if (scrollTop > lastScrollTop) {
+    // Scrolling down
+    navbar.classList.add('hide-navbar');
+  } else {
+    // Scrolling up
+    navbar.classList.remove('hide-navbar');
+  }
+  
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Avoid negative values
+});
+</script>
+<script src="script.js"></script>
 </body>
 </html>
