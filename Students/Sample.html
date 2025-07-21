@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/files/img-uploads-handler.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="/files/img-uploads-handler.css" type="text/css" media="all" />
   <link rel="stylesheet" href="apply-btn.css" type="text/css" media="all" />
   <style>
   
@@ -69,7 +73,7 @@
       position: fixed;
       height: 100%;
       top: 0; left: 0;
-      z-index: 1000;
+      z-index: 10001;
     }
     .sidebar.expanded { width: 220px; }
     .sidebar .hamburger {
@@ -164,8 +168,8 @@
       <i class="fas fa-bars"></i>
     </div>
     <ul>
-        <li><i class="fa-duotone fa-solid fa-sliders"></i> <span class="settings-btn">Customisation</span></li>
-      <li><i class="fas fa-history"></i> <span>Study History</span></li>
+        <li class="settings-btn"><i class="fa-duotone fa-solid fa-sliders"></i> <span>Customisation</span></li>
+      <li id="filesLink"><i class="fa-solid fa-file"></i> <span>Files</span></li>
       <li><i class="fas fa-cog"></i> <span>Settings</span></li>
       <li><i class="fas fa-bullseye"></i> <span>Focus</span></li>
       <li><i class="fas fa-upload"></i> <span>Upload</span></li>
@@ -782,6 +786,364 @@ filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#87A3A3", end
     });
   });
 </script>
+<!--Main Content-->
+<div class="main-content">
+  <div class="fixed top-20 left-1/2 transform -translate-x-1/2 w-[90%] max-w-xl bg-white/10 backdrop-blur-lg p-6 rounded-3xl shadow-2xl text-center text-white space-y-4 transition-all duration-500 main-content">
+  <h1 id="greeting" class="text-3xl font-bold drop-shadow-lg"></h1>
+  <p class="text-lg">You have <span id="taskCount">0</span> tasks left today!</p>
 
+  <div class="flex items-center justify-center gap-2 mt-4">
+    <input
+      type="text"
+      id="taskInput"
+      placeholder="Add a new task..."
+      class="w-full px-4 py-2 rounded-xl text-black outline-none"
+    />
+    <button
+      onclick="addTask()"
+      class="bg-[#b58b2e] hover:bg-yellow-600 px-4 py-2 rounded-xl text-white transition"
+    >
+      Add
+    </button>
+  </div>
+
+  <ul id="taskList" class="mt-4 text-left max-h-60 overflow-y-auto space-y-2"></ul>
+  
+</div>
+<br />
+<br />
+</div>
+</div>
+<script>
+  // Greeting based on time
+  const greetingEl = document.getElementById("greeting");
+  const hour = new Date().getHours();
+  let greet = "Hello";
+
+  if (hour < 12) greet = "Good Morning Dippan,";
+  else if (hour < 18) greet = "Good Afternoon Dippan,";
+  else greet = "Good Evening Dippan,";
+
+  greetingEl.textContent = greet;
+
+  // Task logic
+  const taskInput = document.getElementById("taskInput");
+  const taskList = document.getElementById("taskList");
+  const taskCount = document.getElementById("taskCount");
+
+  let tasks = JSON.parse(localStorage.getItem("dashboardTasks")) || [];
+
+  const renderTasks = () => {
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+      const li = document.createElement("li");
+      li.className =
+        "flex justify-between items-center bg-white/20 px-4 py-2 rounded-xl";
+      li.innerHTML = `
+        <span>${task}</span>
+        <button onclick="removeTask(${index})" class="text-red-400 hover:text-red-600">✖</button>
+      `;
+      taskList.appendChild(li);
+    });
+    taskCount.textContent = tasks.length;
+    localStorage.setItem("dashboardTasks", JSON.stringify(tasks));
+  };
+
+  const addTask = () => {
+    const task = taskInput.value.trim();
+    if (task !== "") {
+      tasks.push(task);
+      taskInput.value = "";
+      renderTasks();
+    }
+  };
+
+  const removeTask = (index) => {
+    tasks.splice(index, 1);
+    renderTasks();
+  };
+
+  renderTasks();
+</script>
+<style>
+  .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 60px; /* Shift footer to the right of navbar */
+            width: calc(100% - 60px); /* Adjust width to exclude navbar */
+            /* From https://css.glass */
+background: rgba(192, 122, 31, 0.12);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(2.2px);
+-webkit-backdrop-filter: blur(2.2px);
+border: 1px solid rgba(192, 122, 31, 0.99);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure footer is above main content but below navbar */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVQYV2NkYGD4z8DAwMgABXgABQv8C1YAAAAABJRU5ErkJggg==');
+        }
+
+        .icon {
+            background-color: #6c5ce7;
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 8px;
+font-size: 16px;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+transition: all 0.3s ease;
+align-items: center;
+        }
+.icon:hover {
+            background-color: #5649c0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(108, 92, 231, 0.3);
+        }
+        
+        .icon i {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000; /* Above navbar and footer */
+            
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 70%;
+            max-width: 500px;
+            position: relative;
+        background-color: #606060;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .modal-heading {
+          font-weight: bolder;
+        }
+        .image-iframe {
+          width: 100%;
+          height: 50vh;
+          padding-top: 3px;
+          display: block;
+          overflow-x: auto;
+          overflow-y: auto;
+          margin: 0;
+        }
+</style>
+<script>
+  iframeResize({
+    license: 'GPLv3',
+    log: 'collapsed',
+    waitForLoad: true,
+  }, '#myIframe')
+</script>
+  <!-- Footer -->
+    <footer class="footer-bar">
+        <div data-modal="imageModal"class="icon"><i class="fas fa-image"></i></div>
+        <div  class="icon" data-modal="cloudModal"><i class="fas fa-cloud"></i></div>
+        <div class="icon" data-modal="cameraModal"><i class="fas fa-camera"></i></div>
+        <div class="icon" data-modal="clockModal"><i class="fas fa-clock"></i></div>
+        <div class="icon" data-modal="musicModal"><i class="fas fa-music"></i></div>
+        <div class="icon" data-modal="menuModal"><i class="fas fa-bars"></i></div>
+        <div class="icon" data-modal="chartModal"><i class="fas fa-chart-bar"></i></div>
+        <div class="icon" data-modal="bookModal"><i class="fas fa-book"></i></div>
+        <div class="icon" data-modal="helpModal"><i class="fas fa-question"></i></div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2 class="modal-heading">Image Uploader</h2>
+            <br />
+            <p>
+              <iframe class="image-iframe" src="/imp/upload-handler.html" height="100%" frameborder="0" allowfullscreen scrolling="none" name="Image Uploder" title="Upload Your Images Here !" id="myIframe" ></iframe>
+            </p>
+        </div>
+    </div>
+    <div id="cloudModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Cloud Storage</h2>
+            <p>Content for cloud storage goes here.</p>
+        </div>
+    </div>
+
+    <div id="cameraModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Camera</h2>
+            <p>Content for camera goes here.</p>
+        </div>
+    </div>
+
+    <div id="clockModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Clock</h2>
+            <p>Content for clock goes here.</p>
+        </div>
+    </div>
+
+    <div id="musicModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Music</h2>
+            <p>Content for music goes here.</p>
+        </div>
+    </div>
+
+    <div id="menuModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Menu</h2>
+            <p>Content for menu goes here.</p>
+        </div>
+    </div>
+
+    <div id="chartModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Charts</h2>
+            <p>Content for charts goes here.</p>
+        </div>
+    </div>
+
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Book</h2>
+            <p>Content for book goes here.</p>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Help</h2>
+            <p>Content for help goes here.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const icons = document.querySelectorAll('.icon');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close');
+
+            icons.forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+
+            window.addEventListener('click', function (event) {
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.4.7"></script>
+    
+<!-- Modal for preview.html -->
+<div id="previewModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-5xl h-[80vh] relative overflow-hidden">
+    <!-- Close Button -->
+    <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl font-bold">&times;</button>
+    
+    <!-- Iframe Preview -->
+    <iframe id="previewIframe" class="w-full h-full border-none" loading="lazy"></iframe>
+  </div>
+</div>
+<style type="text/css" media="all">
+  /* Responsive iframe modal */
+#previewModal iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Hide scrollbar for modal content */
+#previewModal::-webkit-scrollbar {
+  display: none;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const filesLink = document.getElementById("filesLink");
+  const previewModal = document.getElementById("previewModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const previewIframe = document.getElementById("previewIframe");
+
+  // Show modal with iframe when "Files" is clicked
+  filesLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    previewIframe.src = "/imp/preview.html";
+    previewModal.classList.remove("hidden");
+  });
+
+  // Close modal
+  closeModalBtn.addEventListener("click", () => {
+    previewModal.classList.add("hidden");
+    previewIframe.src = ""; // Clear src to stop preview
+  });
+
+  // Close modal when clicking outside iframe box
+  previewModal.addEventListener("click", (e) => {
+    if (e.target === previewModal) {
+      previewModal.classList.add("hidden");
+      previewIframe.src = "";
+    }
+  });
+});
+</script>
 </body>
 </html>
