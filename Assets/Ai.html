@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTogether Ai !</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.svg" />
+<link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Study Toghether " />
+<link rel="manifest" href="/https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Grok-inspired styling with animations */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary: #6d28d9;
+            --secondary: #8b5cf6;
+            --accent: #a78bfa;
+            --text: #1f2937;
+            --bg: #f9fafb;
+            --card: rgba(255, 255, 255, 0.9);
+            --dark-text: #f3f4f6;
+            --dark-bg: #111827;
+            --dark-card: rgba(17, 24, 39, 0.9);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        /* Vibrate animation for new messages */
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .vibrate {
+            animation: vibrate 0.3s linear;
+        }
+        
+        /* Glass effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Typing animation */
+        @keyframes typing {
+            0% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(1); }
+        }
+        
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        /* Message writing animation */
+        @keyframes write {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .writing-animation {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: write 2s steps(40, end);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        /* Pulse effect for new messages */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(109, 40, 217, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(109, 40, 217, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(109, 40, 217, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+        const { motion, AnimatePresence } = Motion;
+        
+        // Available AI models
+        const AI_MODELS = [
+            { id: 'deepseek/deepseek-chat-v3-0324:free', name: 'DeepseekV3 R1' },
+            { id: 'microsoft/mai-ds-r1:free', name: 'Microsoft Ai' },
+            { id: 'cognitivecomputations/dolphin-mistral-24b-venice-edition:free', name: 'Dolphin Ai (Uncensored)' },
+            { id: 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free', name: 'Nvidia Ultra DeepThink' },
+            { id: 'meta-llama/llama-3.1-405b-instruct:free', name: 'Llama 3.1' } 
+            ,
+            {
+                id: 'sarvamai/sarvam-m:free',
+                name: 'Sarvam Ai (Indian)'
+            }
+            ,
+            {
+                id: 'shisa-ai/shisa-v2-llama3.3-70b:free' ,
+                name: 'Shisa Ai'
+            }
+            ,
+            {
+                id: 'google/gemma-2-9b-it:free' ,
+                name: 'Google Gemma 2 '
+            },
+            {
+                id: 'qwen/qwen-2.5-72b-instruct:free' ,
+                name: 'Qwen 2.5'
+            },
+            {
+                id: 'meta-llama/llama-3.2-11b-vision-instruct:free',
+                name: 'Meta 3.2 11b vision Instruct'
+            },
+            {
+                id: 'moonshotai/kimi-k2:free',
+                name: 'MoonshotAI: Kimi K2 (free)'
+            }
+        ];
+        
+        const DEFAULT_MODEL = 'deepseek/deepseek-chat-v3-0324:free';
+        const OPENROUTER_API_KEY = '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';
+        const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        const SEARCH_API_URL = 'https://serpapi.com/search.json?engine=google&api_key=f437a079651a915f4bb9a406ad258f75a1d2dd6e95d5ce462f30b8d2ecdfab91&q=';
+        
+        // Utility functions
+        const generateId = () => Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        const formatMessage = (content) => {
+            let formatted = DOMPurify.sanitize(content)
+                .replace(/```(\w+)?\n?([\s\S]*?)```/g, (_, lang, code) => 
+                    `<pre data-language="${lang || 'text'}"><code class="language-${lang || 'text'}">${code.trim()}</code></pre>`)
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/__(.*?)__/g, '<u>$1</u>')
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>')
+                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                .replace(/^\* (.*$)/gm, '<li>$1</li>')
+                .replace(/^- (.*$)/gm, '<li>$1</li>')
+                .replace(/\n/g, '<br>');
+            
+            return formatted.replace(/(<li>.*<\/li>)+/g, match => `<ul>${match}</ul>`);
+        };
+        
+        const saveToStorage = (key, data) => {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.error('Storage error:', e);
+            }
+        };
+        
+        const loadFromStorage = (key) => {
+            try {
+                return JSON.parse(localStorage.getItem(key));
+            } catch (e) {
+                console.error('Storage error:', e);
+                return null;
+            }
+        };
+        
+        // Components
+        const Message = React.memo(({ message, onEdit, onCopy, onDelete, isLast }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            const contentRef = useRef(null);
+            
+            useEffect(() => {
+                if (isLast && contentRef.current) {
+                    contentRef.current.classList.add('writing-animation');
+                    setTimeout(() => {
+                        contentRef.current?.classList.remove('writing-animation');
+                    }, 2000);
+                }
+            }, [isLast]);
+            
+            return (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={`flex gap-3 mb-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    {message.role === 'assistant' && (
+                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center">
+                            <i className="fas fa-robot text-white text-sm"></i>
+                        </div>
+                    )}
+                    
+                    <div
+                        className={`relative max-w-[80%] rounded-2xl px-4 py-3 ${
+                            message.role === 'user'
+                                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white'
+                                : 'bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-100'
+                        } shadow-md ${isLast ? 'pulse' : ''}`}
+                    >
+                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 hover:opacity-100 transition-opacity">
+                            <button
+                                onClick={() => onCopy(message.content)}
+                                className="w-6 h-6 flex items-center justify-center bg-white/20 dark:bg-black/20 rounded-full hover:bg-white/30 dark:hover:bg-black/30"
+                                title="Copy"
+                            >
+                                <i className="fas fa-copy text-xs"></i>
+                            </button>
+                            {message.role === 'user' && (
+                                <button
+                                    onClick={() => onEdit(message)}
+                                    className="w-6 h-6 flex items-center justify-center bg-white/20 dark:bg-black/20 rounded-full hover:bg-white/30 dark:hover:bg-black/30"
+                                    title="Edit"
+                                >
+                                    <i className="fas fa-edit text-xs"></i>
+                                </button>
+                            )}
+                            <button
+                                onClick={() => onDelete(message.id)}
+                                className="w-6 h-6 flex items-center justify-center bg-white/20 dark:bg-black/20 rounded-full hover:bg-white/30 dark:hover:bg-black/30"
+                                title="Delete"
+                            >
+                                <i className="fas fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                        
+                        <div 
+                            ref={contentRef}
+                            className="message-content"
+                            dangerouslySetInnerHTML={{ __html: formatMessage(message.content) }}
+                        />
+                        
+                        <div className={`text-xs mt-2 flex justify-end items-center gap-2 ${
+                            message.role === 'user' ? 'text-purple-200' : 'text-gray-500 dark:text-gray-400'
+                        }`}>
+                            <span>{new Date(message.timestamp).toLocaleTimeString()}</span>
+                            {message.model && (
+                                <span className="px-2 py-0.5 bg-black/10 dark:bg-white/10 rounded-full text-[10px]">
+                                    {AI_MODELS.find(m => m.id === message.model)?.name || message.model}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                    
+                    {message.role === 'user' && (
+                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center">
+                            <i className="fas fa-user text-white text-sm"></i>
+                        </div>
+                    )}
+                </motion.div>
+            );
+        });
+        
+        const ModelSelector = ({ selectedModel, onChange }) => (
+            <div className="relative">
+                <select
+                    value={selectedModel}
+                    onChange={(e) => onChange(e.target.value)}
+                    className="appearance-none bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 rounded-full py-2 pl-4 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                    {AI_MODELS.map(model => (
+                        <option key={model.id} value={model.id}>{model.name}</option>
+                    ))}
+                </select>
+                <div className="absolute right-3 top-2.5 pointer-events-none">
+                    <i className="fas fa-chevron-down text-gray-500 dark:text-gray-400 text-xs"></i>
+                </div>
+            </div>
+        );
+        
+        const VoiceInput = ({ onResult }) => {
+            const [isListening, setIsListening] = useState(false);
+            const recognitionRef = useRef(null);
+            
+            const toggleListening = () => {
+                if (!('webkitSpeechRecognition' in window)) {
+                    alert('Speech recognition not supported in your browser');
+                    return;
+                }
+                
+                if (!recognitionRef.current) {
+                    recognitionRef.current = new window.webkitSpeechRecognition();
+                    recognitionRef.current.continuous = false;
+                    recognitionRef.current.interimResults = true;
+                    
+                    recognitionRef.current.onresult = (event) => {
+                        const transcript = Array.from(event.results)
+                            .map(result => result[0])
+                            .map(result => result.transcript)
+                            .join('');
+                        onResult(transcript);
+                    };
+                    
+                    recognitionRef.current.onerror = (event) => {
+                        console.error('Speech recognition error', event.error);
+                        setIsListening(false);
+                    };
+                    
+                    recognitionRef.current.onend = () => {
+                        setIsListening(false);
+                    };
+                }
+                
+                if (isListening) {
+                    recognitionRef.current.stop();
+                } else {
+                    recognitionRef.current.start();
+                }
+                
+                setIsListening(!isListening);
+            };
+            
+            return (
+                <button
+                    onClick={toggleListening}
+                    className={`w-10 h-10 flex items-center justify-center rounded-full ${
+                        isListening 
+                            ? 'bg-red-500 text-white animate-pulse' 
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200'
+                    }`}
+                    title={isListening ? 'Stop listening' : 'Voice input'}
+                >
+                    <i className={`fas ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>
+                </button>
+            );
+        };
+        
+        // Main App Component
+        const App = () => {
+            const [chats, setChats] = useState([]);
+            const [activeChat, setActiveChat] = useState(null);
+            const [messages, setMessages] = useState([]);
+            const [input, setInput] = useState('');
+            const [isLoading, setIsLoading] = useState(false);
+            const [isDarkMode, setIsDarkMode] = useState(false);
+            const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
+            const [showSettings, setShowSettings] = useState(false);
+            const [showNewChatModal, setShowNewChatModal] = useState(false);
+            const [newChatTitle, setNewChatTitle] = useState('');
+            const [showEditModal, setShowEditModal] = useState(false);
+            const [editingMessage, setEditingMessage] = useState(null);
+            const [notification, setNotification] = useState(null);
+            const messagesEndRef = useRef(null);
+            const inputRef = useRef(null);
+            
+            // Initialize app
+            useEffect(() => {
+                // Check for dark mode preference
+                const darkMode = loadFromStorage('darkMode') || false;
+                setIsDarkMode(darkMode);
+                document.body.classList.toggle('dark', darkMode);
+                
+                // Load chats
+                const savedChats = loadFromStorage('chats') || [];
+                const savedModel = loadFromStorage('selectedModel') || DEFAULT_MODEL;
+                
+                setChats(savedChats);
+                setSelectedModel(savedModel);
+                
+                // Check for shared chat in URL
+                const params = new URLSearchParams(window.location.search);
+                const sharedChatId = params.get('chat');
+                
+                if (sharedChatId && savedChats.some(c => c.id === sharedChatId)) {
+                    setActiveChat(sharedChatId);
+                    const chat = savedChats.find(c => c.id === sharedChatId);
+                    setMessages(chat.messages);
+                } else if (savedChats.length > 0) {
+                    setActiveChat(savedChats[0].id);
+                    setMessages(savedChats[0].messages);
+                } else {
+                    createNewChat('Welcome Chat');
+                }
+            }, []);
+            
+            // Save chats and settings when they change
+            useEffect(() => {
+                saveToStorage('chats', chats);
+                saveToStorage('selectedModel', selectedModel);
+                saveToStorage('darkMode', isDarkMode);
+                
+                if (activeChat) {
+                    const chatIndex = chats.findIndex(c => c.id === activeChat);
+                    if (chatIndex >= 0) {
+                        const updatedChats = [...chats];
+                        updatedChats[chatIndex] = {
+                            ...updatedChats[chatIndex],
+                            messages,
+                            updatedAt: new Date().toISOString()
+                        };
+                        setChats(updatedChats);
+                    }
+                }
+            }, [messages, activeChat, selectedModel, isDarkMode]);
+            
+            // Auto-scroll to bottom when messages change
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                
+                // Vibrate on new assistant message
+                if (messages.length > 0 && messages[messages.length - 1].role === 'assistant') {
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate([100, 50, 100]);
+                    }
+                }
+            }, [messages]);
+            
+            // Create a new chat
+            const createNewChat = (title = 'New Chat') => {
+                const newChat = {
+                    id: generateId(),
+                    title,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    messages: [{
+                        id: generateId(),
+                        role: 'assistant',
+                        content: `Hello! I'm your AI assistant. How can I help you today?`,
+                        timestamp: new Date(),
+                        model: selectedModel
+                    }]
+                };
+                
+                setChats(prev => [...prev, newChat]);
+                setActiveChat(newChat.id);
+                setMessages(newChat.messages);
+                setShowNewChatModal(false);
+                setNewChatTitle('');
+            };
+            
+            // Delete a chat
+            const deleteChat = (chatId) => {
+                const updatedChats = chats.filter(c => c.id !== chatId);
+                setChats(updatedChats);
+                
+                if (activeChat === chatId) {
+                    if (updatedChats.length > 0) {
+                        setActiveChat(updatedChats[0].id);
+                        setMessages(updatedChats[0].messages);
+                    } else {
+                        createNewChat();
+                    }
+                }
+            };
+            
+            // Rename a chat
+            const renameChat = (chatId, newTitle) => {
+                setChats(prev => prev.map(c => 
+                    c.id === chatId ? { ...c, title: newTitle } : c
+                ));
+            };
+            
+            // Share a chat
+            const shareChat = (chatId) => {
+                const url = `${window.location.origin}${window.location.pathname}?chat=${chatId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('Chat link copied to clipboard!');
+                });
+            };
+            
+            // Show notification
+            const showNotification = (message, duration = 3000) => {
+                setNotification(message);
+                setTimeout(() => setNotification(null), duration);
+            };
+            
+            // Perform a web search
+            const performSearch = async (query) => {
+                try {
+                    const response = await fetch(`${SEARCH_API_URL}${encodeURIComponent(query)}`);
+                    const data = await response.json();
+                    
+                    if (data.organic_results) {
+                        const topResults = data.organic_results.slice(0, 3).map(r => ({
+                            title: r.title,
+                            link: r.link,
+                            snippet: r.snippet
+                        }));
+                        
+                        return `Here are some web search results for "${query}":\n\n${
+                            topResults.map(r => `• [${r.title}](${r.link})\n${r.snippet}\n`).join('\n')
+                        }`;
+                    }
+                    return `I couldn't find web results for "${query}". Try being more specific.`;
+                } catch (error) {
+                    console.error('Search error:', error);
+                    return `Search failed for "${query}". Please try again later.`;
+                }
+            };
+            
+            // Send a message to the AI
+            const sendMessage = async (content = null) => {
+                const messageContent = content || input.trim();
+                if (!messageContent || isLoading) return;
+                
+                const userMessage = {
+                    id: generateId(),
+                    role: 'user',
+                    content: messageContent,
+                    timestamp: new Date()
+                };
+                
+                setMessages(prev => [...prev, userMessage]);
+                if (!content) setInput('');
+                setIsLoading(true);
+                
+                try {
+                    // Check if the message is a search query
+                    let assistantResponse;
+                    if (messageContent.startsWith('/search ')) {
+                        const query = messageContent.substring(8);
+                        assistantResponse = await performSearch(query);
+                    } else {
+                        // Normal AI response
+                        const response = await fetch(OPENROUTER_API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                                'Content-Type': 'application/json',
+                                'HTTP-Referer': window.location.href,
+                                'X-Title': 'AI Assistant'
+                            },
+                            body: JSON.stringify({
+                                model: selectedModel,
+                                messages: [
+                                    ...messages.map(m => ({ role: m.role, content: m.content })),
+                                    { role: 'user', content: messageContent }
+                                ],
+                                temperature: 0.7,
+                                max_tokens: 2000
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`API error: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        assistantResponse = data.choices[0].message.content;
+                    }
+                    
+                    const assistantMessage = {
+                        id: generateId(),
+                        role: 'assistant',
+                        content: assistantResponse,
+                        timestamp: new Date(),
+                        model: selectedModel
+                    };
+                    
+                    setMessages(prev => [...prev, assistantMessage]);
+                } catch (error) {
+                    console.error('Error:', error);
+                    const errorMessage = {
+                        id: generateId(),
+                        role: 'assistant',
+                        content: `Sorry, I encountered an error: ${error.message}`,
+                        timestamp: new Date(),
+                        model: selectedModel
+                    };
+                    setMessages(prev => [...prev, errorMessage]);
+                } finally {
+                    setIsLoading(false);
+                    inputRef.current?.focus();
+                }
+            };
+            
+            // Edit a message
+            const editMessage = (message) => {
+                setEditingMessage(message);
+                setShowEditModal(true);
+            };
+            
+            // Save edited message
+            const saveEditedMessage = (newContent) => {
+                if (editingMessage && newContent.trim()) {
+                    setMessages(prev => prev.map(m => 
+                        m.id === editingMessage.id 
+                            ? { ...m, content: newContent.trim() }
+                            : m
+                    ));
+                }
+                setShowEditModal(false);
+                setEditingMessage(null);
+            };
+            
+            // Delete a message
+            const deleteMessage = (messageId) => {
+                setMessages(prev => prev.filter(m => m.id !== messageId));
+            };
+            
+            // Copy message to clipboard
+            const copyMessage = (content) => {
+                navigator.clipboard.writeText(content).then(() => {
+                    showNotification('Message copied to clipboard!');
+                });
+            };
+            
+            // Handle voice input result
+            const handleVoiceResult = (text) => {
+                setInput(prev => prev + ' ' + text);
+                inputRef.current?.focus();
+            };
+            
+            // Handle key press in input
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            };
+            
+            return (
+                <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''}`}>
+                    {/* Header */}
+                    <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                                Grok-Style AI
+                            </h1>
+                            <button
+                                onClick={() => setShowNewChatModal(true)}
+                                className="px-3 py-1 text-sm bg-purple-100 dark:bg-gray-700 rounded-full hover:bg-purple-200 dark:hover:bg-gray-600 transition-colors"
+                            >
+                                <i className="fas fa-plus mr-1"></i> New Chat
+                            </button>
+                        </div>
+                        
+                        <div className="flex items-center gap-4">
+                            <ModelSelector 
+                                selectedModel={selectedModel}
+                                onChange={setSelectedModel}
+                            />
+                            
+                            <button
+                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+                            >
+                                <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
+                            </button>
+                            
+                            <button
+                                onClick={() => setShowSettings(!showSettings)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+                            >
+                                <i className="fas fa-cog"></i>
+                            </button>
+                        </div>
+                    </header>
+                    
+                    {/* Main content */}
+                    <div className="flex flex-1 overflow-hidden">
+                        {/* Sidebar */}
+                        <aside className={`w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 ${
+                            showSettings ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+                        }`}>
+                            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                                <h2 className="font-semibold text-lg">Chat History</h2>
+                            </div>
+                            
+                            <div className="flex-1 overflow-y-auto">
+                                {chats.map(chat => (
+                                    <div
+                                        key={chat.id}
+                                        className={`p-3 border-b border-gray-100 dark:border-gray-700 cursor-pointer flex justify-between items-center ${
+                                            activeChat === chat.id ? 'bg-purple-50 dark:bg-gray-700' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                                        }`}
+                                        onClick={() => {
+                                            setActiveChat(chat.id);
+                                            setMessages(chat.messages);
+                                        }}
+                                    >
+                                        <div className="truncate flex-1">
+                                            <div className="font-medium truncate">{chat.title}</div>
+                                            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                                {new Date(chat.updatedAt).toLocaleString()}
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex gap-1 opacity-0 group-hover:opacity-100">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    const newTitle = prompt('Rename chat:', chat.title);
+                                                    if (newTitle) renameChat(chat.id, newTitle);
+                                                }}
+                                                className="w-6 h-6 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                                                title="Rename"
+                                            >
+                                                <i className="fas fa-edit text-xs"></i>
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    shareChat(chat.id);
+                                                }}
+                                                className="w-6 h-6 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                                                title="Share"
+                                            >
+                                                <i className="fas fa-share text-xs"></i>
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (confirm('Delete this chat?')) deleteChat(chat.id);
+                                                }}
+                                                className="w-6 h-6 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                                                title="Delete"
+                                            >
+                                                <i className="fas fa-trash text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </aside>
+                        
+                        {/* Chat area */}
+                        <main className="flex-1 flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-900">
+                            {/* Messages */}
+                            <div className="flex-1 overflow-y-auto p-4">
+                                <AnimatePresence>
+                                    {messages.map((message, index) => (
+                                        <Message
+                                            key={message.id}
+                                            message={message}
+                                            onEdit={editMessage}
+                                            onCopy={copyMessage}
+                                            onDelete={deleteMessage}
+                                            isLast={index === messages.length - 1 && message.role === 'assistant'}
+                                        />
+                                    ))}
+                                </AnimatePresence>
+                                <div ref={messagesEndRef} />
+                            </div>
+                            
+                            {/* Input area */}
+                            <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                                <div className="flex items-end gap-2">
+                                    <div className="flex-1 relative">
+                                        <textarea
+                                            ref={inputRef}
+                                            value={input}
+                                            onChange={(e) => setInput(e.target.value)}
+                                            onKeyPress={handleKeyPress}
+                                            placeholder="Type your message or use /search for web results..."
+                                            rows="1"
+                                            className="w-full p-3 pr-10 rounded-xl border border-gray-300 dark:border-gray-600 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 bg-white dark:bg-gray-700 resize-none"
+                                        />
+                                        <div className="absolute right-2 bottom-2 flex gap-1">
+                                            <VoiceInput onResult={handleVoiceResult} />
+                                            <button
+                                                onClick={() => sendMessage()}
+                                                disabled={!input.trim() || isLoading}
+                                                className="w-10 h-10 flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white rounded-full disabled:opacity-50"
+                                            >
+                                                {isLoading ? (
+                                                    <i className="fas fa-spinner fa-spin"></i>
+                                                ) : (
+                                                    <i className="fas fa-paper-plane"></i>
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                    <span>Current model: {AI_MODELS.find(m => m.id === selectedModel)?.name}</span>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                    
+                    {/* New chat modal */}
+                    {showNewChatModal && (
+                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md">
+                                <h3 className="text-lg font-semibold mb-4">Create New Chat</h3>
+                                <input
+                                    type="text"
+                                    value={newChatTitle}
+                                    onChange={(e) => setNewChatTitle(e.target.value)}
+                                    placeholder="Chat title"
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded mb-4 bg-white dark:bg-gray-700"
+                                    autoFocus
+                                />
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        onClick={() => setShowNewChatModal(false)}
+                                        className="px-4 py-2 text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={() => createNewChat(newChatTitle || 'New Chat')}
+                                        className="px-4 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700"
+                                    >
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Edit message modal */}
+                    {showEditModal && (
+                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-2xl">
+                                <h3 className="text-lg font-semibold mb-4">Edit Message</h3>
+                                <textarea
+                                    value={editingMessage?.content || ''}
+                                    onChange={(e) => setEditingMessage({
+                                        ...editingMessage,
+                                        content: e.target.value
+                                    })}
+                                    className="w-full h-64 p-3 border border-gray-300 dark:border-gray-600 rounded mb-4 bg-white dark:bg-gray-700"
+                                />
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        onClick={() => setShowEditModal(false)}
+                                        className="px-4 py-2 text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={() => saveEditedMessage(editingMessage?.content)}
+                                        className="px-4 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700"
+                                    >
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Notification */}
+                    {notification && (
+                        <div className="fixed bottom-4 right-4 bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg animate-bounce">
+                            {notification}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
