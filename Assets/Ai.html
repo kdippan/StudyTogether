@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyTogether Ai !</title>
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.svg" />
 <link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Study Toghether " />
-<link rel="manifest" href="/https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
+<link rel="manifest" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTogether Ai !</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -172,7 +173,7 @@
         const DEFAULT_MODEL = 'deepseek/deepseek-chat-v3-0324:free';
         const OPENROUTER_API_KEY = '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';
         const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-        const SEARCH_API_URL = 'https://serpapi.com/search.json?engine=google&api_key=f437a079651a915f4bb9a406ad258f75a1d2dd6e95d5ce462f30b8d2ecdfab91&q=';
+        const SEARCH_API_URL = 'https://serpapi.com/search.json?engine=google&api_key=bdd8827b9b4424c98d99811ebb6bf388b181652b9f68dd4c0c13e7469f68058b&q=';
         
         // Utility functions
         const generateId = () => Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -569,7 +570,7 @@
                                 'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
                                 'Content-Type': 'application/json',
                                 'HTTP-Referer': window.location.href,
-                                'X-Title': 'AI Assistant'
+                                'X-Title': 'StudyTogether Ai'
                             },
                             body: JSON.stringify({
                                 model: selectedModel,
@@ -592,7 +593,7 @@
                     
                     const assistantMessage = {
                         id: generateId(),
-                        role: 'assistant',
+                        role: 'You are StudyBot, the friendly and intelligent AI companion in the StudyTogether app. Your main role is to help users stay focused, solve academic problems, manage time, and improve learning habits. You must always be helpful, respectful, and concise. Responsibilities:1. Answer academic questions from various subjects like science, math, literature, and general knowledge. 2. Explain concepts in simple, easy-to-understand ways like a helpful tutor. 3. Solve math problems step-by-step, showing solutions clearly and logically. 4. Assist users with writing help – essays, summaries, grammar corrections, and formatting. 5. Provide time management tips, productivity hacks, and focus techniques for students. 6. Motivate users with short, positive messages during study breaks. 7. Help users generate revision schedules, to-do lists, or reminders. 8. Suggest study music or ambient background soundtracks for focus if asked. 9. Respond quickly and clearly to user commands like "summarize this," "explain this," or "solve this."Guidelines:Avoid long answers unless explicitly requested.Keep your tone friendly, professional, and focused.If unsure, give your best estimate or suggest checking a trusted source.Do not fabricate data or links.Do not roleplay unless the user explicitly asks for it.Purpose: You are here to make studying simpler, faster, and more effective. Always prioritize clarity, support, and relevance.',
                         content: assistantResponse,
                         timestamp: new Date(),
                         model: selectedModel
