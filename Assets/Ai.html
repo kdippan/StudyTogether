@@ -5,12 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.svg" />
     <link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Study Toghether " />
+    <meta name="apple-mobile-web-app-title" content="Study Together" />
     <link rel="manifest" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyTogether Ai !</title>
+    <title>StudyTogether AI!</title>
     
     <!-- MathJax for math rendering -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -172,6 +172,49 @@
         .pulse {
             animation: pulse 1.5s infinite;
         }
+
+        /* Settings panel styles */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--card);
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 100;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .settings-panel.open {
+            transform: translateX(0);
+        }
+        
+        .dark .settings-panel {
+            background: var(--dark-card);
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .settings-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
@@ -315,7 +358,7 @@
                                     className="w-6 h-6 flex items-center justify-center bg-white/20 dark:bg-black/20 rounded-full hover:bg-white/30 dark:hover:bg-black/30"
                                     title="Edit"
                                 >
-                                    <i className="fa-regular fa-pen text-xs"></i>
+                                    <i className="fas fa-edit text-xs"></i>
                                 </button>
                             )}
                             <button
@@ -446,6 +489,26 @@
             const messagesEndRef = useRef(null);
             const inputRef = useRef(null);
             
+            // Toggle dark mode
+            const toggleDarkMode = () => {
+                const newMode = !isDarkMode;
+                setIsDarkMode(newMode);
+                document.body.classList.toggle('dark', newMode);
+                saveToStorage('darkMode', newMode);
+            };
+            
+            // Toggle settings panel
+            const toggleSettings = () => {
+                setShowSettings(!showSettings);
+            };
+            
+            // Close settings when clicking outside
+            const handleClickOutsideSettings = (e) => {
+                if (e.target.classList.contains('settings-overlay')) {
+                    setShowSettings(false);
+                }
+            };
+            
             // Initialize app
             useEffect(() => {
                 // Check for dark mode preference
@@ -504,7 +567,6 @@
             useEffect(() => {
                 saveToStorage('chats', chats);
                 saveToStorage('selectedModel', selectedModel);
-                saveToStorage('darkMode', isDarkMode);
                 
                 if (activeChat) {
                     const chatIndex = chats.findIndex(c => c.id === activeChat);
@@ -518,7 +580,7 @@
                         setChats(updatedChats);
                     }
                 }
-            }, [messages, activeChat, selectedModel, isDarkMode]);
+            }, [messages, activeChat, selectedModel]);
             
             // Auto-scroll to bottom when messages change
             useEffect(() => {
@@ -542,7 +604,7 @@
                     messages: [{
                         id: generateId(),
                         role: 'assistant',
-                        content: `Hello! I'm your AI assistant. How can I help you today?`,
+                        content: `Hello! I'm Your StudyTogether AI assistant. How can I help you today?`,
                         timestamp: new Date(),
                         model: selectedModel
                     }]
@@ -759,20 +821,71 @@
                             />
                             
                             <button
-                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                onClick={toggleDarkMode}
                                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+                                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
                             >
                                 <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
                             </button>
                             
                             <button
-                                onClick={() => setShowSettings(!showSettings)}
+                                onClick={toggleSettings}
                                 className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+                                title="Settings"
                             >
                                 <i className="fas fa-cog"></i>
                             </button>
                         </div>
                     </header>
+                    
+                    {/* Settings Panel */}
+                    <div 
+                        className={`settings-overlay ${showSettings ? 'open' : ''}`}
+                        onClick={handleClickOutsideSettings}
+                    ></div>
+                    
+                    <div className={`settings-panel ${showSettings ? 'open' : ''}`}>
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-xl font-bold">Settings</h2>
+                            <button 
+                                onClick={toggleSettings}
+                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+                            >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div className="space-y-6">
+                            <div>
+                                <h3 className="font-semibold mb-2">Appearance</h3>
+                                <div className="flex items-center justify-between">
+                                    <span>Dark Mode</span>
+                                    <button
+                                        onClick={toggleDarkMode}
+                                        className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors ${isDarkMode ? 'bg-purple-600' : 'bg-gray-300'}`}
+                                    >
+                                        <span className={`inline-block w-4 h-4 transform transition-transform rounded-full bg-white ${isDarkMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 className="font-semibold mb-2">AI Model</h3>
+                                <ModelSelector 
+                                    selectedModel={selectedModel}
+                                    onChange={setSelectedModel}
+                                />
+                            </div>
+                            
+                            <div>
+                                <h3 className="font-semibold mb-2">About</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    StudyTogether AI v1.0<br />
+                                    Powered by OpenRouter API
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     
                     {/* Main content */}
                     <div className="flex flex-1 overflow-hidden">
@@ -810,7 +923,7 @@
                                                     const newTitle = prompt('Rename chat:', chat.title);
                                                     if (newTitle) renameChat(chat.id, newTitle);
                                                 }}
-                                                className="w-6 h-6 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-black-600 rounded"
+                                                className="w-6 h-6 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
                                                 title="Rename"
                                             >
                                                 <i className="fas fa-edit text-xs"></i>
