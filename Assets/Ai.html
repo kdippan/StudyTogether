@@ -2,15 +2,27 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.svg" />
-<link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="Study Toghether " />
-<link rel="manifest" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.svg" />
+    <link rel="shortcut icon" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Study Toghether " />
+    <link rel="manifest" href="https://i.postimg.cc/TP8dPLyt/2756-removebg-preview.png/site.webmanifest" />
    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyTogether Ai !</title>
+    
+    <!-- MathJax for math rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Math.js for calculations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.7.0/math.min.js"></script>
+
+    <!-- Kekule.js for chemistry -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/kekule/dist/themes/default/kekule.css" />
+    <script src="https://cdn.jsdelivr.net/npm/kekule/dist/kekule.min.js"></script>
+    
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -49,6 +61,40 @@
         body.dark {
             background: var(--dark-bg);
             color: var(--dark-text);
+        }
+        
+        /* Math formatting */
+        .math-display {
+            display: block;
+            margin: 1em 0;
+            padding: 0.5em;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .math-inline {
+            display: inline;
+            padding: 0 0.2em;
+        }
+
+        /* Chemistry formatting */
+        .chemistry-formula {
+            display: inline-block;
+            margin: 0.5em;
+            padding: 0.5em;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        .dark .chemistry-formula {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chemistry-error {
+            color: #e53e3e;
+            font-style: italic;
         }
         
         /* Vibrate animation for new messages */
@@ -140,37 +186,17 @@
             { id: 'microsoft/mai-ds-r1:free', name: 'Microsoft Ai' },
             { id: 'cognitivecomputations/dolphin-mistral-24b-venice-edition:free', name: 'Dolphin Ai (Uncensored)' },
             { id: 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free', name: 'Nvidia Ultra DeepThink' },
-            { id: 'meta-llama/llama-3.1-405b-instruct:free', name: 'Llama 3.1' } 
-            ,
-            {
-                id: 'sarvamai/sarvam-m:free',
-                name: 'Sarvam Ai (Indian)'
-            }
-            ,
-            {
-                id: 'shisa-ai/shisa-v2-llama3.3-70b:free' ,
-                name: 'Shisa Ai'
-            }
-            ,
-            {
-                id: 'google/gemma-2-9b-it:free' ,
-                name: 'Google Gemma 2 '
-            },
-            {
-                id: 'qwen/qwen-2.5-72b-instruct:free' ,
-                name: 'Qwen 2.5'
-            },
-            {
-                id: 'meta-llama/llama-3.2-11b-vision-instruct:free',
-                name: 'Meta 3.2 11b vision Instruct'
-            },
-            {
-                id: 'moonshotai/kimi-k2:free',
-                name: 'MoonshotAI: Kimi K2 (free)'
-            }
+            { id: 'meta-llama/llama-3.1-405b-instruct:free', name: 'Llama 3.1' },
+            { id: 'sarvamai/sarvam-m:free', name: 'Sarvam Ai (Indian)' },
+            { id: 'shisa-ai/shisa-v2-llama3.3-70b:free', name: 'Shisa Ai' },
+            { id: 'google/gemma-2-9b-it:free', name: 'Google Gemma 2' },
+            { id: 'qwen/qwen-2.5-72b-instruct:free', name: 'Qwen 2.5' },
+            { id: 'meta-llama/llama-3.2-11b-vision-instruct:free', name: 'Meta 3.2 11b vision Instruct' },
+            { id: 'moonshotai/kimi-k2:free', name: 'MoonshotAI: Kimi K2 (free)' },
+            { id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral Ai (Default)' }
         ];
         
-        const DEFAULT_MODEL = 'deepseek/deepseek-chat-v3-0324:free';
+        const DEFAULT_MODEL = 'mistralai/mistral-7b-instruct:free';
         const OPENROUTER_API_KEY = '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';
         const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
         const SEARCH_API_URL = 'https://serpapi.com/search.json?engine=google&api_key=bdd8827b9b4424c98d99811ebb6bf388b181652b9f68dd4c0c13e7469f68058b&q=';
@@ -179,9 +205,31 @@
         const generateId = () => Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         
         const formatMessage = (content) => {
-            let formatted = DOMPurify.sanitize(content)
-                .replace(/```(\w+)?\n?([\s\S]*?)```/g, (_, lang, code) => 
-                    `<pre data-language="${lang || 'text'}"><code class="language-${lang || 'text'}">${code.trim()}</code></pre>`)
+            // First sanitize the content
+            let formatted = DOMPurify.sanitize(content);
+            
+            // Handle LaTeX math expressions (both inline and block)
+            formatted = formatted.replace(/\$\$(.*?)\$\$/g, (_, math) => 
+                `<div class="math-display">\\(${math}\\)</div>`)
+                .replace(/\$(.*?)\$/g, (_, math) => 
+                `<span class="math-inline">\\(${math}\\)</span>`);
+            
+            // Handle chemistry formulas (SMILES notation)
+            formatted = formatted.replace(/\[CHEM:(.*?)\]/g, (_, formula) => {
+                try {
+                    const molecule = Kekule.IO.loadFormatData(formula, 'smi');
+                    return `<div class="chemistry-formula" data-formula="${formula}"></div>`;
+                } catch (e) {
+                    return `<span class="chemistry-error">[Invalid chemical formula: ${formula}]</span>`;
+                }
+            });
+            
+            // Handle code blocks
+            formatted = formatted.replace(/```(\w+)?\n?([\s\S]*?)```/g, (_, lang, code) => 
+                `<pre data-language="${lang || 'text'}"><code class="language-${lang || 'text'}">${code.trim()}</code></pre>`);
+            
+            // Handle other markdown
+            formatted = formatted
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/__(.*?)__/g, '<u>$1</u>')
@@ -194,7 +242,10 @@
                 .replace(/^- (.*$)/gm, '<li>$1</li>')
                 .replace(/\n/g, '<br>');
             
-            return formatted.replace(/(<li>.*<\/li>)+/g, match => `<ul>${match}</ul>`);
+            // Handle lists
+            formatted = formatted.replace(/(<li>.*<\/li>)+/g, match => `<ul>${match}</ul>`);
+            
+            return formatted;
         };
         
         const saveToStorage = (key, data) => {
@@ -425,6 +476,30 @@
                 }
             }, []);
             
+            // Render chemistry and math when messages change
+            useEffect(() => {
+                // Render chemistry formulas after messages are updated
+                const renderChemistry = () => {
+                    document.querySelectorAll('.chemistry-formula').forEach(el => {
+                        const formula = el.getAttribute('data-formula');
+                        try {
+                            const molecule = Kekule.IO.loadFormatData(formula, 'smi');
+                            const renderer = new Kekule.Renderer2D.RectangleRenderer();
+                            renderer.renderToElem(molecule, el);
+                        } catch (e) {
+                            console.error('Failed to render chemical formula:', e);
+                        }
+                    });
+                };
+                
+                renderChemistry();
+                
+                // Process MathJax after messages are updated
+                if (window.MathJax) {
+                    MathJax.typesetPromise();
+                }
+            }, [messages]);
+            
             // Save chats and settings when they change
             useEffect(() => {
                 saveToStorage('chats', chats);
@@ -593,7 +668,7 @@
                     
                     const assistantMessage = {
                         id: generateId(),
-                        role: 'You are StudyBot, the friendly and intelligent AI companion in the StudyTogether app. Your main role is to help users stay focused, solve academic problems, manage time, and improve learning habits. You must always be helpful, respectful, and concise. Responsibilities:1. Answer academic questions from various subjects like science, math, literature, and general knowledge. 2. Explain concepts in simple, easy-to-understand ways like a helpful tutor. 3. Solve math problems step-by-step, showing solutions clearly and logically. 4. Assist users with writing help – essays, summaries, grammar corrections, and formatting. 5. Provide time management tips, productivity hacks, and focus techniques for students. 6. Motivate users with short, positive messages during study breaks. 7. Help users generate revision schedules, to-do lists, or reminders. 8. Suggest study music or ambient background soundtracks for focus if asked. 9. Respond quickly and clearly to user commands like "summarize this," "explain this," or "solve this."Guidelines:Avoid long answers unless explicitly requested.Keep your tone friendly, professional, and focused.If unsure, give your best estimate or suggest checking a trusted source.Do not fabricate data or links.Do not roleplay unless the user explicitly asks for it.Purpose: You are here to make studying simpler, faster, and more effective. Always prioritize clarity, support, and relevance.',
+                        role: 'assistant',
                         content: assistantResponse,
                         timestamp: new Date(),
                         model: selectedModel
@@ -667,7 +742,7 @@
                     <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                                Grok-Style AI
+                                StudyTogether AI
                             </h1>
                             <button
                                 onClick={() => setShowNewChatModal(true)}
