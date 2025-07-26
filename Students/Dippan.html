@@ -2478,7 +2478,7 @@ async function getNewWord() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "mistralai/mistral-nemo:free",
+                model: "deepseek/deepseek-r1-0528:free",
                 messages: [{
                     role: "user",
                     content: "Provide an English vocabulary word with its Hindi meaning and an example sentence. Format as: Word: [word] | Hindi: [hindi] | Example: [sentence]"
@@ -2643,7 +2643,7 @@ async function generateLanguageExercise() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "mistralai/mistral-7b-instruct:free",
+                model: "deepseek/deepseek-r1-0528:free",
                 messages: [{
                     role: "user",
                     content: prompt
