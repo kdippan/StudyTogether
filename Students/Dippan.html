@@ -1209,14 +1209,40 @@ align-items: center;
 
 <style>
 /* Enhanced Modal Styles */
+.modal-content::before {
+    content: '';
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+.modal-content::after {
+    content: '';
+  position: absolute;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
 .modal-content {
-    background: linear-gradient(135deg, #2c3e50, #4ca1af);
-    color: white;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 12px 6px rgba(255, 255, 255, 0.6);
+    color: black;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    max-width: 900px;
-    width: 90%;
-    max-height: 90vh;
+
     overflow-y: auto;
     animation: fadeInUp 0.5s;
 }
