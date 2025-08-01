@@ -5,10 +5,6 @@
   <!-- Font Awesome 6 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="/files/img-uploads-handler.js" type="text/javascript" charset="utf-8"></script>
-  <link rel="stylesheet" href="/files/img-uploads-handler.css" type="text/css" media="all" />
-  <link rel="stylesheet" href="apply-btn.css" type="text/css" media="all" />
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/js/all.min.js" integrity="sha512-gBYquPLlR76UWqCwD06/xwal4so02RjIR0oyG1TIhSGwmBTRrIkQbaPehPF8iwuY9jFikDHMGEelt0DtY7jtvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -41,9 +37,9 @@
 <link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
 <link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=dashboard_customize" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/lib.min.js" integrity="sha512-tE7j0ptGYRtx0sHRAOkHNLAuIqVW7udzmjvNh1A6vIEnWUJnx7j7khwTEjemjDaauV+lHo0jEtdW8jn5weoxhw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.1.11/colors.min.js" integrity="sha512-XCWTRVO7g0LlfM1NYVx8ugIQPaMWJAZEqOcu85qaFrrSVzc48gqN4bsWVWuTheX3iiVhb3g3tBN6E1XArqGYLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.4.7"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <meta charset="UTF-8" />
@@ -981,6 +977,9 @@ align-items: center;
         <div data-modal="imageModal"class="icon"><i class="fas fa-image"></i></div>
         <div  class="icon" data-modal="cloudModal"><i class="fas fa-cloud"></i></div>
         <div class="icon" data-modal="cameraModal"><i class="fas fa-camera"></i></div>
+        <div class="icon" data-modal="achievementsModal"><i class="fas fa-trophy"></i></div>
+        <div class="icon" data-modal="notesModal"><i class="fas fa-sticky-note"></i></div>
+        <div class="icon" data-modal="calendarModal"><i class="fas fa-calendar"></i></div>
         <div class="icon" data-modal="clockModal"><i class="fas fa-clock"></i></div>
         <div class="icon" data-modal="musicModal"><i class="fas fa-music"></i></div>
         <div class="icon" data-modal="menuModal"><i class="fas fa-bars"></i></div>
@@ -1007,7 +1006,38 @@ align-items: center;
             <p>Content for cloud storage goes here.</p>
         </div>
     </div>
+<!-- Achievements Modal -->
+<div id="achievementsModal" class="modal">
+    <div class="modal-content animate__animated">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-trophy"></i> Achievements</h2>
+        <div id="achievementsList"></div>
+    </div>
+</div>
 
+<!-- Notes Modal -->
+<div id="notesModal" class="modal">
+    <div class="modal-content animate__animated">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-sticky-note"></i> Notes</h2>
+        <div id="editor"></div>
+        <button class="modal-btn" onclick="saveNotes()">Save Notes</button>
+    </div>
+</div>
+
+<!-- Calendar Modal -->
+<div id="calendarModal" class="modal">
+    <div class="modal-content animate__animated">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-calendar"></i> Study Calendar</h2>
+        <div class="calendar-controls">
+            <button onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
+            <span id="calendarMonth"></span>
+            <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div id="calendarView"></div>
+    </div>
+</div>
     <div id="cameraModal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
@@ -1015,46 +1045,3538 @@ align-items: center;
             <p>Content for camera goes here.</p>
         </div>
     </div>
+<!-- Clock Modal (Timer) -->
+<div id="clockModal" class="modal">
+  <div class="modal-content timer-modal-content animate__animated">
+    <span class="close">&times;</span>
+    <button class="timer-settings-btn" onclick="openTimerSettings()"><i class="fas fa-cog"></i></button>
+    <h2><i class="fas fa-stopwatch"></i> Study Timer</h2>
+    <div class="timer-display">
+      <div class="timer-circle">
+        <svg class="progress-ring" width="200" height="200">
+          <circle class="progress-ring__circle" cx="100" cy="100" r="90" />
+        </svg>
+        <div class="timer-text" id="timerText">25:00</div>
+      </div>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn" id="startPauseBtn" onclick="toggleTimer()">
+        <i class="fas fa-play"></i> Start
+      </button>
+      <button class="timer-btn" onclick="resetTimer()"><i class="fas fa-redo"></i> Reset</button>
+      <button class="timer-btn" onclick="skipTimer()"><i class="fas fa-forward"></i> Skip</button>
+    </div>
+    <div class="timer-presets">
+      <button class="preset-btn active" onclick="setPresetTimer(25)">Pomodoro (25m)</button>
+      <button class="preset-btn" onclick="setPresetTimer(5)">Short Break (5m)</button>
+      <button class="preset-btn" onclick="setPresetTimer(15)">Long Break (15m)</button>
+      <div class="custom-timer">
+        <input type="number" id="customTimerInput" min="1" max="120" placeholder="Custom (min)">
+        <button class="preset-btn" onclick="setCustomTimer()">Set</button>
+      </div>
+    </div>
+    <audio id="timerAlarm" preload="auto"></audio>
+  </div>
+</div>
 
-    <div id="clockModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Clock</h2>
-            <p>Content for clock goes here.</p>
+<!-- Timer Settings Modal -->
+<div id="timerSettingsModal" class="modal">
+  <div class="modal-content timer-settings-content animate__animated">
+    <span class="close">&times;</span>
+    <h2><i class="fas fa-cog"></i> Timer Settings</h2>
+    <div class="settings-group">
+      <label>Alarm Tone:</label>
+      <select id="alarmToneSelect" onchange="updateAlarmTone()">
+        <option value="default">Default</option>
+        <option value="bell">Bell</option>
+        <option value="chime">Chime</option>
+        <option value="custom">Custom</option>
+      </select>
+      <input type="file" id="customAlarmInput" accept="audio/*" style="display: none;" onchange="setCustomAlarm()">
+    </div>
+    <div class="settings-group">
+      <label><input type="checkbox" id="playAlarmToggle" checked onchange="saveTimerSettings()"> Play Alarm on Completion</label>
+    </div>
+    <div class="settings-group">
+      <label><input type="checkbox" id="animationsToggle" checked onchange="saveTimerSettings()"> Enable Animations</label>
+    </div>
+    <div class="settings-group">
+      <label>Timer Background Color:</label>
+      <input type="color" id="timerBgColor" value="#b58b2e" onchange="updateTimerStyle()">
+    </div>
+    <div class="settings-group">
+      <label>Timer Font:</label>
+      <select id="timerFontSelect" onchange="updateTimerStyle()">
+        <option value="Poppins">Poppins</option>
+        <option value="Oswald">Oswald</option>
+        <option value="Michroma">Michroma</option>
+      </select>
+    </div>
+    <button class="timer-btn apply-settings" onclick="saveTimerSettings()">Apply Settings</button>
+  </div>
+</div>
+
+<style>
+  /* Timer Modal Styles */
+.timer-modal-content {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(7px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.timer-modal-content.animate__fadeInUp {
+    animation: fadeInUp 0.5s ease;
+}
+
+.timer-modal-content.animate__fadeOutDown {
+    animation: fadeOutDown 0.5s ease;
+}
+
+.timer-settings-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.timer-settings-btn:hover {
+    transform: rotate(90deg);
+}
+
+.timer-display {
+    margin: 1.5rem 0;
+}
+
+.timer-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.progress-ring__circle {
+    fill: none;
+    stroke: #b58b2e;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.timer-text.flip {
+    animation: flipDigit 0.3s ease;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.timer-btn {
+    background: rgba(181, 139, 46, 0.8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.3s ease, background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.timer-btn:hover {
+    background: #b58b2e;
+    transform: translateY(-2px);
+}
+
+.timer-btn.pulse {
+    animation: pulseBtn 0.5s ease;
+}
+
+.timer-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.preset-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.preset-btn.active, .preset-btn:hover {
+    background: #b58b2e;
+}
+
+.custom-timer {
+    display: flex;
+    gap: 5px;
+}
+
+.custom-timer input {
+    width: 100px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Timer Settings Modal */
+.timer-settings-content {
+    max-width: 350px;
+    width: 90%;
+}
+
+.settings-group {
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.settings-group label {
+    color: #fff;
+    font-size: 1rem;
+}
+
+.settings-group select, .settings-group input[type="color"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.apply-settings {
+    width: 100%;
+}
+
+/* Chart Modal */
+.stats-summary {
+    margin-top: 1rem;
+    color: #fff;
+    text-align: left;
+}
+
+.stats-summary p {
+    margin: 0.5rem 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOutDown {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes flipDigit {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseBtn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .timer-modal-content, .timer-settings-content {
+        padding: 1rem;
+    }
+    .timer-text {
+        font-size: 2rem;
+    }
+    .timer-circle {
+        width: 150px;
+        height: 150px;
+    }
+    .progress-ring {
+        width: 150px;
+        height: 150px;
+    }
+    .progress-ring__circle {
+        cx: 75;
+        cy: 75;
+        r: 65;
+    }
+}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  // Timer Variables
+let timerInterval = null;
+let timeLeft = 25 * 60; // Default: 25 minutes
+let isRunning = false;
+let currentTimerType = 'Pomodoro';
+const timerText = document.getElementById('timerText');
+const startPauseBtn = document.getElementById('startPauseBtn');
+const progressCircle = document.querySelector('.progress-ring__circle');
+const circumference = 2 * Math.PI * 90; // For 200px circle
+let timerStats = JSON.parse(localStorage.getItem('timerStats')) || {
+    totalTime: 0,
+    sessionsCompleted: 0,
+    starts: 0,
+    pauses: 0
+};
+let timerSettings = JSON.parse(localStorage.getItem('timerSettings')) || {
+    alarmTone: 'default',
+    playAlarm: true,
+    animations: true,
+    bgColor: '#b58b2e',
+    font: 'Poppins'
+};
+
+// Alarm Audio
+const timerAlarm = document.getElementById('timerAlarm');
+const alarmTones = {
+    default: 'https://freesound.org/data/previews/316/316899_4939433-lq.mp3',
+    bell: 'https://freesound.org/data/previews/339/339809_5121236-lq.mp3',
+    chime: 'https://freesound.org/data/previews/256/256549_3263906-lq.mp3'
+};
+
+// Initialize Timer
+function initTimer() {
+    progressCircle.style.strokeDasharray = circumference;
+    progressCircle.style.strokeDashoffset = circumference;
+    loadTimerSettings();
+    updateTimerDisplay();
+    updateChart();
+}
+
+// Update Timer Display
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    if (timerSettings.animations) {
+        timerText.classList.add('flip');
+        setTimeout(() => timerText.classList.remove('flip'), 300);
+    }
+    const progress = (1 - timeLeft / (getInitialTime() * 60)) * circumference;
+    progressCircle.style.strokeDashoffset = progress;
+}
+
+// Start/Pause Timer
+function toggleTimer() {
+    if (!isRunning) {
+        startTimer();
+    } else {
+        pauseTimer();
+    }
+}
+
+function startTimer() {
+    if (timeLeft <= 0) return;
+    isRunning = true;
+    startPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+    if (timerSettings.animations) {
+        startPauseBtn.classList.add('pulse');
+        setTimeout(() => startPauseBtn.classList.remove('pulse'), 500);
+    }
+    timerStats.starts++;
+    saveTimerStats();
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerStats.totalTime++;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            completeTimer();
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    isRunning = false;
+    startPauseBtn.innerHTML = '<i class="fas fa-play"></i> Start';
+    if (timerSettings.animations) {
+        startPauseBtn.classList.add('pulse');
+        setTimeout(() => startPauseBtn.classList.remove('pulse'), 500);
+    }
+    timerStats.pauses++;
+    saveTimerStats();
+    clearInterval(timerInterval);
+}
+
+// Reset Timer
+function resetTimer() {
+    pauseTimer();
+    timeLeft = getInitialTime() * 60;
+    updateTimerDisplay();
+}
+
+// Skip Timer
+function skipTimer() {
+    completeTimer();
+}
+
+// Complete Timer
+function completeTimer() {
+    pauseTimer();
+    timerStats.sessionsCompleted++;
+    saveTimerStats();
+    if (timerSettings.playAlarm) {
+        timerAlarm.play().catch(e => console.error('Alarm playback error:', e));
+    }
+    showToast(`${currentTimerType} session completed!`);
+    suggestNextTimer();
+}
+
+// Suggest Next Timer
+function suggestNextTimer() {
+    if (currentTimerType === 'Pomodoro') {
+        setPresetTimer(5);
+        currentTimerType = 'Short Break';
+    } else {
+        setPresetTimer(25);
+        currentTimerType = 'Pomodoro';
+    }
+    updatePresetButtons();
+}
+
+// Set Preset Timer
+function setPresetTimer(minutes) {
+    pauseTimer();
+    timeLeft = minutes * 60;
+    currentTimerType = minutes === 25 ? 'Pomodoro' : minutes === 5 ? 'Short Break' : 'Long Break';
+    updateTimerDisplay();
+    updatePresetButtons();
+}
+
+// Set Custom Timer
+function setCustomTimer() {
+    const input = document.getElementById('customTimerInput').value;
+    const minutes = parseInt(input);
+    if (isNaN(minutes) || minutes < 1 || minutes > 120) {
+        showToast('Please enter a valid time (1-120 minutes)');
+        return;
+    }
+    pauseTimer();
+    timeLeft = minutes * 60;
+    currentTimerType = 'Custom';
+    updateTimerDisplay();
+    updatePresetButtons();
+}
+
+// Update Preset Buttons
+function updatePresetButtons() {
+    document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+    if (currentTimerType === 'Pomodoro') {
+        document.querySelector('.preset-btn[onclick="setPresetTimer(25)"]').classList.add('active');
+    } else if (currentTimerType === 'Short Break') {
+        document.querySelector('.preset-btn[onclick="setPresetTimer(5)"]').classList.add('active');
+    } else if (currentTimerType === 'Long Break') {
+        document.querySelector('.preset-btn[onclick="setPresetTimer(15)"]').classList.add('active');
+    }
+}
+
+// Get Initial Time
+function getInitialTime() {
+    return currentTimerType === 'Pomodoro' ? 25 : currentTimerType === 'Short Break' ? 5 : currentTimerType === 'Long Break' ? 15 : timeLeft / 60;
+}
+
+// Timer Settings
+function openTimerSettings() {
+    document.getElementById('timerSettingsModal').style.display = 'block';
+    document.getElementById('clockModal').style.display = 'none';
+}
+
+function loadTimerSettings() {
+    document.getElementById('alarmToneSelect').value = timerSettings.alarmTone;
+    document.getElementById('playAlarmToggle').checked = timerSettings.playAlarm;
+    document.getElementById('animationsToggle').checked = timerSettings.animations;
+    document.getElementById('timerBgColor').value = timerSettings.bgColor;
+    document.getElementById('timerFontSelect').value = timerSettings.font;
+    updateAlarmTone();
+    updateTimerStyle();
+}
+
+function saveTimerSettings() {
+    timerSettings = {
+        alarmTone: document.getElementById('alarmToneSelect').value,
+        playAlarm: document.getElementById('playAlarmToggle').checked,
+        animations: document.getElementById('animationsToggle').checked,
+        bgColor: document.getElementById('timerBgColor').value,
+        font: document.getElementById('timerFontSelect').value
+    };
+    localStorage.setItem('timerSettings', JSON.stringify(timerSettings));
+    updateAlarmTone();
+    updateTimerStyle();
+    showToast('Settings saved!');
+    document.getElementById('timerSettingsModal').style.display = 'none';
+    document.getElementById('clockModal').style.display = 'block';
+}
+
+function updateAlarmTone() {
+    const tone = document.getElementById('alarmToneSelect').value;
+    document.getElementById('customAlarmInput').style.display = tone === 'custom' ? 'block' : 'none';
+    if (tone !== 'custom') {
+        timerAlarm.src = alarmTones[tone] || alarmTones.default;
+    }
+}
+
+function setCustomAlarm() {
+    const file = document.getElementById('customAlarmInput').files[0];
+    if (file && file.type.startsWith('audio/')) {
+        const url = URL.createObjectURL(file);
+        timerAlarm.src = url;
+        timerSettings.customAlarm = url;
+        saveTimerSettings();
+        showToast('Custom alarm set!');
+    } else {
+        showToast('Please select a valid audio file');
+    }
+}
+
+function updateTimerStyle() {
+    document.querySelector('.timer-modal-content').style.background = `linear-gradient(135deg, ${timerSettings.bgColor}, rgba(255, 255, 255, 0.12))`;
+    timerText.style.fontFamily = timerSettings.font;
+    progressCircle.style.stroke = timerSettings.bgColor;
+}
+
+// Save Timer Stats
+function saveTimerStats() {
+    localStorage.setItem('timerStats', JSON.stringify(timerStats));
+    updateChart();
+}
+
+// Update Chart
+function updateChart() {
+    const ctx = document.getElementById('timerStatsChart').getContext('2d');
+    if (window.timerChart) {
+        window.timerChart.destroy();
+    }
+    window.timerChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Total Time (min)', 'Sessions', 'Starts', 'Pauses'],
+            datasets: [{
+                label: 'Timer Usage',
+                data: [
+                    Math.round(timerStats.totalTime / 60),
+                    timerStats.sessionsCompleted,
+                    timerStats.starts,
+                    timerStats.pauses
+                ],
+                backgroundColor: '#b58b2e',
+                borderColor: '#ffffff',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+    document.getElementById('totalTimeStudied').textContent = `${Math.round(timerStats.totalTime / 60)} min`;
+    document.getElementById('sessionsCompleted').textContent = timerStats.sessionsCompleted;
+    document.getElementById('timerStarts').textContent = timerStats.starts;
+    document.getElementById('timerPauses').textContent = timerStats.pauses;
+}
+
+// Toast Notification (Reuse existing function)
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Modal Animation Handling
+document.addEventListener('DOMContentLoaded', () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        const content = modal.querySelector('.modal-content');
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('close')) {
+                content.classList.remove('animate__fadeInUp');
+                content.classList.add('animate__fadeOutDown');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    content.classList.remove('animate__fadeOutDown');
+                }, 500);
+            }
+        });
+    });
+
+    document.querySelectorAll('.icon[data-modal="clockModal"]').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const modal = document.getElementById('clockModal');
+            modal.style.display = 'block';
+            modal.querySelector('.modal-content').classList.add('animate__fadeInUp');
+            initTimer();
+        });
+    });
+
+    document.querySelectorAll('.icon[data-modal="chartModal"]').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const modal = document.getElementById('chartModal');
+            modal.style.display = 'block';
+            modal.querySelector('.modal-content').classList.add('animate__fadeInUp');
+            updateChart();
+        });
+    });
+});
+</script>
+    
+<!-- Updated Menu Modal with AI Coach -->
+<div id="menuModal" class="modal">
+    <div class="modal-content animate__animated">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-bars"></i> Quick Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-item" onclick="openModal('bookModal')"><i class="fas fa-book"></i><p>Study Resources</p></div>
+            <div class="menu-item" onclick="openModal('clockModal')"><i class="fas fa-stopwatch"></i><p>Timer</p></div>
+            <div class="menu-item" onclick="getStudySuggestions()"><i class="fas fa-robot"></i><p>AI Coach</p></div>
         </div>
     </div>
+</div>
 
-    <div id="musicModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Music</h2>
-            <p>Content for music goes here.</p>
+<!-- Updated Flashcard Modal with AI Generator -->
+<div id="flashcardModal" class="modal">
+    <div class="modal-content animate__animated">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-graduation-cap"></i> Flashcards</h2>
+        <div class="flashcard-generator">
+            <input type="text" id="flashcardTopic" placeholder="Enter topic (e.g., Biology)">
+            <button class="modal-btn" onclick="generateFlashcards()">Generate Flashcards</button>
+        </div>
+        <div id="flashcardContainer"></div>
+    </div>
+</div>
+<style>
+    
+/* Achievements Modal */
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 10px 0;
+    animation: slideIn 0.5s ease;
+}
+
+.achievement img {
+    width: 40px;
+    filter: drop-shadow(0 0 5px rgba(181, 139, 46, 0.8));
+}
+
+/* Notes Modal */
+#editor {
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Calendar Modal */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#calendarView {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-day.event {
+    background: #b58b2e;
+}
+
+.calendar-day:hover {
+    background: rgba(181, 139, 46, 0.5);
+}
+
+/* Menu Modal */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.menu-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.menu-item:hover {
+    background: #b58b2e;
+}
+
+/* Flashcard Generator */
+.flashcard-generator {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.flashcard-generator input {
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 100%;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1rem;
+    }
+    #editor {
+        height: 200px;
+    }
+    .calendar-day {
+        padding: 5px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #b58b2e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+}
+</style>
+    
+<!-- Chart Modal (Timer Statistics) -->
+<div id="chartModal" class="modal">
+  <div class="modal-content animate__animated">
+    <span class="close">&times;</span>
+    <h2><i class="fas fa-chart-bar"></i> Timer Statistics</h2>
+    <canvas id="timerStatsChart"></canvas>
+    <div class="stats-summary">
+      <p>Total Time Studied: <span id="totalTimeStudied">0 min</span></p>
+      <p>Sessions Completed: <span id="sessionsCompleted">0</span></p>
+      <p>Timer Starts: <span id="timerStarts">0</span></p>
+      <p>Timer Pauses: <span id="timerPauses">0</span></p>
+    </div>
+  </div>
+</div>
+
+<div id="bookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="book-modal-header">
+            <h2><i class="fas fa-book"></i> Study Resources</h2>
+            <div class="book-tabs">
+                <button class="tab-btn active" onclick="openTab('ebook-reader')">E-books</button>
+                <button class="tab-btn" onclick="openTab('flashcards', event)">Flashcards</button>
+                <button class="tab-btn" onclick="openTab('resources')">Resources</button>
+                <button class="tab-btn" onclick="openTab('vocabulary')">Vocabulary</button>
+                <button class="tab-btn" onclick="openTab('journal', event)">Journal</button>
+                <button class="tab-btn" onclick="openTab('language')">Language</button>
+                <button class="tab-btn" onclick="openTab('recommendations')">Recommendations</button>
+                <button class="tab-btn" onclick="openTab('quotes')">Quotes</button>
+            </div>
+        </div>
+
+        <!-- E-books Tab -->
+        <div id="ebook-reader" class="tab-content active">
+            <div class="search-box">
+                <input type="text" id="book-search" placeholder="Search free e-books..." class="styled-input">
+                <button onclick="searchBooks()" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div id="ebook-results" class="ebook-grid"></div>
+        </div>
+
+        <!-- Flashcards Tab -->
+        <div id="flashcards" class="tab-content">
+            <div class="flashcard-container">
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="front">Click to add flashcards</div>
+                    <div class="back">Your answer here</div>
+                </div>
+                <div class="flashcard-controls">
+                    <button onclick="prevCard()" class="nav-btn"><i class="fas fa-arrow-left"></i></button>
+                    <span id="card-count" class="counter">0/0</span>
+                    <button onclick="nextCard()" class="nav-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="flashcard-edit">
+                    <input type="text" id="new-question" placeholder="Enter question" class="flashcard-input">
+                    <input type="text" id="new-answer" placeholder="Enter answer" class="flashcard-input">
+                    <button onclick="addFlashcard()" class="add-card-btn"><i class="fas fa-plus"></i> Add Card</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resources" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="resource-search" placeholder="Search library resources..." class="styled-input">
+                <button onclick="searchResources()" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div id="resource-results" class="resource-grid"></div>
+        </div>
+
+        <!-- Vocabulary Tab -->
+        <div id="vocabulary" class="tab-content">
+            <div class="word-of-the-day">
+                <h3><i class="fas fa-star"></i> Word of the Day</h3>
+                <div id="daily-word" class="word-card">
+                    <p>Loading word...</p>
+                </div>
+            </div>
+            <div class="word-history">
+                <h4><i class="fas fa-history"></i> Recent Words</h4>
+                <div id="word-history-list" class="history-grid"></div>
+            </div>
+            <button onclick="getNewWord()" class="action-btn"><i class="fas fa-sync-alt"></i> New Word</button>
+        </div>
+
+        <!-- Journal Tab -->
+        <div id="journal" class="tab-content">
+            <div class="journal-editor">
+                <textarea id="journal-entry" placeholder="Write your thoughts here..." class="journal-textarea"></textarea>
+                <div class="journal-controls">
+                    <button onclick="saveJournalEntry()" class="save-btn"><i class="fas fa-save"></i> Save Entry</button>
+                    <button onclick="clearJournalEntry()" class="clear-btn"><i class="fas fa-trash"></i> Clear</button>
+                </div>
+            </div>
+            <div class="journal-history">
+                <h4><i class="fas fa-book-open"></i> Previous Entries</h4>
+                <div id="journal-entries" class="entries-container"></div>
+            </div>
+        </div>
+
+        <!-- Language Tab -->
+        <div id="language" class="tab-content">
+            <div class="language-selector">
+                <select id="language-select" class="styled-select">
+                    <option value="hi">Hindi</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="ja">Japanese</option>
+                </select>
+                <button onclick="generateLanguageExercise()" class="generate-btn"><i class="fas fa-random"></i> New Exercise</button>
+            </div>
+            <div class="language-exercise">
+                <h4 id="exercise-title"><i class="fas fa-language"></i> Translate this sentence:</h4>
+                <p id="exercise-text" class="exercise-text">Loading exercise...</p>
+                <div class="answer-container">
+                    <input type="text" id="exercise-answer" placeholder="Your answer" class="answer-input">
+                    <button onclick="checkTranslation()" class="check-btn"><i class="fas fa-check"></i> Check</button>
+                </div>
+                <p id="exercise-feedback" class="feedback-text"></p>
+            </div>
+            <div class="language-progress">
+                <h4><i class="fas fa-chart-line"></i> Your Progress</h4>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="language-progress" class="progress-fill"></div>
+                    </div>
+                    <span id="progress-text" class="progress-text">0 words mastered</span>
+                </div>
+                <div class="streak-container">
+                    <div class="streak-icon"><i class="fas fa-fire"></i></div>
+                    <span id="streak-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Tab -->
+        <div id="recommendations" class="tab-content">
+            <div class="recommendation-controls">
+                <select id="genre-select" class="styled-select">
+                    <option value="fiction">Fiction</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                    <option value="technology">Technology</option>
+                    <option value="biography">Biography</option>
+                </select>
+                <button onclick="getBookRecommendations()" class="action-btn"><i class="fas fa-book"></i> Get Recommendations</button>
+            </div>
+            <div id="book-recommendations" class="recommendation-grid"></div>
+            <div class="saved-recommendations">
+                <h4><i class="fas fa-bookmark"></i> Saved Recommendations</h4>
+                <div id="saved-books" class="saved-grid"></div>
+            </div>
+        </div>
+
+        <!-- Quotes Tab -->
+        <div id="quotes" class="tab-content">
+            <div class="quote-container">
+                <div class="quote-card">
+                    <p id="daily-quote" class="quote-text">"Loading inspirational quote..."</p>
+                    <p id="quote-author" class="quote-author"></p>
+                </div>
+                <div class="quote-controls">
+                    <button onclick="getNewQuote()" class="quote-btn"><i class="fas fa-sync-alt"></i> New Quote</button>
+                    <button onclick="saveCurrentQuote()" class="quote-btn save-quote-btn"><i class="fas fa-heart"></i> Save</button>
+                </div>
+            </div>
+            <div class="quote-history">
+                <h4><i class="fas fa-heart"></i> Favorite Quotes</h4>
+                <div id="saved-quotes" class="quotes-grid"></div>
+            </div>
         </div>
     </div>
+</div>
 
-    <div id="menuModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Menu</h2>
-            <p>Content for menu goes here.</p>
-        </div>
-    </div>
+<style>
+/* Enhanced Modal Styles */
+.modal-content::before {
+    content: '';
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+.modal-content::after {
+    content: '';
+  position: absolute;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+.modal-content {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 12px 6px rgba(255, 255, 255, 0.6);
+    color: black;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-    <div id="chartModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Charts</h2>
-            <p>Content for charts goes here.</p>
-        </div>
-    </div>
+    overflow-y: auto;
+    animation: fadeInUp 0.5s;
+}
 
-    <div id="bookModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Book</h2>
-            <p>Content for book goes here.</p>
+.book-modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.book-modal-header h2 {
+    font-size: 28px;
+    margin: 10px 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.book-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+    justify-content: center;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: #b58b2e;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(181, 139, 46, 0.3);
+}
+
+.tab-content {
+    display: none;
+    padding: 15px;
+    animation: fadeIn 0.5s;
+}
+
+.tab-content.active {
+    display: block;
+}
+.tab-content {
+    animation: fadeIn 0.3s ease;
+}
+.tab-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.tab-btn.active {
+    background: #b58b2e;
+    color: white;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Enhanced Input Styles */
+.styled-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.styled-input:focus {
+    outline: none;
+    border-color: #b58b2e;
+    box-shadow: 0 0 0 3px rgba(181, 139, 46, 0.3);
+}
+
+.styled-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+
+.styled-select:focus {
+    outline: none;
+    border-color: #b58b2e;
+    box-shadow: 0 0 0 3px rgba(181, 139, 46, 0.3);
+}
+
+.search-box {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.search-btn {
+    padding: 12px 20px;
+    background: #b58b2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-btn:hover {
+    background: #c99d3a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(181, 139, 46, 0.3);
+}
+
+/* Enhanced Flashcard Styles */
+.flashcard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.flashcard {
+    width: 350px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s, box-shadow 0.3s;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.flashcard:hover {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard .front, .flashcard .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.flashcard .front {
+    background: linear-gradient(135deg, #b58b2e, #d4a548);
+    color: white;
+    transform: rotateY(0deg);
+}
+
+.flashcard .back {
+    background: linear-gradient(135deg, #3e3c54, #5a5778);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.flashcard-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.counter {
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
+.flashcard-edit {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.flashcard-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.flashcard-input:focus {
+    outline: none;
+    border-color: #b58b2e;
+}
+
+.add-card-btn {
+    padding: 12px;
+    background: #b58b2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-card-btn:hover {
+    background: #c99d3a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(181, 139, 46, 0.3);
+}
+
+/* Enhanced E-book Styles */
+.ebook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.ebook-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ebook-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.ebook-card h4 {
+    margin: 10px 0 5px;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ebook-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.ebook-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: rgba(181, 139, 46, 0.8);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.ebook-card a:hover {
+    background: #b58b2e;
+}
+
+/* Enhanced Vocabulary Styles */
+.word-of-the-day {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.word-card {
+    background: rgba(181, 139, 46, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border-left: 4px solid #b58b2e;
+}
+
+.word-card p {
+    margin: 8px 0;
+}
+
+.word-card strong {
+    color: #b58b2e;
+}
+
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.history-item p {
+    margin: 5px 0;
+}
+
+.history-item small {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #b58b2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.action-btn:hover {
+    background: #c99d3a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(181, 139, 46, 0.3);
+}
+
+/* Enhanced Journal Styles */
+.journal-editor {
+    margin-bottom: 25px;
+}
+
+.journal-textarea {
+    width: 100%;
+    height: 200px;
+    padding: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    line-height: 1.6;
+    resize: none;
+    transition: all 0.3s;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.journal-textarea:focus {
+    outline: none;
+    border-color: #b58b2e;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(181, 139, 46, 0.3);
+}
+
+.journal-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.save-btn {
+    padding: 12px 20px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.save-btn:hover {
+    background: #2ecc71;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.clear-btn {
+    padding: 12px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clear-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(192, 57, 43, 0.3);
+}
+
+.entries-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 15px;
+    padding-right: 10px;
+}
+
+.journal-entry-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    border-left: 3px solid rgba(181, 139, 46, 0.5);
+}
+
+.journal-entry-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.journal-entry-item small {
+    color: #aaa;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.journal-entry-item p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Enhanced Language Learning Styles */
+.language-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.generate-btn {
+    padding: 12px 15px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.generate-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+}
+
+.language-exercise {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-text {
+    font-size: 18px;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.answer-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.answer-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: #b58b2e;
+    box-shadow: 0 0 0 3px rgba(181, 139, 46, 0.3);
+}
+
+.check-btn {
+    padding: 12px 20px;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.check-btn:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.feedback-text {
+    min-height: 20px;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.language-progress {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-container {
+    margin: 15px 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #b58b2e, #d4a548);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.streak-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.streak-icon {
+    color: #e74c3c;
+    font-size: 20px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Enhanced Recommendations Styles */
+.recommendation-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.recommendation-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.recommendation-card h4 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.recommendation-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.recommendation-card .save-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 12px;
+    font-size: 12px;
+    background: rgba(181, 139, 46, 0.8);
+    border-radius: 5px;
+}
+
+.recommendation-card .save-btn:hover {
+    background: #b58b2e;
+}
+
+.saved-recommendations {
+    margin-top: 30px;
+}
+
+.saved-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.saved-book {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.saved-book:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.saved-book h5 {
+    margin: 0 0 5px;
+    font-size: 15px;
+}
+
+.saved-book p {
+    margin: 0;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.saved-book .watch-btn {
+    display: block;
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: rgba(229, 45, 39, 0.8);
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.saved-book .watch-btn:hover {
+    background: #e52d27;
+}
+
+/* Enhanced Quotes Styles */
+.quote-container {
+    margin-bottom: 25px;
+}
+
+.quote-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 15px;
+    border-left: 5px solid #b58b2e;
+    transition: all 0.3s;
+}
+
+.quote-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quote-text {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 0 15px;
+    font-style: italic;
+}
+
+.quote-author {
+    font-size: 16px;
+    color: #b58b2e;
+    font-weight: bold;
+    margin: 0;
+}
+
+.quote-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.quote-btn {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quote-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.save-quote-btn {
+    background: rgba(231, 76, 60, 0.8);
+}
+
+.save-quote-btn:hover {
+    background: #e74c3c;
+}
+
+.quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.saved-quote {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    position: relative;
+    border-left: 3px solid rgba(231, 76, 60, 0.5);
+}
+
+.saved-quote:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.saved-quote p {
+    margin: 0 0 5px;
+    font-style: italic;
+}
+
+.saved-quote small {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.saved-quote .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.saved-quote .remove-btn:hover {
+    color: #e74c3c;
+}
+
+/* Video Modal */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.video-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.video-modal-content {
+    width: 80%;
+    max-width: 800px;
+    background: #2c3e50;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.close-video {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardFlip {
+    0% { transform: rotateY(0); }
+    50% { transform: rotateY(90deg); }
+    100% { transform: rotateY(180deg); }
+}
+
+.flip-animation {
+    animation: cardFlip 0.6s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .book-tabs {
+        gap: 5px;
+    }
+    
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .flashcard {
+        width: 280px;
+        height: 180px;
+    }
+    
+    .ebook-grid, .resource-grid, .recommendation-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .language-selector {
+        flex-direction: column;
+    }
+    
+    .answer-container {
+        flex-direction: column;
+    }
+}
+</style>
+<script>
+    
+// Achievements
+let achievements = JSON.parse(localStorage.getItem('achievements')) || {
+  pomodoro10: false,
+  tasks50: false,
+  flashcards100: false
+};
+
+function checkAchievements() {
+  if (timerStats.sessionsCompleted >= 10 && !achievements.pomodoro10) {
+    achievements.pomodoro10 = true;
+    showToast('Achievement Unlocked: Pomodoro Pro!');
+  }
+  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+  if (tasks.length >= 50 && !achievements.tasks50) {
+    achievements.tasks50 = true;
+    showToast('Achievement Unlocked: Task Master!');
+  }
+  const flashcards = JSON.parse(localStorage.getItem('flashcards') || '[]');
+  if (flashcards.length >= 100 && !achievements.flashcards100) {
+    achievements.flashcards100 = true;
+    showToast('Achievement Unlocked: Flashcard Guru!');
+  }
+  localStorage.setItem('achievements', JSON.stringify(achievements));
+  saveData('achievements', achievements);
+  displayAchievements();
+}
+
+function displayAchievements() {
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = `
+        ${achievements.pomodoro10 ? '<div class="achievement"><img src="https://i.postimg.cc/JzQQbPr8/trophy.png"> Pomodoro Pro: 10 Sessions</div>' : ''}
+        ${achievements.tasks50 ? '<div class="achievement"><img src="https://i.postimg.cc/JzQQbPr8/trophy.png"> Task Master: 50 Tasks</div>' : ''}
+        ${achievements.flashcards100 ? '<div class="achievement"><img src="https://i.postimg.cc/JzQQbPr8/trophy.png"> Flashcard Guru: 100 Flashcards</div>' : ''}
+        ${Object.values(achievements).every(v => !v) ? '<p>No achievements yet!</p>' : ''}
+    `;
+}
+
+// Progress Dashboard (Update Existing Chart Modal)
+function updateChart() {
+  const ctx = document.getElementById('timerStatsChart').getContext('2d');
+  if (window.timerChart) window.timerChart.destroy();
+  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]').length;
+  const flashcards = JSON.parse(localStorage.getItem('flashcards') || '[]').length;
+  window.timerChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Today', 'Yesterday', '2 Days Ago'], // Simplified; use real dates in production
+      datasets: [
+        { label: 'Study Time (min)', data: [Math.round(timerStats.totalTime / 60), 0, 0], borderColor: '#b58b2e', fill: false },
+        { label: 'Tasks Completed', data: [tasks, 0, 0], borderColor: '#4caf50', fill: false },
+        { label: 'Flashcards Created', data: [flashcards, 0, 0], borderColor: '#2196f3', fill: false }
+      ]
+    },
+    options: {
+      scales: { y: { beginAtZero: true } },
+      plugins: { legend: { display: true } }
+    }
+  });
+  document.getElementById('totalTimeStudied').textContent = `${Math.round(timerStats.totalTime / 60)} min`;
+  document.getElementById('sessionsCompleted').textContent = timerStats.sessionsCompleted;
+  document.getElementById('timerStarts').textContent = timerStats.starts;
+  document.getElementById('timerPauses').textContent = timerStats.pauses;
+}
+
+
+// Menu Modal AI Coach (unchanged)
+async function getStudySuggestions() {
+    try {
+        const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer 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',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'meta-ai/llama-3.1-8b-instruct',
+                messages: [{
+                    role: 'user',
+                    content: `Based on ${timerStats.sessionsCompleted} Pomodoro sessions and ${tasks.length} tasks, suggest a study strategy in 50 words or less.`
+                }]
+            })
+        });
+        const data = await response.json();
+        showToast(data.choices[0].message.content);
+    } catch (e) {
+        showToast('Error fetching AI suggestions');
+        console.error(e);
+    }
+}
+
+// AI-Generated Flashcards
+async function generateFlashcards() {
+  const topic = document.getElementById('flashcardTopic').value.trim();
+  if (!topic) {
+    showToast('Please enter a topic');
+    return;
+  }
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'deepseek/deepseek-chat-v3-0324:free',
+        messages: [{
+          role: 'user',
+          content: `Generate 5 flashcards for ${topic} in JSON format: [{question, answer}, ...]`
+        }]
+      })
+    });
+    const data = await response.json();
+    let flashcards = JSON.parse(localStorage.getItem('flashcards') || '[]');
+    const newFlashcards = JSON.parse(data.choices[0].message.content);
+    flashcards.push(...newFlashcards);
+    localStorage.setItem('flashcards', JSON.stringify(flashcards));
+    saveData('flashcards', flashcards);
+    showToast('Flashcards generated!');
+    checkAchievements();
+    // Update flashcard display (assuming existing display function)
+    displayFlashcards();
+  } catch (e) {
+    showToast('Error generating flashcards');
+    console.error(e);
+  }
+}
+
+// Note-Taking Editor
+const quill = new Quill('#editor', { theme: 'snow' });
+async function saveNotes() {
+  const notes = quill.root.innerHTML;
+  localStorage.setItem('notes', notes);
+  await saveData('notes', notes);
+  showToast('Notes saved!');
+}
+
+async function loadNotes() {
+  const notes = await getData('notes') || localStorage.getItem('notes') || '';
+  quill.root.innerHTML = notes;
+}
+
+// Study Calendar
+let currentDate = new Date();
+async function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  document.getElementById('calendarMonth').textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  let html = '<div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>';
+  for (let i = 0; i < firstDay; i++) html += '<div></div>';
+  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+  const timerSessions = JSON.parse(localStorage.getItem('timerStats') || '{}').sessionsCompleted || 0;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = `${year}-${month + 1}-${day}`;
+    const hasEvent = tasks.some(t => t.date === date) || (timerSessions > 0 && day === new Date().getDate());
+    html += `<div class="calendar-day ${hasEvent ? 'event' : ''}">${day}</div>`;
+  }
+  document.getElementById('calendarView').innerHTML = html;
+}
+
+function prevMonth() {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar();
+}
+
+function nextMonth() {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar();
+}
+
+// Service Worker for Offline Mode
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(e => console.error('Service Worker error:', e));
+}
+
+// Modal Handling
+document.addEventListener('DOMContentLoaded', async () => {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+    const content = modal.querySelector('.modal-content');
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.classList.contains('close')) {
+        content.classList.remove('animate__fadeInUp');
+        content.classList.add('animate__fadeOutDown');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          content.classList.remove('animate__fadeOutDown');
+        }, 500);
+      }
+    });
+  });
+  
+  // Footer Icon Bindings
+  document.querySelectorAll('.icon[data-modal="achievementsModal"]').forEach(icon => {
+    icon.addEventListener('click', () => {
+      document.getElementById('achievementsModal').style.display = 'block';
+      document.getElementById('achievementsModal').querySelector('.modal-content').classList.add('animate__fadeInUp');
+      displayAchievements();
+    });
+  });
+  
+  document.querySelectorAll('.icon[data-modal="notesModal"]').forEach(icon => {
+    icon.addEventListener('click', () => {
+      document.getElementById('notesModal').style.display = 'block';
+      document.getElementById('notesModal').querySelector('.modal-content').classList.add('animate__fadeInUp');
+      loadNotes();
+    });
+  });
+  
+  document.querySelectorAll('.icon[data-modal="calendarModal"]').forEach(icon => {
+    icon.addEventListener('click', () => {
+      document.getElementById('calendarModal').style.display = 'block';
+      document.getElementById('calendarModal').querySelector('.modal-content').classList.add('animate__fadeInUp');
+      renderCalendar();
+    });
+  });
+  
+  document.querySelectorAll('.icon[data-modal="menuModal"]').forEach(icon => {
+    icon.addEventListener('click', () => {
+      document.getElementById('menuModal').style.display = 'block';
+      document.getElementById('menuModal').querySelector('.modal-content').classList.add('animate__fadeInUp');
+    });
+  });
+  
+  // Update existing timer completion to check achievements
+  const originalCompleteTimer = completeTimer;
+  completeTimer = function() {
+    originalCompleteTimer();
+    checkAchievements();
+  };
+  
+  // Load initial data
+  achievements = (await getData('achievements')) || achievements;
+  localStorage.setItem('achievements', JSON.stringify(achievements));
+});
+
+// Toast Notification
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Placeholder for existing displayFlashcards function
+function displayFlashcards() {
+  const flashcards = JSON.parse(localStorage.getItem('flashcards') || '[]');
+  document.getElementById('flashcardContainer').innerHTML = flashcards.map(f => `<div>${f.question} - ${f.answer}</div>`).join('');
+}
+
+
+// Modal Handling
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.error(`Modal with ID ${modalId} not found`);
+        showToast(`Error: Modal ${modalId} not found`);
+        return;
+    }
+    modal.style.display = 'block';
+    const content = modal.querySelector('.modal-content');
+    content.classList.remove('animate__fadeOutDown');
+    content.classList.add('animate__fadeInUp');
+    console.log(`Opened modal: ${modalId}`);
+
+    // Initialize modal-specific content
+    if (modalId === 'achievementsModal') {
+        displayAchievements();
+    } else if (modalId === 'notesModal') {
+        loadNotes();
+    } else if (modalId === 'calendarModal') {
+        renderCalendar();
+    } else if (modalId === 'clockModal') {
+        initTimer();
+    } else if (modalId === 'chartModal') {
+        updateChart();
+    } else if (modalId === 'flashcardModal') {
+        displayFlashcards();
+    }
+}
+
+function closeModal(modal) {
+    const content = modal.querySelector('.modal-content');
+    content.classList.remove('animate__fadeInUp');
+    content.classList.add('animate__fadeOutDown');
+    setTimeout(() => {
+        modal.style.display = 'none';
+        content.classList.remove('animate__fadeOutDown');
+    }, 500);
+}
+
+// Event Listeners for Modals
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle modal close
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('close')) {
+                closeModal(modal);
+                console.log(`Closed modal: ${modal.id}`);
+            }
+        });
+    });
+
+// Ensure timer completion checks achievements
+const originalCompleteTimer = window.completeTimer || function() {};
+window.completeTimer = function() {
+    originalCompleteTimer();
+    checkAchievements();
+};
+    // Load initial data
+    getData('achievements').then(data => {
+        if (data) {
+            achievements = data;
+            localStorage.setItem('achievements', JSON.stringify(achievements));
+        }
+    });
+    checkAchievements();
+});
+
+</script>
+
+
+<script>
+// API Keys
+const YOUTUBE_API_KEY = 'AIzaSyCodEW65L1FtiBDym5R1gK2XKQuY-FUJYw';
+const OPENROUTER_API_KEY = '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';
+const QUOTES_API_KEY = 'XTd7kx/vc1AYNGGOiZXazw==aqrzWsbH4YgyAUPj';
+
+// Global Variables
+let currentVideoId = '';
+
+// Initialize when modal opens
+document.querySelector('.icon[data-modal="bookModal"]').addEventListener('click', function() {
+    // Load initial data for each tab
+    initFlashcards();
+    updateWordHistory();
+    updateJournalHistory();
+    updateSavedQuotes();
+    loadSavedRecommendations();
+    
+    // Generate initial content
+    getNewWord();
+    getNewQuote();
+    generateLanguageExercise();
+    
+    // Load progress data
+    updateProgressDisplay();
+});
+
+// 1. E-book Reader (Fixed with Project Gutenberg API)
+function searchBooks() {
+    const query = document.getElementById('book-search').value.trim();
+    if (!query) {
+        alert('Please enter a search term');
+        return;
+    }
+    
+    const resultsContainer = document.getElementById('ebook-results');
+    resultsContainer.innerHTML = '<p class="loading-text">Searching for books...</p>';
+    
+    fetch(`https://gutendex.com/books/?search=${encodeURIComponent(query)}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            resultsContainer.innerHTML = '';
+            
+            if (data.results && data.results.length > 0) {
+                data.results.slice(0, 12).forEach(book => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'ebook-card';
+                    bookCard.innerHTML = `
+                        <h4 title="${book.title}">${book.title.length > 20 ? book.title.substring(0, 20) + '...' : book.title}</h4>
+                        <p>${book.authors[0]?.name || 'Unknown author'}</p>
+                        <div class="ebook-actions">
+                            <a href="https://www.gutenberg.org/ebooks/${book.id}" target="_blank" class="read-btn">Read</a>
+                            <button onclick="showBookDetails(${book.id})" class="details-btn">Details</button>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(bookCard);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p class="no-results">No books found. Try a different search.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching books:', error);
+            resultsContainer.innerHTML = '<p class="error-text">Error loading books. Please try again later.</p>';
+        });
+}
+
+function showBookDetails(bookId) {
+    fetch(`https://gutendex.com/books/${bookId}`)
+        .then(response => response.json())
+        .then(book => {
+            const detailsHTML = `
+                <div class="book-details">
+                    <h3>${book.title}</h3>
+                    <p><strong>Author:</strong> ${book.authors.map(a => a.name).join(', ')}</p>
+                    <p><strong>Subjects:</strong> ${book.subjects?.slice(0, 5).join(', ') || 'Not specified'}</p>
+                    <p><strong>Languages:</strong> ${book.languages.join(', ')}</p>
+                    <div class="detail-actions">
+                        <a href="https://www.gutenberg.org/ebooks/${book.id}" target="_blank" class="read-btn">Read Online</a>
+                        <button onclick="closeDetails()" class="close-details-btn">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            const detailsModal = document.createElement('div');
+            detailsModal.className = 'details-modal';
+            detailsModal.innerHTML = detailsHTML;
+            document.body.appendChild(detailsModal);
+            
+            // Add animation
+            setTimeout(() => {
+                detailsModal.style.opacity = '1';
+                detailsModal.style.transform = 'translateY(0)';
+            }, 10);
+        });
+}
+
+function closeDetails() {
+    const modal = document.querySelector('.details-modal');
+    if (modal) {
+        modal.style.opacity = '0';
+        modal.style.transform = 'translateY(20px)';
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+// 2. Enhanced Flashcards System
+let flashcards = JSON.parse(localStorage.getItem('studyFlashcards')) || [];
+let currentCardIndex = 0;
+
+function initFlashcards() {
+    if (flashcards.length > 0) {
+        updateFlashcardDisplay();
+    } else {
+        document.querySelector('.flashcard .front').textContent = 'Click to add flashcards';
+        document.querySelector('.flashcard .back').textContent = 'Your answer here';
+        document.getElementById('card-count').textContent = '0/0';
+    }
+}
+
+function flipCard(card) {
+    if (flashcards.length === 0) return;
+    card.classList.toggle('flipped');
+}
+
+function updateFlashcardDisplay() {
+    if (flashcards.length === 0) return;
+    
+    const card = document.querySelector('.flashcard');
+    card.querySelector('.front').textContent = flashcards[currentCardIndex].question;
+    card.querySelector('.back').textContent = flashcards[currentCardIndex].answer;
+    document.getElementById('card-count').textContent = `${currentCardIndex + 1}/${flashcards.length}`;
+    
+    // Reset flip state if needed
+    if (card.classList.contains('flipped')) {
+        setTimeout(() => card.classList.remove('flipped'), 10);
+    }
+}
+
+function nextCard() {
+    if (flashcards.length === 0) return;
+    currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+    updateFlashcardDisplay();
+}
+
+function prevCard() {
+    if (flashcards.length === 0) return;
+    currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+    updateFlashcardDisplay();
+}
+
+function addFlashcard() {
+    const question = document.getElementById('new-question').value.trim();
+    const answer = document.getElementById('new-answer').value.trim();
+    
+    if (!question || !answer) {
+        alert('Please enter both question and answer');
+        return;
+    }
+    
+    flashcards.push({ question, answer });
+    localStorage.setItem('studyFlashcards', JSON.stringify(flashcards));
+    
+    // Clear inputs
+    document.getElementById('new-question').value = '';
+    document.getElementById('new-answer').value = '';
+    
+    // Update display if first card
+    if (flashcards.length === 1) {
+        currentCardIndex = 0;
+        updateFlashcardDisplay();
+    }
+    
+    // Show confirmation
+    showToast('Flashcard added successfully!');
+}
+
+// 3. Resources Library (OpenLibrary API)
+function searchResources() {
+    const query = document.getElementById('resource-search').value.trim();
+    if (!query) {
+        alert('Please enter a search term');
+        return;
+    }
+    
+    const resultsContainer = document.getElementById('resource-results');
+    resultsContainer.innerHTML = '<p class="loading-text">Searching resources...</p>';
+    
+    fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=12`)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            resultsContainer.innerHTML = '';
+            
+            if (data.docs && data.docs.length > 0) {
+                data.docs.forEach(book => {
+                    const coverId = book.cover_i;
+                    const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : 'https://via.placeholder.com/150x200?text=No+Cover';
+                    
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'resource-card';
+                    bookCard.innerHTML = `
+                        <img src="${coverUrl}" alt="${book.title}" class="resource-cover">
+                        <h4 title="${book.title}">${book.title.length > 20 ? book.title.substring(0, 20) + '...' : book.title}</h4>
+                        <p>${book.author_name?.[0] || 'Unknown author'}</p>
+                        <div class="resource-actions">
+                            <a href="https://openlibrary.org${book.key}" target="_blank" class="details-btn">Details</a>
+                            <button onclick="searchRelatedVideos('${book.title} ${book.author_name?.[0] || ''}')" class="video-btn">
+                                <i class="fab fa-youtube"></i> Videos
+                            </button>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(bookCard);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p class="no-results">No resources found. Try a different search.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching resources:', error);
+            resultsContainer.innerHTML = '<p class="error-text">Error loading resources. Please try again later.</p>';
+        });
+}
+
+// 4. Daily Vocabulary (Enhanced with OpenRouter API)
+async function getNewWord() {
+    try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "deepseek/deepseek-r1-0528:free",
+                messages: [{
+                    role: "user",
+                    content: "Provide an English vocabulary word with its Hindi meaning and an example sentence. Format as: Word: [word] | Hindi: [hindi] | Example: [sentence]"
+                }]
+            })
+        });
+        
+        if (!response.ok) throw new Error('API request failed');
+        
+        const data = await response.json();
+        const wordData = parseWordResponse(data.choices[0].message.content);
+        
+        // Save to history
+        const wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
+        wordHistory.unshift({
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            ...wordData
+        });
+        localStorage.setItem('wordHistory', JSON.stringify(wordHistory.slice(0, 20)));
+        
+        displayWord(wordData);
+        updateWordHistory();
+        showToast('New word generated!');
+    } catch (error) {
+        console.error('Error fetching word:', error);
+        document.getElementById('daily-word').innerHTML = '<p class="error-text">Error loading word. Please try again.</p>';
+    }
+}
+
+function parseWordResponse(response) {
+    const parts = response.split('|').map(part => part.split(':')[1].trim());
+    return {
+        word: parts[0],
+        hindi: parts[1],
+        example: parts[2]
+    };
+}
+
+function displayWord(wordData) {
+    const wordContainer = document.getElementById('daily-word');
+    wordContainer.innerHTML = `
+        <p><strong>Word:</strong> ${wordData.word}</p>
+        <p><strong>Hindi:</strong> ${wordData.hindi}</p>
+        <p><strong>Example:</strong> ${wordData.example}</p>
+    `;
+}
+
+function updateWordHistory() {
+    const wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
+    const historyContainer = document.getElementById('word-history-list');
+    
+    historyContainer.innerHTML = wordHistory.map((item, index) => `
+        <div class="history-item" onclick="showWordDetails(${index})">
+            <p><strong>${item.word}</strong> (${item.hindi})</p>
+            <small>${item.date} ${item.time}</small>
         </div>
-    </div>
+    `).join('');
+}
+
+function showWordDetails(index) {
+    const wordHistory = JSON.parse(localStorage.getItem('wordHistory')) || [];
+    if (index >= 0 && index < wordHistory.length) {
+        const word = wordHistory[index];
+        document.getElementById('daily-word').innerHTML = `
+            <p><strong>Word:</strong> ${word.word}</p>
+            <p><strong>Hindi:</strong> ${word.hindi}</p>
+            <p><strong>Example:</strong> ${word.example}</p>
+            <small>Saved on ${word.date} at ${word.time}</small>
+        `;
+    }
+}
+
+// 5. Enhanced Journal with Attractive Design
+function saveJournalEntry() {
+    const entry = document.getElementById('journal-entry').value.trim();
+    if (!entry) {
+        alert('Please write something before saving');
+        return;
+    }
+    
+    const journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+    journalEntries.unshift({
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+        content: entry
+    });
+    
+    localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+    document.getElementById('journal-entry').value = '';
+    updateJournalHistory();
+    showToast('Journal entry saved!');
+    
+    // Add celebration effect
+    celebrateSave();
+}
+
+function clearJournalEntry() {
+    if (confirm('Are you sure you want to clear your current journal entry?')) {
+        document.getElementById('journal-entry').value = '';
+    }
+}
+
+function updateJournalHistory() {
+    const journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+    const entriesContainer = document.getElementById('journal-entries');
+    
+    entriesContainer.innerHTML = journalEntries.map((entry, index) => `
+        <div class="journal-entry-item" onclick="viewJournalEntry(${index})">
+            <small>${entry.date} at ${entry.time}</small>
+            <p>${entry.content.length > 100 ? entry.content.substring(0, 100) + '...' : entry.content}</p>
+        </div>
+    `).join('');
+}
+
+function viewJournalEntry(index) {
+    const journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+    if (index >= 0 && index < journalEntries.length) {
+        const entry = journalEntries[index];
+        document.getElementById('journal-entry').value = entry.content;
+        showToast(`Loaded entry from ${entry.date}`);
+    }
+}
+
+function celebrateSave() {
+    const journalTextarea = document.getElementById('journal-entry');
+    journalTextarea.style.transition = 'all 0.3s';
+    journalTextarea.style.boxShadow = '0 0 15px rgba(181, 139, 46, 0.7)';
+    
+    setTimeout(() => {
+        journalTextarea.style.boxShadow = 'none';
+    }, 1000);
+    
+    // Add confetti effect
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    document.querySelector('.journal-editor').appendChild(confetti);
+    
+    setTimeout(() => {
+        confetti.remove();
+    }, 2000);
+}
+
+// 6. Enhanced Language Learning with Progress Tracking
+let currentExercise = null;
+
+async function generateLanguageExercise() {
+    const language = document.getElementById('language-select').value;
+    let prompt = '';
+    let languageName = document.getElementById('language-select').options[document.getElementById('language-select').selectedIndex].text;
+    
+    prompt = `Provide a simple English sentence to translate to ${languageName}, along with the correct translation. Format as: English: [sentence] | ${languageName}: [translation]`;
+    
+    try {
+        document.getElementById('exercise-text').textContent = 'Generating exercise...';
+        document.getElementById('exercise-feedback').textContent = '';
+        
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "deepseek/deepseek-r1-0528:free",
+                messages: [{
+                    role: "user",
+                    content: prompt
+                }]
+            })
+        });
+        
+        if (!response.ok) throw new Error('API request failed');
+        
+        const data = await response.json();
+        currentExercise = parseLanguageResponse(data.choices[0].message.content);
+        
+        localStorage.setItem('currentExercise', JSON.stringify(currentExercise));
+        document.getElementById('exercise-text').textContent = currentExercise.english;
+        document.getElementById('exercise-answer').value = '';
+        document.getElementById('exercise-feedback').textContent = '';
+        
+        showToast('New exercise generated!');
+    } catch (error) {
+        console.error('Error generating exercise:', error);
+        document.getElementById('exercise-text').textContent = 'Error generating exercise. Please try again.';
+        document.getElementById('exercise-feedback').textContent = '';
+    }
+}
+
+function parseLanguageResponse(response) {
+    const parts = response.split('|').map(part => part.split(':')[1].trim());
+    return {
+        english: parts[0],
+        translation: parts[1]
+    };
+}
+
+function checkTranslation() {
+    if (!currentExercise) {
+        alert('Please generate an exercise first');
+        return;
+    }
+    
+    const userAnswer = document.getElementById('exercise-answer').value.trim();
+    if (!userAnswer) {
+        alert('Please enter your translation');
+        return;
+    }
+    
+    const feedbackElement = document.getElementById('exercise-feedback');
+    
+    // Simple check - could be enhanced with NLP in a real app
+    if (userAnswer.toLowerCase() === currentExercise.translation.toLowerCase()) {
+        feedbackElement.textContent = 'Correct! Well done!';
+        feedbackElement.style.color = '#2ecc71';
+        updateLanguageProgress(true);
+        
+        // Add celebration effect
+        celebrateCorrectAnswer();
+    } else {
+        feedbackElement.textContent = `Almost! The correct translation is: ${currentExercise.translation}`;
+        feedbackElement.style.color = '#e74c3c';
+        updateLanguageProgress(false);
+    }
+}
+
+function updateLanguageProgress(isCorrect) {
+    const progress = JSON.parse(localStorage.getItem('languageProgress')) || {
+        attempts: 0,
+        correct: 0,
+        streak: 0,
+        lastLanguage: ''
+    };
+    
+    const currentLanguage = document.getElementById('language-select').value;
+    
+    // Reset streak if language changed or answer was wrong
+    if (progress.lastLanguage !== currentLanguage) {
+        progress.streak = 0;
+    }
+    
+    progress.lastLanguage = currentLanguage;
+    progress.attempts++;
+    
+    if (isCorrect) {
+        progress.correct++;
+        progress.streak++;
+    } else {
+        progress.streak = 0;
+    }
+    
+    localStorage.setItem('languageProgress', JSON.stringify(progress));
+    updateProgressDisplay();
+}
+
+function updateProgressDisplay() {
+    const progress = JSON.parse(localStorage.getItem('languageProgress')) || {
+        attempts: 0,
+        correct: 0,
+        streak: 0
+    };
+    
+    const progressPercentage = progress.attempts > 0 ? Math.round((progress.correct / progress.attempts) * 100) : 0;
+    document.getElementById('language-progress').style.width = `${progressPercentage}%`;
+    document.getElementById('progress-text').textContent = 
+        `${progress.correct} correct (${progressPercentage}%)`;
+    document.getElementById('streak-count').textContent = progress.streak;
+    
+    // Animate streak if > 0
+    if (progress.streak > 0) {
+        document.querySelector('.streak-icon').style.animation = 'pulse 1.5s infinite';
+    } else {
+        document.querySelector('.streak-icon').style.animation = 'none';
+    }
+}
+
+function celebrateCorrectAnswer() {
+    const feedbackElement = document.getElementById('exercise-feedback');
+    feedbackElement.style.transition = 'all 0.3s';
+    feedbackElement.style.transform = 'scale(1.1)';
+    
+    setTimeout(() => {
+        feedbackElement.style.transform = 'scale(1)';
+    }, 300);
+    
+    // Add confetti for streaks
+    const progress = JSON.parse(localStorage.getItem('languageProgress')) || {streak: 0};
+    if (progress.streak >= 3) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        document.querySelector('.language-exercise').appendChild(confetti);
+        
+        setTimeout(() => {
+            confetti.remove();
+        }, 2000);
+    }
+}
+
+// 7. Enhanced Book Recommendations with YouTube Videos
+function getBookRecommendations() {
+    const genre = document.getElementById('genre-select').value;
+    const recommendations = getMockRecommendations(genre);
+    const container = document.getElementById('book-recommendations');
+    
+    container.innerHTML = '';
+    
+    recommendations.forEach(book => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'recommendation-card';
+        bookCard.innerHTML = `
+            <h4 title="${book.title}">${book.title.length > 25 ? book.title.substring(0, 25) + '...' : book.title}</h4>
+            <p>${book.author}</p>
+            <div class="recommendation-actions">
+                <button onclick="saveRecommendation('${book.title.replace("'", "\\'")}', '${book.author.replace("'", "\\'")}')" class="save-btn">
+                    <i class="fas fa-bookmark"></i> Save
+                </button>
+                <button onclick="searchRelatedVideos('${book.title} ${book.author}')" class="video-btn">
+                    <i class="fab fa-youtube"></i> Videos
+                </button>
+            </div>
+        `;
+        container.appendChild(bookCard);
+    });
+}
+
+function getMockRecommendations(genre) {
+    // This is a mock function - in a real app you would use an API
+    const allRecommendations = {
+        fiction: [
+            { title: "To Kill a Mockingbird", author: "Harper Lee" },
+            { title: "1984", author: "George Orwell" },
+            { title: "The Great Gatsby", author: "F. Scott Fitzgerald" }
+        ],
+        science: [
+            { title: "A Brief History of Time", author: "Stephen Hawking" },
+            { title: "The Selfish Gene", author: "Richard Dawkins" },
+            { title: "Cosmos", author: "Carl Sagan" }
+        ],
+        history: [
+            { title: "Sapiens", author: "Yuval Noah Harari" },
+            { title: "Guns, Germs, and Steel", author: "Jared Diamond" },
+            { title: "The Diary of a Young Girl", author: "Anne Frank" }
+        ],
+        technology: [
+            { title: "Clean Code", author: "Robert C. Martin" },
+            { title: "Design Patterns", author: "Gang of Four" },
+            { title: "The Pragmatic Programmer", author: "Andrew Hunt" }
+        ],
+        biography: [
+            { title: "Long Walk to Freedom", author: "Nelson Mandela" },
+            { title: "The Autobiography of Malcolm X", author: "Malcolm X" },
+            { title: "Steve Jobs", author: "Walter Isaacson" }
+        ]
+    };
+    
+    return allRecommendations[genre] || [];
+}
+
+function saveRecommendation(title, author) {
+    const savedBooks = JSON.parse(localStorage.getItem('savedRecommendations')) || [];
+    
+    // Check if already saved
+    if (savedBooks.some(book => book.title === title && book.author === author)) {
+        showToast('This book is already saved!');
+        return;
+    }
+    
+    savedBooks.push({ 
+        title, 
+        author, 
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    });
+    
+    localStorage.setItem('savedRecommendations', JSON.stringify(savedBooks));
+    loadSavedRecommendations();
+    showToast('Book saved to recommendations!');
+}
+
+function loadSavedRecommendations() {
+    const savedBooks = JSON.parse(localStorage.getItem('savedRecommendations')) || [];
+    const container = document.getElementById('saved-books');
+    
+    container.innerHTML = '';
+    
+    savedBooks.forEach((book, index) => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'saved-book';
+        bookCard.innerHTML = `
+            <h5 title="${book.title}">${book.title.length > 20 ? book.title.substring(0, 20) + '...' : book.title}</h5>
+            <p>${book.author}</p>
+            <small>Saved on ${book.date}</small>
+            <div class="saved-actions">
+                <a href="#" onclick="searchRelatedVideos('${book.title} ${book.author}'); return false;" class="watch-btn">
+                    <i class="fab fa-youtube"></i> Watch Videos
+                </a>
+                <button onclick="removeRecommendation(${index})" class="remove-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(bookCard);
+    });
+}
+
+function removeRecommendation(index) {
+    const savedBooks = JSON.parse(localStorage.getItem('savedRecommendations')) || [];
+    if (index >= 0 && index < savedBooks.length) {
+        savedBooks.splice(index, 1);
+        localStorage.setItem('savedRecommendations', JSON.stringify(savedBooks));
+        loadSavedRecommendations();
+        showToast('Recommendation removed');
+    }
+}
+
+async function searchRelatedVideos(query) {
+    if (!query) return;
+    
+    try {
+        showVideoModal();
+        document.querySelector('.video-modal-content').innerHTML = `
+            <div class="video-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Searching for videos about "${query}"...</p>
+            </div>
+        `;
+        
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${encodeURIComponent(query)} book review&type=video&key=${YOUTUBE_API_KEY}`);
+        
+        if (!response.ok) throw new Error('YouTube API request failed');
+        
+        const data = await response.json();
+        
+        if (data.items && data.items.length > 0) {
+            const videosHTML = data.items.map(video => `
+                <div class="video-item" onclick="playVideo('${video.id.videoId}')">
+                    <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}">
+                    <div class="video-info">
+                        <h4>${video.snippet.title}</h4>
+                        <p>${video.snippet.channelTitle}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.querySelector('.video-modal-content').innerHTML = `
+                <button class="close-video" onclick="closeVideoModal()">&times;</button>
+                <h3>Videos about "${query}"</h3>
+                <div class="video-list">
+                    ${videosHTML}
+                </div>
+            `;
+        } else {
+            document.querySelector('.video-modal-content').innerHTML = `
+                <button class="close-video" onclick="closeVideoModal()">&times;</button>
+                <p class="no-videos">No videos found for "${query}"</p>
+            `;
+        }
+    } catch (error) {
+        console.error('Error fetching videos:', error);
+        document.querySelector('.video-modal-content').innerHTML = `
+            <button class="close-video" onclick="closeVideoModal()">&times;</button>
+            <p class="error-text">Error loading videos. Please try again later.</p>
+        `;
+    }
+}
+
+function playVideo(videoId) {
+    currentVideoId = videoId;
+    document.querySelector('.video-modal-content').innerHTML = `
+        <button class="close-video" onclick="closeVideoModal()">&times;</button>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>
+        </div>
+    `;
+}
+
+function showVideoModal() {
+    const modal = document.querySelector('.video-modal');
+    if (!modal) {
+        const videoModal = document.createElement('div');
+        videoModal.className = 'video-modal';
+        videoModal.innerHTML = `
+            <div class="video-modal-content"></div>
+        `;
+        document.body.appendChild(videoModal);
+    }
+    document.querySelector('.video-modal').classList.add('active');
+}
+
+function closeVideoModal() {
+    document.querySelector('.video-modal').classList.remove('active');
+}
+
+// 8. Enhanced Quotes Generator
+async function getNewQuote() {
+    try {
+        document.getElementById('daily-quote').textContent = 'Loading new quote...';
+        document.getElementById('quote-author').textContent = '';
+        
+        const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
+            headers: {
+                'X-Api-Key': QUOTES_API_KEY
+            }
+        });
+        
+        if (!response.ok) throw new Error('API request failed');
+        
+        const data = await response.json();
+        if (data && data.length > 0) {
+            const quote = data[0];
+            document.getElementById('daily-quote').textContent = `"${quote.quote}"`;
+            document.getElementById('quote-author').textContent = `— ${quote.author}`;
+            
+            // Store current quote
+            localStorage.setItem('currentQuote', JSON.stringify(quote));
+            
+            // Add animation
+            animateQuoteChange();
+        }
+    } catch (error) {
+        console.error('Error fetching quote:', error);
+        document.getElementById('daily-quote').textContent = 'Error loading quote. Please try again.';
+        document.getElementById('quote-author').textContent = '';
+    }
+}
+
+function animateQuoteChange() {
+    const quoteCard = document.querySelector('.quote-card');
+    quoteCard.style.animation = 'none';
+    void quoteCard.offsetWidth; // Trigger reflow
+    quoteCard.style.animation = 'fadeIn 0.5s';
+}
+
+function saveCurrentQuote() {
+    const quote = JSON.parse(localStorage.getItem('currentQuote'));
+    if (!quote) {
+        alert('No quote to save. Please generate one first.');
+        return;
+    }
+    
+    const savedQuotes = JSON.parse(localStorage.getItem('savedQuotes')) || [];
+    
+    // Check if already saved
+    if (savedQuotes.some(q => q.quote === quote.quote && q.author === quote.author)) {
+        showToast('This quote is already saved!');
+        return;
+    }
+    
+    savedQuotes.push({
+        ...quote,
+        date: new Date().toLocaleDateString()
+    });
+    
+    localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
+    updateSavedQuotes();
+    showToast('Quote saved to favorites!');
+}
+
+function updateSavedQuotes() {
+    const savedQuotes = JSON.parse(localStorage.getItem('savedQuotes')) || [];
+    const container = document.getElementById('saved-quotes');
+    
+    container.innerHTML = '';
+    
+    savedQuotes.forEach((quote, index) => {
+        const quoteElement = document.createElement('div');
+        quoteElement.className = 'saved-quote';
+        quoteElement.innerHTML = `
+            <p>"${quote.quote}"</p>
+            <small>— ${quote.author}</small>
+            <div class="quote-meta">
+                <small>Saved on ${quote.date}</small>
+                <button onclick="removeQuote(${index})" class="remove-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(quoteElement);
+    });
+}
+
+function removeQuote(index) {
+    const savedQuotes = JSON.parse(localStorage.getItem('savedQuotes')) || [];
+    if (index >= 0 && index < savedQuotes.length) {
+        savedQuotes.splice(index, 1);
+        localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
+        updateSavedQuotes();
+        showToast('Quote removed');
+    }
+}
+
+// Helper Functions
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Initialize video modal HTML
+document.addEventListener('DOMContentLoaded', function() {
+    const videoModal = document.createElement('div');
+    videoModal.className = 'video-modal';
+    videoModal.innerHTML = `
+        <div class="video-modal-content"></div>
+    `;
+    document.body.appendChild(videoModal);
+    
+    // Close modal when clicking outside
+    videoModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeVideoModal();
+        }
+    });
+});
+
+// Add confetti styles
+const confettiStyle = document.createElement('style');
+confettiStyle.textContent = `
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #b58b2e;
+    opacity: 0.7;
+    border-radius: 50%;
+    animation: confetti-fall 2s linear forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+.details-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3e3c54;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 500px;
+    width: 90%;
+    opacity: 0;
+    transform: translate(-50%, -60%);
+    transition: all 0.3s;
+}
+
+.book-details {
+    color: white;
+}
+
+.book-details h3 {
+    margin-top: 0;
+    color: #b58b2e;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.read-btn {
+    padding: 10px 15px;
+    background: #b58b2e;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.read-btn:hover {
+    background: #c99d3a;
+}
+
+.close-details-btn {
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.close-details-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.loading-text, .no-results, .error-text {
+    text-align: center;
+    padding: 20px;
+}
+
+.ebook-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.details-btn {
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.details-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.video-btn {
+    padding: 6px 10px;
+    background: rgba(229, 45, 39, 0.8);
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.video-btn:hover {
+    background: #e52d27;
+}
+
+.resource-cover {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.resource-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.video-loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.video-loading i {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #b58b2e;
+}
+
+.video-list {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.video-item {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.video-item img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.video-info {
+    flex: 1;
+}
+
+.video-info h4 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.video-info p {
+    margin: 0;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.no-videos {
+    text-align: center;
+    padding: 40px;
+    color: #aaa;
+}
+
+.recommendation-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.saved-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.remove-btn:hover {
+    color: #e74c3c;
+}
+
+.quote-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+`;
+document.head.appendChild(confettiStyle);
+</script>
+<script>
+// Tab functionality - Fixed version
+function openTab(tabId, event) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show the selected tab content
+    document.getElementById(tabId).classList.add('active');
+    
+    // Add active class to the clicked tab button
+    event.currentTarget.classList.add('active');
+    
+    // Load content for the selected tab
+    loadTabContent(tabId);
+}
+
+function loadTabContent(tabId) {
+    switch(tabId) {
+        case 'ebook-reader':
+            // No need to load anything initially for ebooks
+            break;
+        case 'flashcards':
+            initFlashcards();
+            break;
+        case 'resources':
+            // No need to load anything initially for resources
+            break;
+        case 'vocabulary':
+            if (!document.getElementById('daily-word').textContent.includes('Word:')) {
+                getNewWord();
+            }
+            updateWordHistory();
+            break;
+        case 'journal':
+            updateJournalHistory();
+            break;
+        case 'language':
+            updateProgressDisplay();
+            if (!currentExercise) {
+                generateLanguageExercise();
+            }
+            break;
+        case 'recommendations':
+            loadSavedRecommendations();
+            break;
+        case 'quotes':
+            if (!JSON.parse(localStorage.getItem('currentQuote'))) {
+                getNewQuote();
+            }
+            updateSavedQuotes();
+            break;
+    }
+}
+
+// Update your tab buttons in HTML to pass the event:
+// <button class="tab-btn" onclick="openTab('journal', event)">Journal</button>
+
+// Initialize the first tab when modal opens
+document.querySelector('.icon[data-modal="bookModal"]').addEventListener('click', function() {
+    // Set the first tab as active
+    document.querySelector('.tab-btn').classList.add('active');
+    document.querySelector('.tab-content').classList.add('active');
+    
+    // Load content for the first tab
+    loadTabContent('ebook-reader');
+});
+</script>
 <div id="helpModal" class="modal">
     <div class="modal-content animate__animated animate__fadeInUp">
         <span class="close">&times;</span>
@@ -1469,7 +4991,7 @@ align-items: center;
 
 @keyframes fadeInUp {
     from {
-        opacity: 0;
+          opacity: 0;
         transform: translate3d(0, 30px, 0);
     }
     to {
