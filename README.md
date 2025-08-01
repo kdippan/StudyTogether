@@ -29,3 +29,4 @@ Uses free AI models like:
 
 API Key used in the project: #OpenRouterAPI
 **https://studytogetherapp.netlify.app/**
+[![Synopsys Intelligent Security Scan](https://github.com/kdippan/StudyTogether/actions/workflows/synopsys-io.yml/badge.svg)](https://github.com/kdippan/StudyTogether/actions/workflows/synopsys-io.yml)
