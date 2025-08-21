@@ -1,0 +1,439 @@
+/* Themes CSS - Light, Dark, AMOLED themes */
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing);
+}
+
+.theme-toggle:hover {
+  background: var(--card);
+}
+
+.theme-toggle-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text);
+  transition: transform var(--duration-normal) var(--easing);
+}
+
+.theme-toggle[data-theme="dark"] .theme-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Theme Selector Modal */
+.theme-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-3);
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing);
+  text-align: center;
+}
+
+.theme-option:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-option.active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+.theme-preview {
+  width: 60px;
+  height: 40px;
+  border-radius: var(--radius);
+  margin-bottom: var(--space-2);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.theme-preview-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.theme-preview-card {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+.theme-description {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin: 0;
+  margin-top: var(--space-1);
+}
+
+/* Light Theme Preview */
+.theme-preview.light .theme-preview-bg {
+  background: #ffffff;
+}
+
+.theme-preview.light .theme-preview-card {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+/* Dark Theme Preview */
+.theme-preview.dark .theme-preview-bg {
+  background: #0f172a;
+}
+
+.theme-preview.dark .theme-preview-card {
+  background: #334155;
+  border-color: #475569;
+}
+
+/* AMOLED Theme Preview */
+.theme-preview.amoled .theme-preview-bg {
+  background: #000000;
+}
+
+.theme-preview.amoled .theme-preview-card {
+  background: #1a1a1a;
+  border-color: #333333;
+}
+
+/* System Theme Auto-Detection */
+@media (prefers-color-scheme: dark) {
+  .theme-option[data-theme="system"] .theme-preview {
+    background: linear-gradient(45deg, #ffffff 50%, #0f172a 50%);
+  }
+}
+
+/* Glassmorphism Support */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(var(--blur));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .glassmorphism {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="amoled"] .glassmorphism {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .glassmorphism {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+}
+
+/* Theme-specific Widget Enhancements */
+
+/* Dark theme widget shadows */
+[data-theme="dark"] .widget-grid-item {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .widget-grid-item:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* AMOLED theme minimal shadows */
+[data-theme="amoled"] .widget-grid-item {
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+  border-color: #333333;
+}
+
+[data-theme="amoled"] .widget-grid-item:hover {
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.15);
+}
+
+/* Theme-specific App Bar */
+[data-theme="dark"] .app-bar,
+[data-theme="amoled"] .app-bar {
+  backdrop-filter: blur(var(--blur));
+  background: rgba(var(--panel-rgb), 0.8);
+}
+
+/* Theme Animation Classes */
+.theme-transition {
+  transition: 
+    background-color var(--duration-normal) var(--easing),
+    color var(--duration-normal) var(--easing),
+    border-color var(--duration-normal) var(--easing),
+    box-shadow var(--duration-normal) var(--easing);
+}
+
+/* Apply theme transition to common elements */
+body,
+.widget-grid-item,
+.app-bar,
+.modal,
+.toast,
+.btn,
+.form-input,
+.form-textarea,
+.form-select {
+  transition: 
+    background-color var(--duration-normal) var(--easing),
+    color var(--duration-normal) var(--easing),
+    border-color var(--duration-normal) var(--easing),
+    box-shadow var(--duration-normal) var(--easing);
+}
+
+/* Theme-specific Focus Rings */
+[data-theme="dark"] :focus-visible {
+  outline-color: #60a5fa;
+}
+
+[data-theme="amoled"] :focus-visible {
+  outline-color: #60a5fa;
+  outline-width: 1px;
+}
+
+/* Theme-specific Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--panel);
+  border-radius: var(--radius);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius);
+  transition: background var(--duration-fast) var(--easing);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--panel);
+}
+
+/* Theme-specific Selection */
+::selection {
+  background: color-mix(in srgb, var(--primary) 30%, transparent);
+  color: var(--text);
+}
+
+[data-theme="dark"] ::selection {
+  background: color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+[data-theme="amoled"] ::selection {
+  background: color-mix(in srgb, var(--primary) 50%, transparent);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #000000;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  
+  [data-theme="dark"] {
+    --border: #ffffff;
+    --text: #ffffff;
+    --bg: #000000;
+  }
+  
+  .widget-grid-item {
+    border-width: 2px;
+  }
+  
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .app-bar,
+  .side-panel,
+  .toast-container,
+  .modal-overlay {
+    display: none !important;
+  }
+  
+  .widget-grid-item {
+    background: white !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+  
+  .widget-actions,
+  .resize-handle {
+    display: none !important;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-icon {
+    transition: none;
+  }
+  
+  .theme-option {
+    transition: none;
+  }
+  
+  .theme-transition,
+  body,
+  .widget-grid-item,
+  .app-bar,
+  .modal,
+  .toast,
+  .btn,
+  .form-input,
+  .form-textarea,
+  .form-select {
+    transition: none !important;
+  }
+  
+  .widget-grid-item:hover {
+    transform: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* Color Scheme Utilities */
+.light-only {
+  display: block;
+}
+
+.dark-only {
+  display: none;
+}
+
+[data-theme="dark"] .light-only,
+[data-theme="amoled"] .light-only {
+  display: none;
+}
+
+[data-theme="dark"] .dark-only,
+[data-theme="amoled"] .dark-only {
+  display: block;
+}
+
+/* System preference detection for auto theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .light-only {
+    display: none;
+  }
+  
+  :root:not([data-theme]) .dark-only {
+    display: block;
+  }
+}
+
+/* Theme-aware SVG icons */
+.icon-themed {
+  filter: none;
+}
+
+[data-theme="dark"] .icon-themed {
+  filter: invert(1);
+}
+
+[data-theme="amoled"] .icon-themed {
+  filter: invert(1);
+}
+
+/* Custom properties for theme calculations */
+:root {
+  --panel-rgb: 248, 250, 252;
+  --card-rgb: 255, 255, 255;
+  --text-rgb: 30, 41, 59;
+}
+
+[data-theme="dark"] {
+  --panel-rgb: 30, 41, 59;
+  --card-rgb: 51, 65, 85;
+  --text-rgb: 241, 245, 249;
+}
+
+[data-theme="amoled"] {
+  --panel-rgb: 17, 17, 17;
+  --card-rgb: 26, 26, 26;
+  --text-rgb: 255, 255, 255;
+}
+
+/* Theme switching animation */
+.theme-switching {
+  pointer-events: none;
+}
+
+.theme-switching * {
+  transition: none !important;
+}
+
+/* Theme persistence indicator */
+.theme-saved {
+  position: fixed;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: var(--success);
+  color: white;
+  border-radius: var(--radius);
+  font-size: var(--font-size-xs);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--duration-normal) var(--easing);
+  z-index: 1000;
+}
+
+.theme-saved.show {
+  opacity: 1;
+  transform: translateY(0);
+}

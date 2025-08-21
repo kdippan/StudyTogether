@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customizable Dashboard</title>
+    <meta name="description" content="A customizable, drag-and-drop dashboard with widgets">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/widgets.css">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./assets/icons.svg" as="image" type="image/svg+xml">
+</head>
+<body class="page-loading">
+    <!-- Icon Sprite -->
+    <div class="sr-only">
+        <object data="./assets/icons.svg" type="image/svg+xml"></object>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="dashboard-app">
+        <!-- Top App Bar -->
+        <header class="app-bar" role="banner">
+            <h1 class="app-title">Dashboard</h1>
+            
+            <div class="app-controls">
+                <!-- Search -->
+                <div class="app-search">
+                    <input 
+                        type="search" 
+                        placeholder="Search widgets..." 
+                        aria-label="Search widgets"
+                        id="widget-search"
+                    >
+                    <svg class="search-icon icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-search"></use>
+                    </svg>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button 
+                    class="btn btn-icon theme-toggle tooltip" 
+                    data-theme="system"
+                    aria-label="Toggle theme"
+                    title="Toggle theme"
+                >
+                    <svg class="theme-toggle-icon icon light-only" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-sun"></use>
+                    </svg>
+                    <svg class="theme-toggle-icon icon dark-only" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-moon"></use>
+                    </svg>
+                </button>
+                
+                <!-- Add Widget Button -->
+                <button 
+                    class="btn btn-primary" 
+                    id="add-widget-btn"
+                    aria-label="Add new widget"
+                >
+                    <svg class="icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-plus"></use>
+                    </svg>
+                    Add Widget
+                </button>
+                
+                <!-- Menu -->
+                <div class="dropdown">
+                    <button 
+                        class="btn btn-icon" 
+                        id="menu-btn"
+                        aria-label="Open menu"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                    >
+                        <svg class="icon" aria-hidden="true">
+                            <use href="./assets/icons.svg#icon-menu"></use>
+                        </svg>
+                    </button>
+                    
+                    <div class="dropdown-content" role="menu">
+                        <button class="dropdown-item" id="import-btn" role="menuitem">
+                            <svg class="icon" aria-hidden="true">
+                                <use href="./assets/icons.svg#icon-upload"></use>
+                            </svg>
+                            Import Layout
+                        </button>
+                        <button class="dropdown-item" id="export-btn" role="menuitem">
+                            <svg class="icon" aria-hidden="true">
+                                <use href="./assets/icons.svg#icon-download"></use>
+                            </svg>
+                            Export Layout
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item danger" id="reset-btn" role="menuitem">
+                            <svg class="icon" aria-hidden="true">
+                                <use href="./assets/icons.svg#icon-reset"></use>
+                            </svg>
+                            Reset to Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main" role="main">
+            <!-- Widget Grid -->
+            <div class="widget-grid" id="widget-grid" role="region" aria-label="Dashboard widgets">
+                <!-- Widgets will be dynamically inserted here -->
+            </div>
+            
+            <!-- Grid Overlay (for development/debugging) -->
+            <div class="grid-overlay" id="grid-overlay" aria-hidden="true">
+                <!-- Grid cells will be generated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Side Panel -->
+    <aside class="side-panel" id="side-panel" role="complementary" aria-label="Widget library">
+        <div class="side-panel-header">
+            <h2>Widget Library</h2>
+            <button class="btn btn-icon" id="close-panel-btn" aria-label="Close panel">
+                <svg class="icon" aria-hidden="true">
+                    <use href="./assets/icons.svg#icon-close"></use>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="side-panel-content">
+            <div class="widget-library" id="widget-library">
+                <!-- Widget previews will be populated by JavaScript -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Modal for Add Widget -->
+    <div class="modal-overlay" id="add-widget-modal" role="dialog" aria-labelledby="add-widget-title" aria-hidden="true">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="add-widget-title">Add Widget</h2>
+                <button class="btn btn-icon" aria-label="Close modal">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-close"></use>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="widget-library" id="modal-widget-library">
+                    <!-- Widget options will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Widget Settings -->
+    <div class="modal-overlay" id="widget-settings-modal" role="dialog" aria-labelledby="widget-settings-title" aria-hidden="true">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="widget-settings-title">Widget Settings</h2>
+                <button class="btn btn-icon" aria-label="Close modal">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-close"></use>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-content" id="widget-settings-content">
+                <!-- Settings form will be populated by JavaScript -->
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-settings-btn">Cancel</button>
+                <button class="btn btn-primary" id="save-settings-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Theme Selection -->
+    <div class="modal-overlay" id="theme-modal" role="dialog" aria-labelledby="theme-title" aria-hidden="true">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="theme-title">Choose Theme</h2>
+                <button class="btn btn-icon" aria-label="Close modal">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#icon-close"></use>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="theme-selector">
+                    <div class="theme-option" data-theme="system">
+                        <div class="theme-preview system">
+                            <div class="theme-preview-bg"></div>
+                            <div class="theme-preview-card"></div>
+                        </div>
+                        <h3 class="theme-name">System</h3>
+                        <p class="theme-description">Follow system preference</p>
+                    </div>
+                    
+                    <div class="theme-option" data-theme="light">
+                        <div class="theme-preview light">
+                            <div class="theme-preview-bg"></div>
+                            <div class="theme-preview-card"></div>
+                        </div>
+                        <h3 class="theme-name">Light</h3>
+                        <p class="theme-description">Clean and bright</p>
+                    </div>
+                    
+                    <div class="theme-option" data-theme="dark">
+                        <div class="theme-preview dark">
+                            <div class="theme-preview-bg"></div>
+                            <div class="theme-preview-card"></div>
+                        </div>
+                        <h3 class="theme-name">Dark</h3>
+                        <p class="theme-description">Easy on the eyes</p>
+                    </div>
+                    
+                    <div class="theme-option" data-theme="amoled">
+                        <div class="theme-preview amoled">
+                            <div class="theme-preview-bg"></div>
+                            <div class="theme-preview-card"></div>
+                        </div>
+                        <h3 class="theme-name">AMOLED</h3>
+                        <p class="theme-description">Pure black for OLED</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="dropdown-content" id="context-menu" role="menu" style="position: fixed; display: none;">
+        <button class="dropdown-item" id="context-settings" role="menuitem">
+            <svg class="icon" aria-hidden="true">
+                <use href="./assets/icons.svg#icon-settings"></use>
+            </svg>
+            Settings
+        </button>
+        <button class="dropdown-item" id="context-refresh" role="menuitem">
+            <svg class="icon" aria-hidden="true">
+                <use href="./assets/icons.svg#icon-refresh"></use>
+            </svg>
+            Refresh
+        </button>
+        <button class="dropdown-item" id="context-duplicate" role="menuitem">
+            <svg class="icon" aria-hidden="true">
+                <use href="./assets/icons.svg#icon-plus"></use>
+            </svg>
+            Duplicate
+        </button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item danger" id="context-remove" role="menuitem">
+            <svg class="icon" aria-hidden="true">
+                <use href="./assets/icons.svg#icon-close"></use>
+            </svg>
+            Remove
+        </button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container" role="region" aria-label="Notifications" aria-live="polite">
+        <!-- Toasts will be dynamically inserted here -->
+    </div>
+
+    <!-- File Input for Import -->
+    <input type="file" id="import-file" accept=".json" style="display: none;" aria-hidden="true">
+
+    <!-- JavaScript Modules -->
+    <script type="module" src="./js/main.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful');
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
