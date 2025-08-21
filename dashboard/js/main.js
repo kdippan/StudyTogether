@@ -418,8 +418,11 @@ class Dashboard {
             root.setAttribute('data-theme', theme);
         }
         
-        // Save theme preference
-        this.state.setTheme(theme);
+        // Save theme preference only if different
+        const currentTheme = this.state.getTheme();
+        if (currentTheme !== theme) {
+            this.state.setTheme(theme);
+        }
         
         // Update theme toggle button
         const themeToggle = document.querySelector('.theme-toggle');
